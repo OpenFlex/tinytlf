@@ -22,18 +22,6 @@ package org.tinytlf.streams
 			return life.map(function(...args):Paragraph { return paragraph; });
 		}
 		
-		private function scanParagraphs(a:IObservable, b:IObservable):IObservable {
-			return a.combineLatest(b, [].concat).map(associateParagraphs);
-		}
-		
-		private function associateParagraphs(a:Array):Paragraph {
-			const now:Paragraph = a.pop();
-			const prev:Paragraph = a.pop();
-			prev.next = now;
-			now.prev = prev;
-			return now;
-		}
-		
 		[Inject]
 		public var injector:Injector;
 		

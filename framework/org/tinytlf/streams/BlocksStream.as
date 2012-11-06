@@ -28,20 +28,6 @@ package org.tinytlf.streams
 			return new Block(textBlock, content);
 		}
 		
-		private function scanBlockObs(a:IObservable, b:IObservable):IObservable {
-			return a.take(1).
-				combineLatest(b.take(1), [].concat).
-				map(associateBlocks);
-		}
-		
-		private function associateBlocks(a:Array):Block {
-			const now:Block = a.pop();
-			const prev:Block = a.pop();
-			prev.next = now;
-			now.prev = prev;
-			return now;
-		};
-		
 		[Inject(name="contents")]
 		public var contents:IObservable;
 	}
