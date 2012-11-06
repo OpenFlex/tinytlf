@@ -19,12 +19,15 @@ package org.tinytlf
 			
 			map(Injector).toValue(this);
 			map(TextEngine).toValue(this);
-			map(CSS).asSingleton();
 			map(Virtualizer).asSingleton();
 			
 			// An Observable stream of inputs.
 			map(ISubject, 'html').toValue(htmlSubj);
 			map(IObservable, 'html').toValue(html);
+			
+			// An Observable stream of CSS.
+			map(ISubject, 'css').toValue(cssSubj);
+			map(IObservable, 'css').toValue(css);
 			
 			// An Observable stream of x-scroll positions.
 			map(ISubject, 'hScroll').toValue(hScrollSubj);
@@ -64,7 +67,7 @@ package org.tinytlf
 			};
 			
 			const htmlBlockElementObs:IObservable = IStream(instantiateUnmapped(HTMLBlockElementStream)).observable;
-			map(IObservable, 'htmlBlockElements').toValue(htmlBlockElementObs.map(castInner(XML)));
+			map(IObservable, 'htmlBlockElements').toValue(htmlBlockElementObs.cast(XML));
 			
 			// An Observable stream of block-level XML node lifecycles.
 			const nodesObs:IObservable = IStream(instantiateUnmapped(NodesStream)).observable;
@@ -84,9 +87,30 @@ package org.tinytlf
 			
 			// An Observable stream of Paragraph lifecycles.
 			const paragraphsObs:IObservable = IStream(instantiateUnmapped(ParagraphsStream)).observable;
-			map(IObservable, 'paragraphs').toValue(paragraphsObs.cast(DisplayObject));
+			map(IObservable, 'paragraphs').toValue(paragraphsObs.map(castInner(DisplayObject)));
+		}
+		
+		private var started:Boolean = false;
+		
+		public function startup():void {
+			if(started) return;
+			started = true;
+			
+			const htmlBlockElementObs:IObservable = getInstance(IObservable, 'htmlBlockElements');
+			const xmlNodesSubj:ISubject = getInstance(ISubject, 'xml');
 			
 			htmlBlockElementObs.subscribe(xmlNodesSubj.onNext);
+		}
+		
+		override public function teardown():void {
+			
+			const xmlNodesSubj:ISubject = getInstance(ISubject, 'xml');
+			xmlNodesSubj.onCompleted();
+			
+			const virtualizer:Virtualizer = getInstance(Virtualizer);
+			virtualizer.clear();
+			
+			super.teardown();
 		}
 		
 		private const htmlSubj:ISubject = new ReplaySubject(1);
@@ -97,6 +121,16 @@ package org.tinytlf
 		
 		public function set html(w:*):void {
 			htmlSubj.onNext(w);
+		}
+		
+		private const cssSubj:ISubject = new ReplaySubject(1);
+		
+		public function get css():IObservable {
+			return cssSubj.cast(CSS);
+		}
+		
+		public function set css(w:*):void {
+			cssSubj.onNext(w is CSS ? w : new CSS(w));
 		}
 		
 		private const hScrollSubj:ISubject = new ReplaySubject(1);

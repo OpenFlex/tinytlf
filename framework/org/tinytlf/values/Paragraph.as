@@ -12,11 +12,9 @@ package org.tinytlf.values
 	
 	public class Paragraph extends Component
 	{
-		public function Paragraph(life:IObservable)
-		{
-			super();
-			
-			lifeCancelable = life.subscribe(onNextLife, destroy, error);
+		public function set life(value:IObservable):void {
+			lifeCancelable.cancel();
+			lifeCancelable = value.subscribe(onNextLife, destroy, error);
 		}
 		
 		private var _block:Block;
@@ -33,10 +31,10 @@ package org.tinytlf.values
 		
 		protected function onNextLife(a:Array):void {
 			
-			trace("container life update");
-			
 			const lines:IObservable = a.pop();
-			const textLines:IObservable = lines.map(function(line:Line):TextLine { return line.line; });
+			const textLines:IObservable = lines.map(function(line:Line):TextLine {
+				return line.line;
+			});
 			
 			width = a.pop();
 			_block = a.pop();
@@ -48,18 +46,18 @@ package org.tinytlf.values
 			addChild(container = progression == TextBlockProgression.TTB ? new VBox() : new HBox());
 			
 			lineCancelable = new CompositeCancelable([
+				// Adjust the container's Y by the first line's ascent
+				textLines.first().
+					subscribe(function(line:TextLine):void {
+						container.y = line.ascent;
+					}),
+				
 				// Add all the line children
 				textLines.
 					// When the lines finish rendering, update the Virtualizer
 					// with our new width and height values.
 					finallyAction(updateVirtualizer).
-					subscribe(container.addChild),
-				
-				// Adjust the container's Y by the first line's ascent
-				textLines.first().
-					subscribe(function(line:TextLine):void {
-						container.y = line.ascent;
-					})
+					subscribe(container.addChild)
 			]);
 		}
 		
@@ -73,8 +71,6 @@ package org.tinytlf.values
 			const node:XML = block.node;
 			const index:int = virtualizer.getIndex(node);
 			
-			trace("container virtualizer update", width, height, container.numChildren, node);
-			
 			if(index == -1) {
 				virtualizer.add(node, height); // TODO: make this work with horizontal progressions too.
 			} else {
@@ -83,8 +79,6 @@ package org.tinytlf.values
 		}
 		
 		public function destroy():void {
-			trace("container destroy");
-			
 			lifeCancelable.cancel();
 			lineCancelable.cancel();
 			

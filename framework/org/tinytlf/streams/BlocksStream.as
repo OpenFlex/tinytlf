@@ -13,7 +13,7 @@ package org.tinytlf.streams
 	public class BlocksStream implements IStream
 	{
 		/**
-		 * Mutates an IObservable<IObservable<Content>> into an IObservable<IObservable<Block>>
+		 * Mutates an IObservable<IObservable<IObservable<Content>>> into an IObservable<IObservable<Block>>
 		 */
 		public function get observable():IObservable {
 			return contents.map(mapContents).scan(scanBlockObs);
@@ -24,9 +24,8 @@ package org.tinytlf.streams
 		}
 		
 		private function scanContentToBlock(block:Block, content:Content):Block {
-			const styles:Styleable = toStyleable(content.node, css);
-			const textBlock:TextBlock = getTextBlock(TextBlocks.checkOut(), content.element, styles);
-			return new Block(textBlock, content.node, content.element, styles);
+			const textBlock:TextBlock = getTextBlock(TextBlocks.checkOut(), content.element, content.styles);
+			return new Block(textBlock, content.node, content.element, content.styles);
 		}
 		
 		private function scanBlockObs(a:IObservable, b:IObservable):IObservable {
@@ -45,8 +44,5 @@ package org.tinytlf.streams
 		
 		[Inject(name="contents")]
 		public var contents:IObservable;
-		
-		[Inject]
-		public var css:CSS;
 	}
 }

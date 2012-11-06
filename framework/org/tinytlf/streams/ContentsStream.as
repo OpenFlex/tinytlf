@@ -3,6 +3,7 @@ package org.tinytlf.streams
 	import flash.text.engine.*;
 	
 	import org.swiftsuspenders.*;
+	import org.tinytlf.classes.*;
 	import org.tinytlf.lambdas.*;
 	import org.tinytlf.values.*;
 	
@@ -14,65 +15,56 @@ package org.tinytlf.streams
 		 * Mutates an IObservable<IObservable<XML>> into an IObservable<IObservable<Content>>
 		 */
 		public function get observable():IObservable {
-			// For each node, asynchronously parse it into a ContentElement.
-			return nodes.mapMany(mapGroup);
+			// parse each node into a ContentElement
+			return nodes.map(mapGroup);
 		}
 		
-		private function mapGroup(group:IObservable):IObservable {
-			return group.map(recurse);
+		private function mapGroup(group:IObservable/*<XML>*/):IObservable/*<Content>*/ {
+			return group.combineLatest(css, [].concat).map(recurse);
 		}
 		
-		private function recurse(node:XML):IObservable {
+		private function recurse(a:Array):Content {
+			
+			const css:CSS = a.pop();
+			const node:XML = a.pop();
+			
 			const name:String = node.localName();
 			const numChildren:int = node.*.length();
 			
 			if(numChildren == 0) {
-				return Observable.value({
-					node: node,
-					content: parsers.hasOwnProperty(name) ?
+				return new Content(
+					node,
+					(parsers.hasOwnProperty(name) ?
 						parsers[name](node, []) :
-						new TextElement(node.toString(), new ElementFormat())
-				});
+						new TextElement(node.toString(), new ElementFormat())),
+					null
+				);
 			}
 			
-			return iterate(node, numChildren, name);
-		}
-		
-		private function iterate(node:XML, numChildren:int, name:String):IObservable {
-			return Observable.generate(0,
-					function(i:int):Boolean { return i < numChildren; },
-					function(i:int):Boolean { return i + 1; },
-					function(i:int):XML { return node.children()[i]; }
-//					, Scheduler.greenThread
-				).
-				map(iterateMapChild).
-				concatMany(iterateConcatMany).
-				toArray().
-				map(function(elements:Array):Object {
-					return new Content(
-						node, 
-						parsers.hasOwnProperty(name) ?
-							parsers[name](node, elements) :
-							new GroupElement(Vector.<ContentElement>(elements), new ElementFormat())
-					);
-				});
-		}
-		
-		private function iterateMapChild(child:XML):XML {
-			child.@cssInheritanceChain = getInheritanceChain(child);
-			return child;
-		}
-		
-		private function iterateConcatMany(node:XML):IObservable {
-			return recurse(node).map(function(child:Object):ContentElement {
-				return child.content;
-			});
+			const elements:Array = [];
+			for(var i:int = -1; ++i < numChildren;) {
+				const child:XML = node.children()[i];
+				child.@cssInheritanceChain = getInheritanceChain(child);
+				elements[i] = recurse([child, css]).element;
+			}
+			
+			return new Content(
+				node, 
+				(parsers.hasOwnProperty(name) ?
+					parsers[name](node, elements) :
+					new GroupElement(Vector.<ContentElement>(elements), new ElementFormat())
+				),
+				toStyleable(node, css)
+			);
 		}
 		
 		[Inject(name="nodes")]
-		public var nodes:IObservable;
+		public var nodes:IObservable/*<IObservable<XML>>*/;
 		
 		[Inject(name="inline")]
 		public var parsers:Object;
+		
+		[Inject(name="css")]
+		public var css:IObservable;
 	}
 }

@@ -9,19 +9,28 @@ package org.tinytlf.streams
 	public class ParagraphsStream implements IStream
 	{
 		/**
-		 * Mutates an IObservable<IObservable<Array<Block, Number, IObservable<TextLine>>>> into an IObservable<Paragraph>
+		 * Mutates an IObservable<IObservable<Array<Block, Number, IObservable<TextLine>>>>
+		 * into an IObservable<IObservable<Paragraph>>.
 		 */
 		public function get observable():IObservable {
 			return lines.map(mapBlockLife).scan(scanParagraphs);
 		}
 		
-		private function mapBlockLife(life:IObservable):Paragraph {
-			const paragraph:Paragraph = new Paragraph(life);
-			injector.injectInto(paragraph);
-			return paragraph;
+		private function mapBlockLife(life:IObservable):IObservable {
+			const paragraph:Paragraph = injector.instantiateUnmapped(Paragraph);
+			paragraph.life = life;
+			return life.map(function(...args):Paragraph { return paragraph; });
 		}
 		
-		private function scanParagraphs(prev:Paragraph, now:Paragraph):Paragraph {
+		private function scanParagraphs(a:IObservable, b:IObservable):IObservable {
+			return a.take(1).
+				combineLatest(b.take(1), [].concat).
+				map(associateParagraphs);
+		}
+		
+		private function associateParagraphs(a:Array):Paragraph {
+			const now:Paragraph = a.pop();
+			const prev:Paragraph = a.pop();
 			prev.next = now;
 			now.prev = prev;
 			return now;
