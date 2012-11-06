@@ -7,13 +7,13 @@ package org.tinytlf.lambdas
 	public function getInheritanceChain(node:XML):String
 	{
 		const index:int = node.childIndex();
-		const name:String = node.localName() + (index == -1 ? '' : index);
+		const name:String = node.localName();
 		const parent:XML = node.parent();
 		
 		const classes:String = String(node.attributes()['class'] || '').split(' ').join(' .');
 		const id:String = node.@id || '';
 		const existingChain:String = parent ? parent.@cssInheritanceChain : 'html';
 		
-		return existingChain + ' ' + name + classes + id
+		return (index == -1 ? '' : index) + ' ' + existingChain + ' ' + name + classes + id
 	}
 }

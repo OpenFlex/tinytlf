@@ -7,7 +7,7 @@ package org.tinytlf.lambdas
 	/**
 	 * @author ptaylor
 	 */
-	public function getTextBlock(block:TextBlock, content:ContentElement, styles:Styleable):TextBlock
+	public function setupTextBlock(block:TextBlock, content:ContentElement, styles:Styleable):TextBlock
 	{
 		block.content = content;
 		

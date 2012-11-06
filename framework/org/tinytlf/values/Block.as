@@ -6,23 +6,22 @@ package org.tinytlf.values
 	
 	import raix.reactive.*;
 
-	public class Block
+	public class Block extends Styleable
 	{
-		public function Block(block:TextBlock, node:XML = null, element:ContentElement = null, styles:Styleable = null)
+		public function Block(block:TextBlock, content:Content)
 		{
+			super(content);
+			
 			block.userData = this;
-			this['node'] = node;
-			this['element'] = element;
 			this['block'] = block;
-			this['styles'] = styles;
+			this['content'] = content;
 		}
 		
 		public var prev:Block;
 		public var next:Block;
 		
-		public const node:XML;
-		public const element:ContentElement;
 		public const block:TextBlock;
-		public const styles:Styleable;
+		public const content:Content;
+		public const node:XML;
 	}
 }

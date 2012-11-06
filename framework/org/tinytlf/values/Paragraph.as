@@ -41,7 +41,7 @@ package org.tinytlf.values
 			
 			lineCancelable.cancel();
 			
-			const progression:String = TextBlockProgression.convert(block.styles['progression'] || TextBlockProgression.TTB);
+			const progression:String = TextBlockProgression.convert(block['progression'] || TextBlockProgression.TTB);
 			removeChildren();
 			addChild(container = progression == TextBlockProgression.TTB ? new VBox() : new HBox());
 			
@@ -49,7 +49,9 @@ package org.tinytlf.values
 				// Adjust the container's Y by the first line's ascent
 				textLines.first().
 					subscribe(function(line:TextLine):void {
-						container.y = line.ascent;
+						container.y = line.ascent + block['paddingTop'];
+						container.x = block['paddingLeft'];
+						container.height += block['paddingBottom']
 					}),
 				
 				// Add all the line children

@@ -16,7 +16,7 @@ package org.tinytlf.streams
 		 * Mutates an IObservable<IObservable<IObservable<Content>>> into an IObservable<IObservable<Block>>
 		 */
 		public function get observable():IObservable {
-			return contents.map(mapContents).scan(scanBlockObs);
+			return contents.map(mapContents);
 		}
 		
 		private function mapContents(contentObs:IObservable):IObservable {
@@ -24,8 +24,8 @@ package org.tinytlf.streams
 		}
 		
 		private function scanContentToBlock(block:Block, content:Content):Block {
-			const textBlock:TextBlock = getTextBlock(TextBlocks.checkOut(), content.element, content.styles);
-			return new Block(textBlock, content.node, content.element, content.styles);
+			const textBlock:TextBlock = setupTextBlock(TextBlocks.checkOut(), content.element, content);
+			return new Block(textBlock, content);
 		}
 		
 		private function scanBlockObs(a:IObservable, b:IObservable):IObservable {

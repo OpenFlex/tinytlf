@@ -14,17 +14,14 @@ package org.tinytlf.streams
 		 * node, keyed by each node's @cssInheritanceChain attribute.
 		 */
 		public function get observable():IObservable {
-			
-			return Observable.merge([
-					// Complete when the xmlNodes Subject completes.
-					xmlNodes.ignoreValues(),
-					
-					// Update when the height or vScroll updates.
-					// TODO: Make this work with horizontal block progressions.
-					height.combineLatest(vScroll, [].concat).switchMany(selectVisibleNodes)
-				]).
+			// Update when the height or vScroll updates.
+			// TODO: Make this work with horizontal block progressions.
+			return height.
+				combineLatest(vScroll, [].concat).
+				switchMany(selectVisibleNodes).
 				groupByUntil(nodeKeySelector, nodeDurationSelector).
-				map(captureNodeValues);
+				map(snatchNodeValues).
+				takeUntil(xmlNodes.ignoreValues());
 		}
 		
 		// Selects only the visible nodes, or all nodes
@@ -86,10 +83,10 @@ package org.tinytlf.streams
 			return node.toString() == '' && node.text().toString() == '';
 		}
 		
-		public function captureNodeValues(obs:IObservable):IObservable {
-			const replay:ISubject = new ReplaySubject(1);
-			obs.subscribeWith(replay);
-			return replay;
+		private function snatchNodeValues(group:IObservable):IObservable {
+			const subj:ISubject = new ReplaySubject(1);
+			group.subscribeWith(subj);
+			return subj;
 		}
 		
 		[Inject]
@@ -106,6 +103,9 @@ package org.tinytlf.streams
 		
 		[Inject(name="vScroll")]
 		public var vScroll:IObservable;
+		
+		[Inject(name="html")]
+		public var html:IObservable;
 		
 		[Inject(name="xml")]
 		public var xmlNodes:IObservable;

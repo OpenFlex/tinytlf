@@ -2,6 +2,7 @@ package org.tinytlf.streams
 {
 	import flash.text.engine.*;
 	
+	import org.tinytlf.classes.Styleable;
 	import org.tinytlf.lambdas.*;
 	import org.tinytlf.values.*;
 	
@@ -32,15 +33,16 @@ package org.tinytlf.streams
 		
 		private function createLineBreaker(block:Block, prevWidth:Number, newWidth:Number):IObservable {
 			const validLines:Array = getValidLines(block.block);
+			const blockWidth:Number = newWidth - block['paddingLeft'] - block['paddingRight'];
 			
-			var breakAnother:Boolean = isBlockInvalid(block.block) || newWidth != prevWidth;
+			var breakAnother:Boolean = isBlockInvalid(block.block) || blockWidth != prevWidth;
 			
 			const predicate:Function = function(line:TextLine):Boolean {
 				return breakAnother;
 			};
 			
 			const iterate:Function = function(line:TextLine):TextLine {
-				line = createTextLine(block.block, line, newWidth);
+				line = createTextLine(block.block, line, blockWidth);
 				breakAnother = isBlockInvalid(block.block);
 				return line;
 			};

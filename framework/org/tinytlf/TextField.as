@@ -11,6 +11,7 @@ package org.tinytlf
 	import org.tinytlf.values.*;
 	
 	import raix.reactive.IObservable;
+	import raix.reactive.scheduling.Scheduler;
 	
 	public class TextField extends Sprite
 	{
@@ -20,38 +21,67 @@ package org.tinytlf
 			x = xpos;
 			y = ypos;
 			if(parent) parent.addChild(this);
+		}
+		
+		private var _engine:TextEngine = new TextEngine();
+		public function get engine():TextEngine {
+			return _engine;
+		}
+		
+		public function set engine(value:TextEngine):void {
+			
+			if(value == _engine) return;
+			
+			if(engine) engine.teardown();
+			
+			_engine = value;
+			
+			engine.startup();
 			
 			const onError:Function = function(e:Error):void { trace(e.getStackTrace()); };
-			
 			const textField:TextField = this;
 			
-			const css:IObservable = engine.getInstance(IObservable, 'css');
-			css.subscribe(function(css:CSS):void {
+			const cssObs:IObservable = engine.getInstance(IObservable, 'css');
+			cssObs.subscribe(function(css:CSS):void {
 				const progression:String = TextBlockProgression.convert(css['progression'] || TextBlockProgression.TTB);
 				const containerType:Class = progression == TextBlockProgression.TTB ? VBox : HBox;
 				
 				if(!(container is containerType)) {
 					container.removeChildren();
-					$addChild(container = new containerType(textField));
+					if($contains(container)) $removeChild(container);
+					$addChild(container = new containerType());
 				}
 			});
 			
 			const paragraphs:IObservable = engine.getInstance(IObservable, 'paragraphs') as IObservable;
 			paragraphs.subscribe(
 				function(paragraph:IObservable):void {
-					paragraph.take(1).subscribe(addChild, identity, onError);
+					
+					var p:Paragraph;
+					
+					paragraph.filter(function(p:Paragraph):Boolean {
+						return !contains(p);
+					}).
+					subscribe(
+						function(n:Paragraph):void {
+							addChild(p = n);
+						},
+						function():void {
+							trace("complete", p.block['cssInheritanceChain']);
+						},
+						function(e:Error):void {
+							trace("error", e);
+						}
+					);
 				},
-				removeChildren,
-				onError
+				removeChildren
 			);
 			
 			engine.width = width;
 			engine.height = height;
-			
-			engine.startup();
+			engine.css = css;
+			engine.html = html;
 		}
-		
-		public const engine:TextEngine = new TextEngine();
 		
 		private var container:DisplayObjectContainer = new Sprite();
 		
@@ -59,8 +89,20 @@ package org.tinytlf
 			return super.addChild(child);
 		}
 		
+		public function $contains(child:DisplayObject):Boolean {
+			return super.contains(child);
+		}
+		
+		public function $removeChild(child:DisplayObject):DisplayObject {
+			return super.removeChild(child);
+		}
+		
 		override public function addChild(child:DisplayObject):DisplayObject {
 			return container.addChild(child);
+		}
+		
+		override public function contains(child:DisplayObject):Boolean {
+			return container.contains(child);
 		}
 		
 		override public function removeChildren(beginIndex:int=0, endIndex:int=int.MAX_VALUE):void {
@@ -68,24 +110,35 @@ package org.tinytlf
 		}
 		
 		private var _height:Number = int.MAX_VALUE;
+		override public function get height():Number {
+			return _height;
+		}
+		
 		override public function set height(h:Number):void
 		{
-			engine.height = _height = h;
+			_height = h;
+			engine.height = h;
 		}
 		
 		private var _width:Number = TextLine.MAX_LINE_WIDTH;
-		override public function set width(w:Number):void
-		{
-			engine.width = _width = w;
+		override public function get width():Number {
+			return _width;
 		}
 		
-		private var _html:* = '';
+		override public function set width(w:Number):void
+		{
+			_width = w;
+			engine.width = w;
+		}
+		
+		private var _html:String = '';
 		public function get html():* {
 			return _html;
 		}
 		
 		public function set html(value:*):void {
-			engine.html = _html = value;
+			_html = value;
+			engine = new TextEngine();
 		}
 		
 		private var _css:String = '';
@@ -94,7 +147,8 @@ package org.tinytlf
 		}
 		
 		public function set css(value:*):void {
-			engine.css = _css = value;
+			_css = value;
+			engine.css = _css;
 		}
 	}
 }

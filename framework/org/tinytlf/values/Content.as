@@ -4,17 +4,17 @@ package org.tinytlf.values
 	
 	import org.tinytlf.classes.*;
 
-	public class Content
+	public class Content extends Styleable
 	{
 		public function Content(node:XML, element:ContentElement, styles:Styleable)
 		{
+			super(styles);
+			
 			this['node'] = node;
 			this['element'] = element;
-			this['styles'] = styles;
 		}
 		
 		public const node:XML;
 		public const element:ContentElement;
-		public const styles:Styleable;
 	}
 }

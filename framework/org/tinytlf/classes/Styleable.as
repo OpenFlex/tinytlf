@@ -131,7 +131,7 @@ package org.tinytlf.classes
 		
 		override flash_proxy function getProperty(name:*):*
 		{
-			return properties[name];
+			return properties[name] || defaults[name];
 		}
 		
 		override flash_proxy function hasProperty(name:*):Boolean
@@ -182,6 +182,11 @@ package org.tinytlf.classes
 		override flash_proxy function nextValue(index:int):*
 		{
 			return properties[propNames[index - 1]];
+		}
+		
+		private static const defaults:Object = {};
+		public static function registerDefault(field:String, value:*):void {
+			defaults[field] = value;
 		}
 	}
 }

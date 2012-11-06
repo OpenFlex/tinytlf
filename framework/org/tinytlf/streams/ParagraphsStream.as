@@ -13,7 +13,7 @@ package org.tinytlf.streams
 		 * into an IObservable<IObservable<Paragraph>>.
 		 */
 		public function get observable():IObservable {
-			return lines.map(mapBlockLife).scan(scanParagraphs);
+			return lines.map(mapBlockLife);
 		}
 		
 		private function mapBlockLife(life:IObservable):IObservable {
@@ -23,9 +23,7 @@ package org.tinytlf.streams
 		}
 		
 		private function scanParagraphs(a:IObservable, b:IObservable):IObservable {
-			return a.take(1).
-				combineLatest(b.take(1), [].concat).
-				map(associateParagraphs);
+			return a.combineLatest(b, [].concat).map(associateParagraphs);
 		}
 		
 		private function associateParagraphs(a:Array):Paragraph {
