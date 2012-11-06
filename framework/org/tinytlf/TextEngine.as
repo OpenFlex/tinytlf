@@ -17,6 +17,7 @@ package org.tinytlf
 		Styleable.registerDefault('paddingRight', 0);
 		Styleable.registerDefault('paddingBottom', 0);
 		Styleable.registerDefault('paddingLeft', 0);
+		public static var stage:Stage;
 		
 		public function TextEngine()
 		{
