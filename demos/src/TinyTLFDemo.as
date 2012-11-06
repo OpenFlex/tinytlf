@@ -12,10 +12,8 @@ package
 	import flash.text.TextFormat;
 	import flash.utils.*;
 	
-	import org.tinytlf.components.*;
-	import org.tinytlf.html.*;
-	import org.tinytlf.layout.*;
-	import org.tinytlf.util.*;
+	import org.tinytlf.*;
+	import org.tinytlf.lambdas.*;
 	
 	[SWF(width = "600", height = "500")]
 	public class TinyTLFDemo extends Sprite
@@ -40,8 +38,8 @@ package
 			mainVbox.width = 160;
 			mainVbox.alignment = VBox.RIGHT;
 			
-			addTextField(org.tinytlf.components.TextField);
-			createShapeCombobox();
+			addTextField(org.tinytlf.TextField);
+//			createShapeCombobox();
 			createHTMLCombobox();
 			createCSSComponents();
 			
@@ -66,23 +64,6 @@ package
 			tf.x = 165;
 		}
 		
-		private function createShapeCombobox():void
-		{
-			const window:Window = new Window(mainVbox, 0, 0, 'Rendering Shape');
-			window.draggable = false;
-			window.height = 60;
-			
-			const list:List = new List(window, 0, 0, ['Block', 'Circle']);
-			list.selectedIndex = 0;
-			list.height = 40;
-			list.width = 160;
-			list.autoHideScrollBar = true;
-			list.addEventListener('select', function(e:Event):void {
-				addTextField(list.selectedItem == 'Circle' ? CircleTextField : TextField);
-			});
-			window.width = 160;
-		}
-		
 		private function createHTMLCombobox():void
 		{
 			const window:Window = new Window(mainVbox, 0, 0, 'HTML Source');
@@ -92,6 +73,7 @@ package
 			
 			const list:List = new List(window, 0, 0,
 									   [
+									   'Single',
 									   'Small',
 									   'Large',
 									   'Long',
@@ -99,6 +81,7 @@ package
 									   'Idle Words',
 									   'Farmer One By Christian Cantrell'
 									   ]);
+			
 			list.autoHideScrollBar = true;
 			list.height = 120;
 			list.width = 160;
@@ -109,10 +92,12 @@ package
 				const panel:Panel = new Panel(stage, (stage.stageWidth - 100) * 0.5, (stage.stageHeight - 40) * 0.5);
 				panel.width = 120;
 				panel.height = 40;
+				
 				const label:Label = new Label(panel, 0, 10, 'Parsing XML');
 				const format:TextFormat = label.textField.defaultTextFormat;
 				format.size = 14;
 				format.font = 'Helvetica';
+				
 				label.textField.defaultTextFormat = format;
 				label.draw();
 				label.x = (panel.width - label.width) * 0.5;
@@ -121,7 +106,7 @@ package
 				
 				setTimeout(function():void {
 					const time:Number = getTimer();
-					const xml:XML = TagSoup.toXML(new (HTMLSource[propName] as Class)().toString());
+					const xml:XML = toXML(new (HTMLSource[propName] as Class)().toString());
 					label.text = (getTimer() - time) + 'ms';
 					label.draw();
 					label.x = (panel.width - label.width) * 0.5;
@@ -134,7 +119,7 @@ package
 					}, 750);
 				}, 250);
 			});
-			tf.html = new HTMLSource.Small().toString();
+			tf.html = new HTMLSource.Single().toString();
 		}
 		
 		private function createCSSComponents():void
@@ -207,6 +192,23 @@ package
 			});
 			editButton.width = 50;
 		}
+		
+//		private function createShapeCombobox():void
+//		{
+//			const window:Window = new Window(mainVbox, 0, 0, 'Rendering Shape');
+//			window.draggable = false;
+//			window.height = 60;
+//			
+//			const list:List = new List(window, 0, 0, ['Block', 'Circle']);
+//			list.selectedIndex = 0;
+//			list.height = 40;
+//			list.width = 160;
+//			list.autoHideScrollBar = true;
+//			list.addEventListener('select', function(e:Event):void {
+//				addTextField(list.selectedItem == 'Circle' ? CircleTextField : TextField);
+//			});
+//			window.width = 160;
+//		}
 	}
 }
 
@@ -215,189 +217,189 @@ import com.bit101.components.*;
 import flash.display.*;
 import flash.geom.*;
 import flash.text.*;
-import flash.text.engine.*;
-
-import org.tinytlf.box.*;
-import org.tinytlf.box.alignment.*;
-import org.tinytlf.box.paragraph.*;
-import org.tinytlf.box.progression.*;
-import org.tinytlf.box.region.*;
-import org.tinytlf.components.*;
-import org.tinytlf.html.*;
-import org.tinytlf.layout.*;
-
-internal class CircleTextField extends org.tinytlf.components.TextField
-{
-	public function CircleTextField()
-	{
-		super();
-		
-		const boxes:Array = injector.getInstance(Array, '<Box>');
-		boxes[0] = injector.instantiateUnmapped(CircleRegion);
-	}
-	
-//	override protected function createBoxes(root:IDOMNode):Array
+//import flash.text.engine.*;
+//
+//import org.tinytlf.box.*;
+//import org.tinytlf.box.alignment.*;
+//import org.tinytlf.box.paragraph.*;
+//import org.tinytlf.box.progression.*;
+//import org.tinytlf.box.region.*;
+//import org.tinytlf.components.*;
+//import org.tinytlf.html.*;
+//import org.tinytlf.layout.*;
+//
+//internal class CircleTextField extends org.tinytlf.components.TextField
+//{
+//	public function CircleTextField()
 //	{
-//		const panes:Array = injector.getInstance(Array, '<Box>');
-//		const region:Region = panes[0];
+//		super();
 //		
-//		pane.progression = pane.blockProgression == TextBlockProgression.TTB ?
-//			new CircleTTBProgression() :
-//			pane.blockProgression == TextBlockProgression.LTR ?
-//			new CircleLTRProgression() : new CircleRTLProgression();
-//		
-//		return super.createBoxes(root).map(function(box:Box, ... args):Box {
-//			if(box is Paragraph)
-//				Paragraph(box).layout = new CircleLayout();
-//			return box;
-//		});
+//		const boxes:Array = injector.getInstance(Array, '<Box>');
+//		boxes[0] = injector.instantiateUnmapped(CircleRegion);
 //	}
-}
-
-internal class CircleRegion extends Region
-{
-	override public function set blockProgression(value:String):void
-	{
-		super.blockProgression = value;
-		
-		progression = value == TextBlockProgression.TTB ?
-			new CircleTTBProgression() :
-			value == TextBlockProgression.LTR ?
-				new CircleLTRProgression() :
-				new CircleRTLProgression();
-	}
-}
-
-internal class CircleTTBProgression extends TTBProgression
-{
-	public function CircleTTBProgression()
-	{
-		super();
-		defaultAlignment = getAlignmentForProgression(TextAlign.CENTER, TextBlockProgression.TTB);
-	}
-	
-	override public function getLineSize(box:Box, previousLine:TextLine):Number
-	{
-		if(!previousLine)
-			return box.width * .2;
-		
-		const d:Number = box.width - box.paddingTop - box.paddingBottom;
-		const r:Number = d * 0.5;
-		position(box, previousLine);
-		var y:Number = previousLine.y + previousLine.descent + box.leading;
-		
-		if(y > d)
-			y %= d;
-		
-		const indent:Number = (box is Paragraph) ? Paragraph(box).textIndent : 0;
-		const point:Point = xAtY(y, new Point(r, r), r);
-		
-		return Math.floor(point.y - point.x - indent);
-	}
-}
-
-internal class CircleLTRProgression extends LTRProgression
-{
-	public function CircleLTRProgression()
-	{
-		super();
-		defaultAlignment = getAlignmentForProgression(TextAlign.CENTER, TextBlockProgression.LTR);
-	}
-	
-	override public function getLineSize(box:Box, previousLine:TextLine):Number
-	{
-		if(!previousLine)
-			return box.height * .2;
-		
-		const d:Number = box.height - box.paddingLeft - box.paddingRight;
-		const r:Number = d * 0.5;
-		position(box, previousLine);
-		var x:Number = previousLine.x + previousLine.width + box.leading;
-		
-		if(x > d)
-			x %= d;
-		
-		const indent:Number = (box is Paragraph) ? Paragraph(box).textIndent : 0;
-		const point:Point = xAtY(x, new Point(r, r), r);
-		
-		return Math.floor(point.y - point.x - indent);
-	}
-}
-
-internal class CircleRTLProgression extends RTLProgression
-{
-	public function CircleRTLProgression()
-	{
-		super();
-		defaultAlignment = getAlignmentForProgression(TextAlign.CENTER, TextBlockProgression.RTL);
-	}
-	
-	override public function getLineSize(box:Box, previousLine:TextLine):Number
-	{
-		if(!previousLine)
-			return Math.floor(box.height * .2);
-		
-		const d:Number = box.height - box.paddingLeft - box.paddingRight;
-		const r:Number = d * 0.5;
-		position(box, previousLine);
-		var x:Number = Math.floor(previousLine.x - previousLine.width - box.leading);
-		
-		if(x < 0)
-			x = Math.abs(x % d);
-		
-		const indent:Number = (box is Paragraph) ? Paragraph(box).textIndent : 0;
-		const point:Point = xAtY(x, new Point(r, r), r);
-		
-		return Math.floor(point.y - point.x - indent);
-	}
-}
-
-internal function xAtY(yValue:Number, center:Point, radius:Number):Point
-{
-	// equation of circle is (x-h)^2 + (y-k)^2 = r^2 -> x^2 - 2hx + h^2 + (value-k)^2 = r^2 
-	
-	// use the textbook notation
-	const a:Number = 1;
-	const b:Number = -2 * center.x;
-	const c:Number = center.x * center.x + (yValue - center.y) * (yValue - center.y) - radius * radius;
-	
-	var d:Number = b * b - 4 * a * c;
-	if(d < 0)
-		return null;
-	
-	d = Math.sqrt(d);
-	
-	// note that 2*a = 2 since a = 1 and 1/2a = 1/2, so I'm adjusting the quadratic formula appropriately
-	return new Point(0.5 * (-b - d), 0.5 * (-b + d));
-}
-
-internal function yAtX(xValue:Number, center:Point, radius:Number):Point
-{
-	// equation of circle is (x-h)^2 + (y-k)^2 = r^2 -> x^2 - 2hx + h^2 + (value-k)^2 = r^2 
-	
-	// use the textbook notation
-	const a:Number = 1;
-	const b:Number = -2 * center.x;
-	const c:Number = center.y * center.y + (xValue - center.x) * (xValue - center.x) - radius * radius;
-	
-	var d:Number = (b * b) - (4 * a * c);
-	if(d < 0)
-		return null;
-	
-	d = Math.sqrt(d);
-	
-	// note that 2*a = 2 since a = 1 and 1/2a = 1/2, so I'm adjusting the quadratic formula appropriately
-	return new Point(0.5 * (-b - d), 0.5 * (-b + d));
-}
-
-internal class CircleLayout extends StandardParagraphLayout
-{
-	override public function layout(lines:Array, paragraph:Paragraph):Array
-	{
-		return lines;
-	}
-}
-
+//	
+////	override protected function createBoxes(root:IDOMNode):Array
+////	{
+////		const panes:Array = injector.getInstance(Array, '<Box>');
+////		const region:Region = panes[0];
+////		
+////		pane.progression = pane.blockProgression == TextBlockProgression.TTB ?
+////			new CircleTTBProgression() :
+////			pane.blockProgression == TextBlockProgression.LTR ?
+////			new CircleLTRProgression() : new CircleRTLProgression();
+////		
+////		return super.createBoxes(root).map(function(box:Box, ... args):Box {
+////			if(box is Paragraph)
+////				Paragraph(box).layout = new CircleLayout();
+////			return box;
+////		});
+////	}
+//}
+//
+//internal class CircleRegion extends Region
+//{
+//	override public function set blockProgression(value:String):void
+//	{
+//		super.blockProgression = value;
+//		
+//		progression = value == TextBlockProgression.TTB ?
+//			new CircleTTBProgression() :
+//			value == TextBlockProgression.LTR ?
+//				new CircleLTRProgression() :
+//				new CircleRTLProgression();
+//	}
+//}
+//
+//internal class CircleTTBProgression extends TTBProgression
+//{
+//	public function CircleTTBProgression()
+//	{
+//		super();
+//		defaultAlignment = getAlignmentForProgression(TextAlign.CENTER, TextBlockProgression.TTB);
+//	}
+//	
+//	override public function getLineSize(box:Box, previousLine:TextLine):Number
+//	{
+//		if(!previousLine)
+//			return box.width * .2;
+//		
+//		const d:Number = box.width - box.paddingTop - box.paddingBottom;
+//		const r:Number = d * 0.5;
+//		position(box, previousLine);
+//		var y:Number = previousLine.y + previousLine.descent + box.leading;
+//		
+//		if(y > d)
+//			y %= d;
+//		
+//		const indent:Number = (box is Paragraph) ? Paragraph(box).textIndent : 0;
+//		const point:Point = xAtY(y, new Point(r, r), r);
+//		
+//		return Math.floor(point.y - point.x - indent);
+//	}
+//}
+//
+//internal class CircleLTRProgression extends LTRProgression
+//{
+//	public function CircleLTRProgression()
+//	{
+//		super();
+//		defaultAlignment = getAlignmentForProgression(TextAlign.CENTER, TextBlockProgression.LTR);
+//	}
+//	
+//	override public function getLineSize(box:Box, previousLine:TextLine):Number
+//	{
+//		if(!previousLine)
+//			return box.height * .2;
+//		
+//		const d:Number = box.height - box.paddingLeft - box.paddingRight;
+//		const r:Number = d * 0.5;
+//		position(box, previousLine);
+//		var x:Number = previousLine.x + previousLine.width + box.leading;
+//		
+//		if(x > d)
+//			x %= d;
+//		
+//		const indent:Number = (box is Paragraph) ? Paragraph(box).textIndent : 0;
+//		const point:Point = xAtY(x, new Point(r, r), r);
+//		
+//		return Math.floor(point.y - point.x - indent);
+//	}
+//}
+//
+//internal class CircleRTLProgression extends RTLProgression
+//{
+//	public function CircleRTLProgression()
+//	{
+//		super();
+//		defaultAlignment = getAlignmentForProgression(TextAlign.CENTER, TextBlockProgression.RTL);
+//	}
+//	
+//	override public function getLineSize(box:Box, previousLine:TextLine):Number
+//	{
+//		if(!previousLine)
+//			return Math.floor(box.height * .2);
+//		
+//		const d:Number = box.height - box.paddingLeft - box.paddingRight;
+//		const r:Number = d * 0.5;
+//		position(box, previousLine);
+//		var x:Number = Math.floor(previousLine.x - previousLine.width - box.leading);
+//		
+//		if(x < 0)
+//			x = Math.abs(x % d);
+//		
+//		const indent:Number = (box is Paragraph) ? Paragraph(box).textIndent : 0;
+//		const point:Point = xAtY(x, new Point(r, r), r);
+//		
+//		return Math.floor(point.y - point.x - indent);
+//	}
+//}
+//
+//internal function xAtY(yValue:Number, center:Point, radius:Number):Point
+//{
+//	// equation of circle is (x-h)^2 + (y-k)^2 = r^2 -> x^2 - 2hx + h^2 + (value-k)^2 = r^2 
+//	
+//	// use the textbook notation
+//	const a:Number = 1;
+//	const b:Number = -2 * center.x;
+//	const c:Number = center.x * center.x + (yValue - center.y) * (yValue - center.y) - radius * radius;
+//	
+//	var d:Number = b * b - 4 * a * c;
+//	if(d < 0)
+//		return null;
+//	
+//	d = Math.sqrt(d);
+//	
+//	// note that 2*a = 2 since a = 1 and 1/2a = 1/2, so I'm adjusting the quadratic formula appropriately
+//	return new Point(0.5 * (-b - d), 0.5 * (-b + d));
+//}
+//
+//internal function yAtX(xValue:Number, center:Point, radius:Number):Point
+//{
+//	// equation of circle is (x-h)^2 + (y-k)^2 = r^2 -> x^2 - 2hx + h^2 + (value-k)^2 = r^2 
+//	
+//	// use the textbook notation
+//	const a:Number = 1;
+//	const b:Number = -2 * center.x;
+//	const c:Number = center.y * center.y + (xValue - center.x) * (xValue - center.x) - radius * radius;
+//	
+//	var d:Number = (b * b) - (4 * a * c);
+//	if(d < 0)
+//		return null;
+//	
+//	d = Math.sqrt(d);
+//	
+//	// note that 2*a = 2 since a = 1 and 1/2a = 1/2, so I'm adjusting the quadratic formula appropriately
+//	return new Point(0.5 * (-b - d), 0.5 * (-b + d));
+//}
+//
+//internal class CircleLayout extends StandardParagraphLayout
+//{
+//	override public function layout(lines:Array, paragraph:Paragraph):Array
+//	{
+//		return lines;
+//	}
+//}
+//
 internal class FormattedTextArea extends TextArea
 {
 	public function FormattedTextArea(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number = 0, text:String = "")

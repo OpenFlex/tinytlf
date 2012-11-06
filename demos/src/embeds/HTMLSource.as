@@ -2,6 +2,9 @@ package embeds
 {
 	public class HTMLSource
 	{
+		[Embed(source = "assets/html/single.txt", mimeType = "application/octet-stream")]
+		public static const Single:Class;
+		
 		[Embed(source = "assets/html/small.txt", mimeType = "application/octet-stream")]
 		public static const Small:Class;
 		
