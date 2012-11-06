@@ -1,4 +1,4 @@
-package org.tinytlf.layout.box
+package org.tinytlf.box
 {
 	import org.swiftsuspenders.*;
 	import org.tinytlf.html.*;
@@ -58,8 +58,8 @@ package org.tinytlf.layout.box
 import flash.display.*;
 
 import org.swiftsuspenders.*;
-import org.tinytlf.layout.box.*;
-import org.tinytlf.layout.box.progression.*;
+import org.tinytlf.box.*;
+import org.tinytlf.box.progression.*;
 
 internal class ClosureRectangle extends Box
 {

@@ -1,9 +1,9 @@
-package org.tinytlf.layout.box.paragraph
+package org.tinytlf.box.paragraph
 {
 	import flash.text.engine.*;
 	
-	import org.tinytlf.layout.box.alignment.*;
-	import org.tinytlf.layout.box.progression.*;
+	import org.tinytlf.box.alignment.*;
+	import org.tinytlf.box.progression.*;
 	import org.tinytlf.util.*;
 	
 	public class StandardParagraphRenderer implements IParagraphRenderer

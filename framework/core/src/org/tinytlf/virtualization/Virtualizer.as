@@ -1,4 +1,4 @@
-package org.tinytlf
+package org.tinytlf.virtualization
 {
 	import flash.utils.Dictionary;
 	

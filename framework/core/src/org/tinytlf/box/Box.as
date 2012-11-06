@@ -1,4 +1,4 @@
-package org.tinytlf.layout.box
+package org.tinytlf.box
 {
 	import flash.display.*;
 	import flash.geom.*;
@@ -6,9 +6,10 @@ package org.tinytlf.layout.box
 	
 	import org.swiftsuspenders.*;
 	import org.tinytlf.*;
+	import org.tinytlf.box.alignment.*;
+	import org.tinytlf.box.progression.*;
 	import org.tinytlf.html.*;
 	import org.tinytlf.layout.*;
-	import org.tinytlf.layout.box.progression.*;
 	import org.tinytlf.util.*;
 	
 	public class Box extends Styleable
@@ -41,7 +42,7 @@ package org.tinytlf.layout.box
 			return [this];
 		}
 		
-		public function render():Array
+		public function render():Array /*<DisplayObject>*/
 		{
 			progression.alignment = getAlignmentForProgression(textAlign, blockProgression);
 			invalid = false;
@@ -50,11 +51,9 @@ package org.tinytlf.layout.box
 		
 		public function getSelectionRects(start:int, end:int):Array /*<Rectangle>*/
 		{
-			const boxes:Array = [];
-			kids.forEach(function(child:DisplayObject, ...args):void {
-				boxes.push(child.getBounds(child));
+			return kids.map(function(child:DisplayObject, ...args):Rectangle {
+				return child.getBounds(child);
 			});
-			return boxes;
 		}
 		
 		public function addChild(child:DisplayObject):DisplayObject

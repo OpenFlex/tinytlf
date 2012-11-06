@@ -1,4 +1,4 @@
-package org.tinytlf.layout.box
+package org.tinytlf.box
 {
 	import org.tinytlf.html.IDOMNode;
 	

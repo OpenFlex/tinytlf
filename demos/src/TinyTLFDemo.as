@@ -217,13 +217,14 @@ import flash.geom.*;
 import flash.text.*;
 import flash.text.engine.*;
 
+import org.tinytlf.box.*;
+import org.tinytlf.box.alignment.*;
+import org.tinytlf.box.paragraph.*;
+import org.tinytlf.box.progression.*;
+import org.tinytlf.box.region.*;
 import org.tinytlf.components.*;
 import org.tinytlf.html.*;
 import org.tinytlf.layout.*;
-import org.tinytlf.layout.box.*;
-import org.tinytlf.layout.box.paragraph.*;
-import org.tinytlf.layout.box.progression.*;
-import org.tinytlf.layout.box.region.*;
 
 internal class CircleTextField extends org.tinytlf.components.TextField
 {

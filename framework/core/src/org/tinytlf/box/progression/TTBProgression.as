@@ -1,12 +1,12 @@
-package org.tinytlf.layout.box.progression
+package org.tinytlf.box.progression
 {
 	import flash.display.*;
 	import flash.text.engine.*;
 	
 	import org.tinytlf.layout.*;
-	import org.tinytlf.layout.box.alignment.*;
-	import org.tinytlf.layout.box.*;
-	import org.tinytlf.layout.box.paragraph.*;
+	import org.tinytlf.box.alignment.*;
+	import org.tinytlf.box.*;
+	import org.tinytlf.box.paragraph.*;
 	
 	public class TTBProgression implements IProgression
 	{

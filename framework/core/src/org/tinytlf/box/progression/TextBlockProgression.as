@@ -1,4 +1,4 @@
-package org.tinytlf.layout
+package org.tinytlf.box.progression
 {
 	public class TextBlockProgression
 	{

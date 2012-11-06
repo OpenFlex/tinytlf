@@ -1,14 +1,14 @@
-package org.tinytlf.layout.box.progression
+package org.tinytlf.box.progression
 {
 	import flash.display.*;
 	import flash.text.engine.*;
 	
 	import org.tinytlf.layout.*;
-	import org.tinytlf.layout.box.alignment.*;
-	import org.tinytlf.layout.box.*;
-	import org.tinytlf.layout.box.paragraph.*;
+	import org.tinytlf.box.alignment.*;
+	import org.tinytlf.box.*;
+	import org.tinytlf.box.paragraph.*;
 	
-	public class LTRProgression implements IProgression
+	public class RTLProgression implements IProgression
 	{
 		public function getLineSize(box:Box, previousLine:TextLine):Number
 		{
@@ -27,7 +27,7 @@ package org.tinytlf.layout.box.progression
 				return;
 			}
 			
-			child.x = box.x;
+			child.x = box.x + (box.width - child.width);
 			child.y = box.textAlign == TextAlign.JUSTIFY ?
 				defaultAlignment.getAlignment(box, child) :
 				a.getAlignment(box, child);
@@ -38,14 +38,13 @@ package org.tinytlf.layout.box.progression
 			const pline:TextLine = line.previousLine;
 			
 			if(pline)
-				line.x = pline.x + pline.descent + box.leading + line.ascent;
+				line.x = pline.x - box.leading - line.width;
 			else
-				line.x = box.paddingLeft + line.width;
+				line.x = -box.paddingRight - line.width;
 			
-			line.y = line.height +
-				(box.textAlign == TextAlign.JUSTIFY ?
+			line.y = box.textAlign == TextAlign.JUSTIFY ?
 				defaultAlignment.getAlignment(box, line) :
-				a.getAlignment(box, line));
+				a.getAlignment(box, line);
 		}
 		
 		public function getTotalHorizontalSize(box:Box):Number
@@ -75,7 +74,7 @@ package org.tinytlf.layout.box.progression
 			return box.paddingTop + h + box.paddingBottom;
 		}
 		
-		protected var a:IAlignment = new BottomAlignment();
+		protected var a:IAlignment = new TopAlignment();
 		public function get alignment():IAlignment
 		{
 			return a;
@@ -86,6 +85,6 @@ package org.tinytlf.layout.box.progression
 			a = value;
 		}
 		
-		protected var defaultAlignment:IAlignment = new BottomAlignment();
+		protected var defaultAlignment:IAlignment = new TopAlignment();
 	}
 }

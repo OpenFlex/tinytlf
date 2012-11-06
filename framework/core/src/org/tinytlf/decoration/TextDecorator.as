@@ -63,7 +63,7 @@ package org.tinytlf.decoration
 			
 			const el:Element = getElement(element);
 			
-			if(styleObject is String && map.hasMapping(styleProp))
+			if(styleObject is String)
 			{
 				el.addDecoration(new Decoration(map.instantiate(styleProp), layer));
 			}

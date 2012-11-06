@@ -19,8 +19,7 @@ package org.tinytlf
 		/**
 		 * The index of the selection caret for the engine.
 		 */
-		function get caretIndex():int;
-		function set caretIndex(index:int):void;
+		function get caret():int;
 		
 		/**
 		 * The scroll position of the engine. This value is in pixels. Defined
@@ -37,8 +36,13 @@ package org.tinytlf
 		function get selection():Point;
 		
 		/**
-		* Draws a selection decoration around text.
-		*/
+		 * Returns the character index of the item at the given stage point.
+		 */
+		function getCharIndexAtPoint(stageX:int, stageY:int):int;
+		
+		/**
+		 * Selects the text between the given start and end indicies.
+		 */
 		function select(startIndex:Number = NaN, endIndex:Number = NaN):void;
 		
 		/**

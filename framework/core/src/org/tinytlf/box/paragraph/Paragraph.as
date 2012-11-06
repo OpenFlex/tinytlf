@@ -1,4 +1,4 @@
-package org.tinytlf.layout.box.paragraph
+package org.tinytlf.box.paragraph
 {
 	import flash.display.*;
 	import flash.events.*;
@@ -7,12 +7,13 @@ package org.tinytlf.layout.box.paragraph
 	
 	import org.swiftsuspenders.*;
 	import org.tinytlf.*;
+	import org.tinytlf.box.*;
+	import org.tinytlf.box.alignment.*;
+	import org.tinytlf.box.progression.*;
 	import org.tinytlf.content.*;
 	import org.tinytlf.html.*;
 	import org.tinytlf.layout.*;
-	import org.tinytlf.layout.box.progression.*;
 	import org.tinytlf.util.*;
-	import org.tinytlf.layout.box.*;
 	
 	public class Paragraph extends Box
 	{
@@ -124,9 +125,13 @@ package org.tinytlf.layout.box.paragraph
 				return [];
 			
 			const boxes:Array = [];
+			const blockLength:int = block.lastLine.textBlockBeginIndex + block.lastLine.atomCount;
+			
+			start = Math.max(0, Math.min(blockLength - 1, start));
+			end = Math.max(0, Math.min(blockLength - 1, end));
 			
 			var line:TextLine = block.getTextLineAtCharIndex(start);
-			var lastLine:TextLine = block.getTextLineAtCharIndex(end);
+			const lastLine:TextLine = block.getTextLineAtCharIndex(end);
 			
 			while(line)
 			{

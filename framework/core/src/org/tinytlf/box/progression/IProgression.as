@@ -1,10 +1,10 @@
-package org.tinytlf.layout.box.progression
+package org.tinytlf.box.progression
 {
 	import flash.display.DisplayObject;
 	import flash.text.engine.*;
 	
-	import org.tinytlf.layout.box.alignment.IAlignment;
-	import org.tinytlf.layout.box.*;
+	import org.tinytlf.box.alignment.IAlignment;
+	import org.tinytlf.box.*;
 	
 	public interface IProgression
 	{

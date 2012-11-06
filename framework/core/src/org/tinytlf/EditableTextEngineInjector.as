@@ -12,11 +12,12 @@ package org.tinytlf
 	import org.tinytlf.html.*;
 	import org.tinytlf.interaction.*;
 	import org.tinytlf.layout.*;
-	import org.tinytlf.layout.box.*;
-	import org.tinytlf.layout.box.paragraph.*;
-	import org.tinytlf.layout.box.region.Region;
+	import org.tinytlf.box.*;
+	import org.tinytlf.box.paragraph.*;
+	import org.tinytlf.box.region.Region;
 	import org.tinytlf.style.*;
 	import org.tinytlf.util.*;
+	import org.tinytlf.virtualization.Virtualizer;
 	
 	public class EditableTextEngineInjector extends Injector
 	{
@@ -49,7 +50,7 @@ package org.tinytlf
 			map(Array, '<Sprite>').toValue([new Sprite()]);
 			map(Array, '<Box>').toValue([]);
 			
-			map(MouseSelectionBehavior).toSingleton(MouseSelectionBehavior);
+			map(MouseSelectionBehavior).toValue(new MouseSelectionBehavior());
 			
 			// When someone asks for a vanilla Virtualizer,
 			// assume they want the one we use for layout.
@@ -76,13 +77,17 @@ package org.tinytlf
 			injectInto(getInstance(Virtualizer, 'layout'));
 			injectInto(getInstance(Virtualizer, 'content'));
 			
-			map(IDOMNode).toValue(new DOMNode(<_/>));
-			injectInto(getInstance(MouseSelectionBehavior));
-			unmap(IDOMNode);
-			
 			// Start off with at least one TextPane.
 			const boxes:Array = getInstance(Array, '<Box>');
 			boxes.push(instantiateUnmapped(Paragraph));
+			
+			// Since we're the editable TextField, we're only going to have one
+			// paragraph instance. Map him into the 'layout' Virtualizer with
+			// the largest height possible.
+			const v:Virtualizer = getInstance(Virtualizer);
+			v.add(boxes[0], int.MAX_VALUE);
+			
+			injectInto(getInstance(MouseSelectionBehavior));
 		}
 		
 		protected function mapEventMirrors():void
@@ -109,7 +114,7 @@ package org.tinytlf
 				paragraph.percentWidth = 100;
 				paragraph.percentHeight = 100;
 				
-				cllv.add(paragraph, dom.contentSize);
+				cllv.add(paragraph, dom.length);
 				return [paragraph];
 			});
 		}

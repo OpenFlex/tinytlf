@@ -6,11 +6,13 @@ package org.tinytlf.components
 	
 	import org.swiftsuspenders.*;
 	import org.tinytlf.*;
+	import org.tinytlf.box.*;
+	import org.tinytlf.box.progression.*;
 	import org.tinytlf.html.*;
 	import org.tinytlf.interaction.*;
 	import org.tinytlf.layout.*;
-	import org.tinytlf.layout.box.*;
 	import org.tinytlf.util.*;
+	import org.tinytlf.virtualization.*;
 	
 	public class TextField extends ComponentBase
 	{
@@ -147,9 +149,6 @@ package org.tinytlf.components
 			{
 				const engine:ITextEngine = injector.getInstance(ITextEngine);
 				const c:CSS = injector.getInstance(CSS);
-				
-				const llv:Virtualizer = injector.getInstance(Virtualizer, 'layout');
-				llv.clear();
 				
 				if(injectorChanged)
 				{

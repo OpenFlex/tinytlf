@@ -12,26 +12,27 @@ package org.tinytlf.util
 		 * is outside the boundaries of the line, this determines which side the
 		 * point is on, and returns 0 or line.atomCount.
 		 */
-		public static function getAtomIndexAtPoint(line:TextLine, stageCoords:Point):int
+		public static function getAtomIndexAtPoint(line:TextLine, x:Number, y:Number):int
 		{
-			var index:int = line.getAtomIndexAtPoint(stageCoords.x, stageCoords.y);
+			if(!line) return -1;
+			
+			var index:int = line.getAtomIndexAtPoint(x, y);
 			
 			if(index < 0)
 			{
-				var bounds:Rectangle = line.getBounds(line.stage);
-				var center:Point = bounds.topLeft.clone();
+				const bounds:Rectangle = line.getBounds(line.stage);
+				const center:Point = bounds.topLeft.clone();
 				center.offset(bounds.width * .5, bounds.height * .5);
 				
-				if(stageCoords.y < bounds.y)
+				if(y < bounds.y)
 					return 0;
-				if(stageCoords.y > bounds.y &&
-					stageCoords.y < bounds.y + bounds.height)
+				if(y > bounds.y && y < bounds.y + bounds.height)
 					return line.atomCount;
 				
-				index = (stageCoords.x < center.x) ? 0 : line.atomCount;
+				index = (x < center.x) ? 0 : line.atomCount;
 			}
 			
-			const atomIncrement:int = getAtomSide(line, stageCoords) ? 0 : 1;
+			const atomIncrement:int = getAtomSide(line, x, y) ? 0 : 1;
 			
 			return Math.max(index + atomIncrement, 0);
 		}
@@ -40,9 +41,9 @@ package org.tinytlf.util
 		 * Finds which side of the atom the point is on.
 		 * @returns true for left, false for right.
 		 */
-		public static function getAtomSide(line:TextLine, stageCoords:Point):Boolean
+		public static function getAtomSide(line:TextLine, x:Number, y:Number):Boolean
 		{
-			var atomIndex:int = line.getAtomIndexAtPoint(stageCoords.x, stageCoords.y);
+			var atomIndex:int = line.getAtomIndexAtPoint(x, y);
 			
 			if(atomIndex < 0)
 				return true;
@@ -50,7 +51,7 @@ package org.tinytlf.util
 			var center:Number = line.getAtomCenter(atomIndex);
 			var pt:Point = line.localToGlobal(new Point(center));
 			
-			return pt.x > stageCoords.x;
+			return pt.x > x;
 		}
 		
 		private static const defaultWordBoundaryPattern:RegExp = /\W+|\b[^\W﷯]*/;

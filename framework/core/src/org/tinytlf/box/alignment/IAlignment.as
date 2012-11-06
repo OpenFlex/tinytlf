@@ -1,9 +1,9 @@
-package org.tinytlf.layout.box.alignment
+package org.tinytlf.box.alignment
 {
 	import flash.display.DisplayObject;
 	import flash.text.engine.*;
 	
-	import org.tinytlf.layout.box.*;
+	import org.tinytlf.box.*;
 
 	public interface IAlignment
 	{

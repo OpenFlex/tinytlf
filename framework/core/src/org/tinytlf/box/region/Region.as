@@ -1,6 +1,6 @@
-package org.tinytlf.layout.box.region
+package org.tinytlf.box.region
 {
-	import org.tinytlf.layout.box.Box;
+	import org.tinytlf.box.Box;
 	
 	public class Region extends Box
 	{

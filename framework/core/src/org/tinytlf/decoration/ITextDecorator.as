@@ -7,12 +7,12 @@
 package org.tinytlf.decoration
 {
 	/**
-	 * ITextDecor is the decoration actor for tinytlf. <code>ITextDecor</code> 
+	 * ITextDecorator is the decoration actor for tinytlf. <code>ITextDecorator</code> 
 	 * is a map for defining text decorations, including what they're called and
 	 * the classes or instances which draw the decoration.
-	 * <code>ITextDecor</code> also manages the application and rendering of 
+	 * <code>ITextDecorator</code> also manages the application and rendering of 
 	 * decorations. Use <code>decorate</code> and <code>undecorate</code> to 
-	 * apply or un-apply a decoration to an element. <code>ITextDecor</code> 
+	 * apply or un-apply a decoration to an element. <code>ITextDecorator</code> 
 	 * handles invalidating and rendering the decorations.
 	 */
     public interface ITextDecorator
@@ -28,7 +28,7 @@ package org.tinytlf.decoration
 		 * <p>
 		 * The element type is deliberately ambiguous, as it's up to the 
 		 * implementor to support different types. In the core 
-		 * <code>TextDecor</code>, <code>element</code> can be one of four 
+		 * <code>TextDecorator</code>, <code>element</code> can be one of four 
 		 * types:
 		 * <ol>
 		 * <li>A <code>flash.text.engine.ContentElement</code>.</li>
@@ -66,7 +66,7 @@ package org.tinytlf.decoration
 		 * <li>If <code>decorationProp</code> is specified with no 
 		 * <code>element</code>, <code>undecorate</code> removes all instances 
 		 * of the decoration from all elements in the 
-		 * <code>ITextDecor</code>.</li>
+		 * <code>ITextDecorator</code>.</li>
 		 * </ul>
 		 * 
 		 * @see org.tinytlf.decor.ITextDecoration

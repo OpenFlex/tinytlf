@@ -7,16 +7,18 @@ package org.tinytlf
 	
 	import org.swiftsuspenders.*;
 	import org.swiftsuspenders.reflection.*;
+	import org.tinytlf.box.*;
+	import org.tinytlf.box.alignment.*;
+	import org.tinytlf.box.paragraph.*;
+	import org.tinytlf.box.region.*;
 	import org.tinytlf.content.*;
 	import org.tinytlf.decoration.*;
 	import org.tinytlf.html.*;
 	import org.tinytlf.interaction.*;
 	import org.tinytlf.layout.*;
-	import org.tinytlf.layout.box.*;
-	import org.tinytlf.layout.box.paragraph.*;
-	import org.tinytlf.layout.box.region.Region;
 	import org.tinytlf.style.*;
 	import org.tinytlf.util.*;
+	import org.tinytlf.virtualization.*;
 	
 	public class HTMLTextEngineInjector extends Injector
 	{
@@ -117,7 +119,7 @@ package org.tinytlf
 				paragraph.percentWidth = 100;
 				paragraph.percentHeight = 100;
 				
-				cllv.add(paragraph, dom.contentSize);
+				cllv.add(paragraph, dom.length);
 				return [paragraph];
 			});
 			
@@ -233,7 +235,7 @@ package org.tinytlf
 				paragraph.percentHeight = 100;
 				paragraph.textAlign = TextAlign.CENTER;
 				
-				cllv.add(paragraph, dom.contentSize);
+				cllv.add(paragraph, dom.length);
 				return [paragraph];
 			}));
 			

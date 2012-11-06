@@ -2,11 +2,8 @@ package org.tinytlf.html
 {
 	import flash.events.*;
 	import flash.text.engine.*;
-	import flash.utils.flash_proxy;
 	
 	import org.tinytlf.*;
-	
-	use namespace flash_proxy;
 	
 	public interface IDOMNode extends IStyleable
 	{
@@ -16,7 +13,7 @@ package org.tinytlf.html
 		
 		function get content():ContentElement;
 		function set content(ce:ContentElement):void;
-		function get contentSize():int;
+		function get length():int;
 		
 		function set mirror(eventMirror:*):void;
 		

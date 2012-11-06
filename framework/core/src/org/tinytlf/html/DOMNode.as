@@ -5,8 +5,7 @@ package org.tinytlf.html
 	
 	import org.swiftsuspenders.*;
 	import org.tinytlf.*;
-	import org.tinytlf.interaction.AnchorMirror;
-	import org.tinytlf.interaction.EventBehavior;
+	import org.tinytlf.interaction.*;
 	
 	use namespace flash_proxy;
 	
@@ -117,14 +116,14 @@ package org.tinytlf.html
 			return xml.localName();
 		}
 		
-		public function get contentSize():int
+		public function get length():int
 		{
 			var len:int = nodeValue.length;
 			if(len <= 0 && numChildren)
 			{
 				for(var i:int = 0, n:int = numChildren; i < n; ++i)
 				{
-					len += getChildAt(i).contentSize;
+					len += getChildAt(i).length;
 				}
 			}
 			

@@ -62,9 +62,6 @@ package org.tinytlf.content
 					element = new GraphicElement(new Shape(), 0, 0, eff.getElementFormat(dom));
 				}
 				
-				if(!element)
-					return null;
-				
 				// Associate these objects with each other.
 				dom.content = element;
 				element.userData = dom;

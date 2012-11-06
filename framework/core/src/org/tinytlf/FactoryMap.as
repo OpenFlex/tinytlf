@@ -6,7 +6,7 @@ package org.tinytlf
 	import org.tinytlf.content.*;
 	import org.tinytlf.decoration.*;
 	import org.tinytlf.interaction.*;
-	import org.tinytlf.layout.box.*;
+	import org.tinytlf.box.*;
 	
 	public class FactoryMap implements ITextDecorationMap, IContentElementFactoryMap, IEventMirrorMap, IBoxFactoryMap
 	{

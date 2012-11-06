@@ -1,10 +1,10 @@
-package org.tinytlf.layout.box.alignment
+package org.tinytlf.box.alignment
 {
 	import flash.display.*;
 	import flash.text.engine.*;
 	
-	import org.tinytlf.layout.box.*;
-	import org.tinytlf.layout.box.paragraph.*;
+	import org.tinytlf.box.*;
+	import org.tinytlf.box.paragraph.*;
 	
 	public class RightAlignment extends Alignment implements IAlignment
 	{

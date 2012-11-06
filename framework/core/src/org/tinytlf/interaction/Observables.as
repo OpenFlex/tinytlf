@@ -144,68 +144,65 @@ package org.tinytlf.interaction
 			return wheelObs;
 		}
 		
-		protected const localCancelables:Dictionary = new Dictionary(false);
+		protected const cachedObservables:Dictionary = new Dictionary(false);
 		public function mouseUp(target:IEventDispatcher):IObservable
 		{
 			return cacheObs(target,
-							Observable.
-							fromEvent(target, MouseEvent.MOUSE_UP, false, 0, true),
+							Observable.fromEvent(target, MouseEvent.MOUSE_UP, false, 0, true),
 							'up');
 		}
 		
 		public function mouseOver(target:IEventDispatcher):IObservable
 		{
 			return cacheObs(target,
-							Observable.
-							fromEvent(target, MouseEvent.MOUSE_OVER, false, 0, true),
+							Observable.fromEvent(target, MouseEvent.MOUSE_OVER, false, 0, true),
 							'over');
 		}
 		
 		public function mouseOut(target:IEventDispatcher):IObservable
 		{
 			return cacheObs(target,
-							Observable.
-							fromEvent(target, MouseEvent.MOUSE_OUT, false, 0, true),
+							Observable.fromEvent(target, MouseEvent.MOUSE_OUT, false, 0, true),
 							'out');
 		}
 		
 		public function mouseRollOver(target:IEventDispatcher):IObservable
 		{
 			return cacheObs(target,
-							Observable.
-							fromEvent(target, MouseEvent.ROLL_OVER, false, 0, true),
+							Observable.fromEvent(target, MouseEvent.ROLL_OVER, false, 0, true),
 							'rollOver');
 		}
 		
 		public function mouseRollOut(target:IEventDispatcher):IObservable
 		{
 			return cacheObs(target,
-							Observable.
-							fromEvent(target, MouseEvent.ROLL_OUT, false, 0, true),
+							Observable.fromEvent(target, MouseEvent.ROLL_OUT, false, 0, true),
 							'rollOut');
 		}
 		
 		public function mouseMove(target:IEventDispatcher):IObservable
 		{
 			return cacheObs(target,
-							Observable.
-							fromEvent(target, MouseEvent.MOUSE_MOVE, false, 0, true),
+							Observable.fromEvent(target, MouseEvent.MOUSE_MOVE, false, 0, true),
 							'move');
+		}
+		
+		protected function downGenerator(target:IEventDispatcher):IObservable
+		{
+			return cacheObs(target,
+				Observable.fromEvent(target, MouseEvent.MOUSE_DOWN).
+					scan(function(state:Object, evt:MouseEvent):Object {
+						return {val: state.val + 1, event: evt};
+					}, {val: 0, event: null}, true).
+					takeUntil(Observable.timer(800, 0)).
+					repeat(),
+				'downGenerator');
 		}
 		
 		public function mouseDown(target:IEventDispatcher):IObservable
 		{
-			const downGenerator:IObservable = cacheObs(target,
-													   Observable.
-													   fromEvent(target, MouseEvent.MOUSE_DOWN, false, 0, true).
-													   scan(function(state:Object, evt:MouseEvent):Object {
-														   return {val: state.val + 1, event: evt};
-													   }, {val: 0, event: null}, true).
-													   takeUntil(Observable.timer(800, 0)).
-													   repeat(),
-													   'downGenerator');
 			return cacheObs(target,
-							downGenerator.filter(function(tuple:Object):Boolean {
+							downGenerator(target).filter(function(tuple:Object):Boolean {
 								return tuple.val == 1;
 							}).
 							map(function(tuple:Object):MouseEvent {
@@ -216,17 +213,8 @@ package org.tinytlf.interaction
 		
 		public function mouseDoubleDown(target:IEventDispatcher):IObservable
 		{
-			const downGenerator:IObservable = cacheObs(target,
-													   Observable.
-													   fromEvent(target, MouseEvent.MOUSE_DOWN, false, 0, true).
-													   scan(function(state:Object, evt:MouseEvent):Object {
-														   return {val: state.val + 1, event: evt};
-													   }, {val: 0, event: null}, true).
-													   takeUntil(Observable.timer(800, 0)).
-													   repeat(),
-													   'downGenerator');
 			return cacheObs(target,
-							downGenerator.filter(function(tuple:Object):Boolean {
+							downGenerator(target).filter(function(tuple:Object):Boolean {
 								return tuple.val == 2;
 							}).
 							map(function(tuple:Object):MouseEvent {
@@ -237,17 +225,8 @@ package org.tinytlf.interaction
 		
 		public function mouseTripleDown(target:IEventDispatcher):IObservable
 		{
-			const downGenerator:IObservable = cacheObs(target,
-													   Observable.
-													   fromEvent(target, MouseEvent.MOUSE_DOWN, false, 0, true).
-													   scan(function(state:Object, evt:MouseEvent):Object {
-														   return {val: state.val + 1, event: evt};
-													   }, {val: 0, event: null}, true).
-													   takeUntil(Observable.timer(800, 0)).
-													   repeat(),
-													   'downGenerator');
 			return cacheObs(target,
-							downGenerator.filter(function(tuple:Object):Boolean {
+							downGenerator(target).filter(function(tuple:Object):Boolean {
 								return tuple.val == 3;
 							}).
 							map(function(tuple:Object):MouseEvent {
@@ -259,8 +238,7 @@ package org.tinytlf.interaction
 		public function mouseClick(target:IEventDispatcher):IObservable
 		{
 			return cacheObs(target,
-							Observable.
-							fromEvent(target, MouseEvent.CLICK, false, 0, true),
+							Observable.fromEvent(target, MouseEvent.CLICK, false, 0, true),
 							'click');
 		}
 		
@@ -268,19 +246,18 @@ package org.tinytlf.interaction
 		{
 			return cacheObs(target,
 							mouseClick(target).
-							timeInterval().
-							filter(function(ti:TimeInterval):Boolean {
-								return ti.interval > 0 && ti.interval < 400;
-							}).
-							removeTimeInterval(),
+								timeInterval().
+								filter(function(ti:TimeInterval):Boolean {
+									return ti.interval > 0 && ti.interval < 400;
+								}).
+								removeTimeInterval(),
 							'doubleClick');
 		}
 		
 		public function mouseDrag(target:IEventDispatcher):IObservable
 		{
 			return cacheObs(target,
-							mouseDown(target).
-							mapMany(function(me:MouseEvent):IObservable {
+							mouseDown(target).mapMany(function(me:MouseEvent):IObservable {
 								return move.takeUntil(up);
 							}),
 							'drag');
@@ -289,8 +266,7 @@ package org.tinytlf.interaction
 		public function mouseDoubleDrag(target:IEventDispatcher):IObservable
 		{
 			return cacheObs(target,
-							mouseDoubleDown(target).
-							mapMany(function(me:MouseEvent):IObservable {
+							mouseDoubleDown(target).mapMany(function(me:MouseEvent):IObservable {
 								return move.takeUntil(up);
 							}),
 							'doubleDrag');
@@ -299,8 +275,7 @@ package org.tinytlf.interaction
 		public function mouseTripleDrag(target:IEventDispatcher):IObservable
 		{
 			return cacheObs(target,
-							mouseTripleDown(target).
-							mapMany(function(me:MouseEvent):IObservable {
+							mouseTripleDown(target).mapMany(function(me:MouseEvent):IObservable {
 								return move.takeUntil(up);
 							}),
 							'tripleDrag');
@@ -309,15 +284,14 @@ package org.tinytlf.interaction
 		public function mouseWheel(target:IEventDispatcher):IObservable
 		{
 			return cacheObs(target,
-							Observable.
-							fromEvent(target, MouseEvent.MOUSE_WHEEL),
+							Observable.fromEvent(target, MouseEvent.MOUSE_WHEEL),
 							'wheel');
 		}
 		
 		protected function cacheObs(target:IEventDispatcher, obs:IObservable, name:String):IObservable
 		{
-			localCancelables[target] ||= {};
-			return localCancelables[target][name] ||= obs;
+			cachedObservables[target] ||= {};
+			return cachedObservables[target][name] ||= obs;
 		}
 	}
 }
