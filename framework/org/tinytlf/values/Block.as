@@ -19,9 +19,9 @@ package org.tinytlf.values
 		
 		public var prev:Block;
 		public var next:Block;
+		public var paragraph:Paragraph;
 		
 		public const block:TextBlock;
 		public const content:Content;
-		public const node:XML;
 	}
 }

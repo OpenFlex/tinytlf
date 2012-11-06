@@ -5,19 +5,19 @@ package org.tinytlf.values
 	
 	public class Caret
 	{
-		public function Caret(block:TextBlock, container:DisplayObjectContainer, node:XML, index:int, line:TextLine)
+		public function Caret(paragraph:Paragraph, block:Block, line:Line, index:int, node:XML)
 		{
 			this['block'] = block;
-			this['container'] = container;
 			this['node'] = node;
 			this['index'] = index;
 			this['line'] = line;
+			this['paragraph'] = paragraph;
 		}
 		
-		public const block:TextBlock;
-		public const container:DisplayObjectContainer;
-		public const node:XML;
+		public const block:Block;
 		public const index:int;
-		public const line:TextLine;
+		public const line:Line;
+		public const node:XML;
+		public const paragraph:Paragraph;
 	}
 }
