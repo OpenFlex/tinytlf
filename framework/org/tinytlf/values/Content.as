@@ -10,6 +10,7 @@ package org.tinytlf.values
 		{
 			super(styles);
 			
+			element.userData = this;
 			this['node'] = node;
 			this['element'] = element;
 		}
