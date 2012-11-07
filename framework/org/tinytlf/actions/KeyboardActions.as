@@ -11,12 +11,16 @@ package org.tinytlf.actions
 	import org.tinytlf.events.keyboard.arrowleft;
 	import org.tinytlf.events.keyboard.arrowright;
 	import org.tinytlf.events.keyboard.arrowup;
+	import org.tinytlf.events.keyboard.backspace;
 	import org.tinytlf.events.modifiers.option;
 	import org.tinytlf.events.modifiers.shift;
 	import org.tinytlf.events.mouse.down;
 	import org.tinytlf.events.stahp;
 	import org.tinytlf.lambdas.getIndexAtPoint;
+	import org.tinytlf.lambdas.getLeafAtIndex;
+	import org.tinytlf.lambdas.identity;
 	import org.tinytlf.lambdas.nextWordBoundary;
+	import org.tinytlf.lambdas.setLeafAtIndex;
 	import org.tinytlf.values.Caret;
 	import org.tinytlf.values.Line;
 	import org.tinytlf.values.Paragraph;
@@ -33,6 +37,7 @@ package org.tinytlf.actions
 			
 			const caretSubj:ISubject = engine.getInstance(ISubject, 'caret');
 			const selectionSubj:ISubject = engine.getInstance(ISubject, 'selection');
+			const xmlNodesSubj:ISubject = engine.getInstance(ISubject, 'xml');
 			
 			const shiftOptionArrowLeft:IObservable = shift(option(arrowleft(textField))).
 				peek(stahp).publish().refCount();
@@ -70,21 +75,24 @@ package org.tinytlf.actions
 			const shiftArrowDown:IObservable = shift(arrowdown(textField)).
 				peek(stahp).publish().refCount();
 			
+			const back:IObservable = backspace(textField).publish().refCount();
 			const arrowLeft:IObservable = arrowleft(textField).publish().refCount();
 			const arrowRight:IObservable = arrowright(textField).publish().refCount();
 			const arrowUp:IObservable = arrowup(textField).publish().refCount();
 			const arrowDown:IObservable = arrowdown(textField).publish().refCount();
 			
-			// Any time any of these happen, clear selections.
-			engine.subscriptions.add(Observable.merge([
-					optionArrowLeft, optionArrowRight,
-					optionArrowUp, optionArrowDown,
-					arrowLeft, arrowRight,
-					arrowUp, arrowDown
-				]).
-				subscribe(function(...args):void {
-					selectionSubj.onNext(new Selection(null, null));
-				}));
+			// Move the selection one left
+//			engine.subscriptions.add(
+//				shiftArrowLeft.
+//					mapMany(combineSubjectAndSelector(selectionSubj, mapSelectOneLeft)).
+//					repeat().
+//					subscribe(selectionSubj.onNext, null, engine.onError));
+			
+			engine.subscriptions.add(
+				back.
+					mapMany(combineSubjectAndSelector(caretSubj, mapOneBackspace)).
+					repeat().
+					subscribe(xmlNodesSubj.onNext, null, engine.onError));
 			
 			// Move the caret left by word boundary
 			engine.subscriptions.add(
@@ -116,7 +124,7 @@ package org.tinytlf.actions
 			
 			// Move the caret one left
 			engine.subscriptions.add(
-				shiftArrowLeft.merge(arrowLeft).
+				Observable.merge([shiftArrowLeft, arrowLeft, back]).
 					mapMany(combineSubjectAndSelector(caretSubj, mapOneLeft)).
 					repeat().
 					subscribe(caretSubj.onNext, null, engine.onError));
@@ -141,6 +149,19 @@ package org.tinytlf.actions
 					mapMany(combineSubjectAndSelector(caretSubj, mapOneDown)).
 					repeat().
 					subscribe(caretSubj.onNext, null, engine.onError));
+			
+			// And finally, any time any of these happen, clear selections.
+			engine.subscriptions.add(Observable.merge([
+				optionArrowLeft, optionArrowRight,
+				optionArrowUp, optionArrowDown,
+				arrowLeft, arrowRight,
+				arrowUp, arrowDown
+			]).
+				mapMany(combineSubjectAndSelector(caretSubj, identity)).
+				repeat().
+				subscribe(function(caret:Caret, ...args):void {
+					selectionSubj.onNext(new Selection(caret.setValues([]), caret.setValues([])));
+			}));
 		}
 		
 		private const caret:Sprite = new Sprite();
@@ -162,7 +183,7 @@ package org.tinytlf.actions
 			caret.visible = true;
 			
 			const line:TextLine = value.line.line;
-			line.stage.focus = line;
+			if(line.stage) line.stage.focus = line;
 			
 			const x:Number = index >= line.atomCount ?
 				line.getAtomBounds(line.atomCount - 1).right :
@@ -186,6 +207,24 @@ package org.tinytlf.actions
 					return selector(s, n);
 				});
 			};
+		}
+		
+		private function mapSelectOneLeft(selection:Selection, ...args):Selection {
+			return selection.setA(mapOneLeft(selection.a));
+		}
+		
+		private function mapSelectOneRight(selection:Selection, ...args):Selection {
+			return selection.setB(mapOneRight(selection.b));
+		}
+		
+		private function mapOneBackspace(caret:Caret, ...args):XML {
+			const node:XML = caret.node;
+			const info:Array = getLeafAtIndex(node, caret.line.line.textBlockBeginIndex + caret.index);
+			const index:int = info.pop();
+			const leaf:String = info.pop().toString();
+			const result:String = leaf.substring(0, index - 1) + leaf.substring(index);
+			
+			return setLeafAtIndex(node, result, caret.index);
 		}
 		
 		private function mapWordLeft(caret:Caret, ...args):Caret {
