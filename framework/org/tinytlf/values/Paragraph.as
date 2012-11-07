@@ -6,12 +6,12 @@ package org.tinytlf.values
 	import flash.text.engine.*;
 	
 	import org.tinytlf.TextEngine;
-	import org.tinytlf.classes.*;
-	import org.tinytlf.constants.*;
-	import org.tinytlf.lambdas.identity;
+	import org.tinytlf.classes.Container;
+	import org.tinytlf.classes.Virtualizer;
+	import org.tinytlf.constants.TextBlockProgression;
 	
 	import raix.reactive.*;
-	import raix.reactive.subjects.IConnectableObservable;
+	import raix.reactive.subjects.*;
 	
 	public class Paragraph extends Container
 	{

@@ -12,6 +12,7 @@ package org.tinytlf.actions
 	import org.tinytlf.events.keyboard.arrowright;
 	import org.tinytlf.events.keyboard.arrowup;
 	import org.tinytlf.events.modifiers.option;
+	import org.tinytlf.events.modifiers.shift;
 	import org.tinytlf.events.mouse.down;
 	import org.tinytlf.events.stahp;
 	import org.tinytlf.lambdas.getIndexAtPoint;
@@ -19,6 +20,7 @@ package org.tinytlf.actions
 	import org.tinytlf.values.Caret;
 	import org.tinytlf.values.Line;
 	import org.tinytlf.values.Paragraph;
+	import org.tinytlf.values.Selection;
 	
 	import raix.reactive.*;
 
@@ -30,68 +32,134 @@ package org.tinytlf.actions
 			engine.subscriptions.add(Observable.timer(0, 350).subscribe(onNextCaretBlink));
 			
 			const caretSubj:ISubject = engine.getInstance(ISubject, 'caret');
+			const selectionSubj:ISubject = engine.getInstance(ISubject, 'selection');
+			
+			const clickInLine:IObservable = down(textField).filter(targetIsTextLine).
+				peek(stahp).publish().refCount();
+			
+			const clickInParagraph:IObservable = down(textField).filter(targetIsParagraph).
+				peek(stahp).publish().refCount();
+			
+			const shiftOptionArrowLeft:IObservable = shift(option(arrowleft(textField))).
+				peek(stahp).publish().refCount();
+			
+			const shiftOptionArrowRight:IObservable = shift(option(arrowright(textField))).
+				peek(stahp).publish().refCount();
+			
+			const shiftOptionArrowUp:IObservable = shift(option(arrowup(textField))).
+				peek(stahp).publish().refCount();
+			
+			const shiftOptionArrowDown:IObservable = shift(option(arrowdown(textField))).
+				peek(stahp).publish().refCount();
+			
+			const optionArrowLeft:IObservable = option(arrowleft(textField)).
+				peek(stahp).publish().refCount();
+			
+			const optionArrowRight:IObservable = option(arrowright(textField)).
+				peek(stahp).publish().refCount();
+			
+			const optionArrowUp:IObservable = option(arrowup(textField)).
+				peek(stahp).publish().refCount();
+			
+			const optionArrowDown:IObservable = option(arrowdown(textField)).
+				peek(stahp).publish().refCount();
+			
+			const shiftArrowLeft:IObservable = shift(arrowleft(textField)).
+				peek(stahp).publish().refCount();
+			
+			const shiftArrowRight:IObservable = shift(arrowright(textField)).
+				peek(stahp).publish().refCount();
+			
+			const shiftArrowUp:IObservable = shift(arrowup(textField)).
+				peek(stahp).publish().refCount();
+			
+			const shiftArrowDown:IObservable = shift(arrowdown(textField)).
+				peek(stahp).publish().refCount();
+			
+			const arrowLeft:IObservable = arrowleft(textField).publish().refCount();
+			const arrowRight:IObservable = arrowright(textField).publish().refCount();
+			const arrowUp:IObservable = arrowup(textField).publish().refCount();
+			const arrowDown:IObservable = arrowdown(textField).publish().refCount();
+			
+			// Any time any of these happen, clear selections.
+			engine.subscriptions.add(Observable.merge([
+					clickInLine, clickInParagraph,
+					optionArrowLeft, optionArrowRight,
+					optionArrowUp, optionArrowDown,
+					arrowLeft, arrowRight,
+					arrowUp, arrowDown
+				]).
+				subscribe(function(...args):void {
+					selectionSubj.onNext(new Selection(null, null));
+				}));
 			
 			// Handle clicks inside TextLines
 			engine.subscriptions.add(
-				down(textField).
-					filter(targetIsTextLine).
-					peek(stahp).
+				clickInLine.
 					mapMany(combineSubjectAndSelector(caretSubj, mapLineClick)).
 					repeat().
 					subscribe(caretSubj.onNext, null, engine.onError));
 			
 			// Handle clicks inside paragraphs
 			engine.subscriptions.add(
-				down(textField).
-					filter(targetIsParagraph).
-					peek(stahp).
+				clickInParagraph.
 					mapMany(combineSubjectAndSelector(caretSubj, mapParagraphClick)).
 					repeat().
 					subscribe(caretSubj.onNext, null, engine.onError));
 			
 			// Move the caret left by word boundary
 			engine.subscriptions.add(
-				option(arrowleft(textField)).
-					peek(stahp).
+				shiftOptionArrowLeft.merge(optionArrowLeft).
 					mapMany(combineSubjectAndSelector(caretSubj, mapWordLeft)).
 					repeat().
 					subscribe(caretSubj.onNext, null, engine.onError));
 			
 			// Move the caret left by word boundary
 			engine.subscriptions.add(
-				option(arrowright(textField)).
-					peek(stahp).
+				shiftOptionArrowRight.merge(optionArrowRight).
 					mapMany(combineSubjectAndSelector(caretSubj, mapWordRight)).
 					repeat().
 					subscribe(caretSubj.onNext, null, engine.onError));
 			
 			// Move the caret to the beginning of the paragraph
 			engine.subscriptions.add(
-				option(arrowup(textField)).
-					peek(stahp).
+				shiftOptionArrowUp.merge(optionArrowUp).
 					mapMany(combineSubjectAndSelector(caretSubj, mapParagraphUp)).
 					repeat().
 					subscribe(caretSubj.onNext, null, engine.onError));
 			
 			// Move the caret to the end of the paragraph
 			engine.subscriptions.add(
-				option(arrowdown(textField)).
-					peek(stahp).
+				shiftOptionArrowDown.merge(optionArrowDown).
 					mapMany(combineSubjectAndSelector(caretSubj, mapParagraphDown)).
 					repeat().
 					subscribe(caretSubj.onNext, null, engine.onError));
 			
 			// Move the caret one left
 			engine.subscriptions.add(
-				arrowleft(textField).
+				shiftArrowLeft.merge(arrowLeft).
 					mapMany(combineSubjectAndSelector(caretSubj, mapOneLeft)).
 					repeat().
 					subscribe(caretSubj.onNext, null, engine.onError));
 			
 			// Move the caret one right
 			engine.subscriptions.add(
-				arrowright(textField).
+				shiftArrowRight.merge(arrowRight).
 					mapMany(combineSubjectAndSelector(caretSubj, mapOneRight)).
+					repeat().
+					subscribe(caretSubj.onNext, null, engine.onError));
+			
+			// Move the caret one line up
+			engine.subscriptions.add(
+				shiftArrowUp.merge(arrowUp).
+					mapMany(combineSubjectAndSelector(caretSubj, mapOneUp)).
+					repeat().
+					subscribe(caretSubj.onNext, null, engine.onError));
+			
+			// Move the caret one line down
+			engine.subscriptions.add(
+				shiftArrowDown.merge(arrowDown).
+					mapMany(combineSubjectAndSelector(caretSubj, mapOneDown)).
 					repeat().
 					subscribe(caretSubj.onNext, null, engine.onError));
 		}
@@ -241,7 +309,6 @@ package org.tinytlf.actions
 			return caret.setValues([paragraph, paragraph.block, textLine.userData, textLine.atomCount, paragraph.node]);
 		}
 		
-		
 		private function mapOneRight(caret:Caret, ...args):Caret {
 			const index:int = caret.index;
 			var textLine:TextLine = caret.line.line;
@@ -258,6 +325,79 @@ package org.tinytlf.actions
 			
 			textLine = paragraph.getChildAt(0) as TextLine;
 			return caret.setValues([paragraph, paragraph.block, textLine.userData, 0, paragraph.node]);
+		}
+		
+		private function mapOneUp(caret:Caret, ...args):Caret {
+			const index:int = caret.index;
+			var line:Line = caret.line.prev;
+			
+			if(line == null) {
+				const paragraph:Paragraph = caret.paragraph.prev;
+				
+				if(paragraph == null) return caret.setValues([0]);
+				
+				line = (paragraph.getChildAt(paragraph.numChildren - 1) as TextLine).userData;
+			}
+			
+			const textLine:TextLine = caret.line.line;
+			const bounds:Rectangle = index >= textLine.atomCount ?
+				textLine.getAtomBounds(textLine.atomCount - 1) :
+				textLine.getAtomBounds(index);
+			
+			const newTextLine:TextLine = line.line;
+			const newLineStageCoords:Point = newTextLine.localToGlobal(bounds.topLeft);
+			const newIndex:int = index == 0 ?
+				0 :
+				newTextLine.getAtomIndexAtPoint(newLineStageCoords.x + (bounds.width * 0.5), newLineStageCoords.y);
+			
+			if(newIndex != -1) {
+				return caret.setValues([line.paragraph, line.block, line, newIndex, line.block.node]);
+			}
+			
+			if(bounds.left > newTextLine.width) {
+				return caret.setValues([line.paragraph, line.block, line, newTextLine.atomCount, line.block.node]);
+			}
+			
+			return caret.setValues([line.paragraph, line.block, line, 0, line.block.node]);
+		}
+		
+		private function mapOneDown(caret:Caret, ...args):Caret {
+			const index:int = caret.index;
+			var line:Line = caret.line.next;
+			var textLine:TextLine;
+			
+			if(line == null) {
+				var paragraph:Paragraph = caret.paragraph.next;
+				
+				if(paragraph == null) {
+					paragraph = caret.paragraph;
+					textLine = paragraph.getChildAt(paragraph.numChildren - 1) as TextLine;
+					return caret.setValues([textLine.atomCount]);
+				}
+				
+				line = (paragraph.getChildAt(0) as TextLine).userData;
+			}
+			
+			textLine = caret.line.line;
+			const bounds:Rectangle = index >= textLine.atomCount ?
+				textLine.getAtomBounds(textLine.atomCount - 1) :
+				textLine.getAtomBounds(index);
+			
+			const newTextLine:TextLine = line.line;
+			const newLineStageCoords:Point = newTextLine.localToGlobal(bounds.topLeft);
+			const newIndex:int = index == 0 ?
+				0 :
+				newTextLine.getAtomIndexAtPoint(newLineStageCoords.x + (bounds.width * 0.5), newLineStageCoords.y);
+			
+			if(newIndex != -1) {
+				return caret.setValues([line.paragraph, line.block, line, newIndex, line.block.node]);
+			}
+			
+			if(bounds.left > newTextLine.width) {
+				return caret.setValues([line.paragraph, line.block, line, newTextLine.atomCount, line.block.node]);
+			}
+			
+			return caret.setValues([line.paragraph, line.block, line, 0, line.block.node]);
 		}
 	}
 }

@@ -4,10 +4,21 @@ package org.tinytlf
 	import flash.system.*;
 	
 	import org.swiftsuspenders.*;
-	import org.tinytlf.classes.*;
-	import org.tinytlf.lambdas.*;
-	import org.tinytlf.streams.*;
-	import org.tinytlf.values.*;
+	import org.tinytlf.classes.CSS;
+	import org.tinytlf.classes.Virtualizer;
+	import org.tinytlf.lambdas.toXML;
+	import org.tinytlf.streams.BlocksStream;
+	import org.tinytlf.streams.ContentsStream;
+	import org.tinytlf.streams.HTMLBlockElementStream;
+	import org.tinytlf.streams.IStream;
+	import org.tinytlf.streams.LinesStream;
+	import org.tinytlf.streams.NodesStream;
+	import org.tinytlf.streams.ParagraphsStream;
+	import org.tinytlf.values.Block;
+	import org.tinytlf.values.Caret;
+	import org.tinytlf.values.Content;
+	import org.tinytlf.values.Paragraph;
+	import org.tinytlf.values.Selection;
 	
 	import raix.reactive.*;
 	import raix.reactive.subjects.*;
@@ -53,6 +64,11 @@ package org.tinytlf
 			caretSubj.onNext(new Caret(null, null, null, -1, null));
 			map(ISubject, 'caret').toValue(caretSubj);
 			map(IObservable, 'caret').toValue(caret);
+			
+			// An Observable stream of Caret values.
+			selectionSubj.onNext(new Selection(null, null));
+			map(ISubject, 'selection').toValue(selectionSubj);
+			map(IObservable, 'selection').toValue(selection);
 			
 			// An Observable stream of block-level XML nodes.
 			const xmlNodesSubj:ISubject = new Subject();
@@ -228,6 +244,16 @@ package org.tinytlf
 		
 		public function set caret(w:*):void {
 			caretSubj.onNext(w);
+		}
+		
+		private const selectionSubj:ISubject = new ReplaySubject(1);
+		
+		public function get selection():IObservable {
+			return selectionSubj.cast(Selection);
+		}
+		
+		public function set selection(w:*):void {
+			selectionSubj.onNext(w);
 		}
 	}
 }
