@@ -6,6 +6,6 @@ package org.tinytlf.events
 	 * @author ptaylor
 	 */
 	public function stop(event:Event):void {
-		return event.stopPropagation();
+		event.stopPropagation();
 	}
 }

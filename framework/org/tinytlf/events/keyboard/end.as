@@ -12,6 +12,6 @@ package org.tinytlf.events.keyboard
 	 * @author ptaylor
 	 */
 	public function end(target:IEventDispatcher):IObservable {
-		return TextEngine.mac ? command(left(target)) : keyequals(keydown(target), Keyboard.END);
+		return TextEngine.mac ? command(arrowleft(target)) : keyequals(keydown(target), Keyboard.END);
 	}	
 }

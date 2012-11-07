@@ -94,14 +94,15 @@ package org.tinytlf
 			map(IObservable, 'paragraphs').toValue(paragraphsObs.map(castInner(DisplayObject)));
 		}
 		
+		public function onError(e:Error):void {
+			trace(e.getStackTrace());
+		}
+		
 		private function castInner(type:Class):Function {
 			return function(o:IObservable):IObservable {
 				return o.cast(type);
 			}
 		};
-		
-		private function mapStreams():void {
-		}
 		
 		private var started:Boolean = false;
 		public const subscriptions:CompositeCancelable = new CompositeCancelable();
@@ -115,11 +116,7 @@ package org.tinytlf
 			const blocks:IObservable = getInstance(IObservable, 'blocks');
 			const paragraphs:IObservable = getInstance(IObservable, 'paragraphs');
 			
-			subscriptions.add(htmlBlockElementObs.subscribe(
-				xmlNodesSubj.onNext,
-				null,
-				function(e:Error):void { trace(e.getStackTrace()); }
-			));
+			subscriptions.add(htmlBlockElementObs.subscribe(xmlNodesSubj.onNext, null, onError));
 			
 			// Set up the blocks linked-list
 			subscriptions.add(blocks.skip(1).zip(blocks, [].concat).

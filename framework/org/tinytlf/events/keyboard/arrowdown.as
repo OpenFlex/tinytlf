@@ -8,7 +8,7 @@ package org.tinytlf.events.keyboard
 	/**
 	 * @author ptaylor
 	 */
-	public function right(target:IEventDispatcher):IObservable {
-		return keyequals(keydown(target), Keyboard.RIGHT);
+	public function arrowdown(target:IEventDispatcher):IObservable {
+		return keyequals(keydown(target), Keyboard.DOWN);
 	}
 }

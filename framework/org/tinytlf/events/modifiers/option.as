@@ -13,10 +13,8 @@ package org.tinytlf.events.modifiers
 	 * @author ptaylor
 	 */
 	public function option(obs:IObservable):IObservable {
-		return obs.takeWhile(function(event:*):Boolean {
+		return obs.filter(function(event:*):Boolean {
 				return TextEngine.mac ? event.altKey : event.ctrlKey;
-			}).
-			takeUntil(keyequals(keyup(TextEngine.stage), Keyboard.ALTERNATE)).
-			repeat();
+			});
 	}
 }

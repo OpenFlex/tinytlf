@@ -8,7 +8,7 @@ package org.tinytlf.events.keyboard
 	/**
 	 * @author ptaylor
 	 */
-	public function up(target:IEventDispatcher):IObservable {
+	public function arrowup(target:IEventDispatcher):IObservable {
 		return keyequals(keydown(target), Keyboard.UP);
 	}
 }

@@ -1,20 +1,17 @@
 package org.tinytlf
 {
-	import com.bit101.components.HBox;
-	import com.bit101.components.VBox;
+	import com.bit101.components.*;
 	
-	import flash.display.DisplayObjectContainer;
-	import flash.display.Sprite;
+	import flash.display.*;
 	
-	import org.tinytlf.actions.CaretActions;
+	import org.tinytlf.actions.KeyboardActions;
 	import org.tinytlf.actions.CursorActions;
 	import org.tinytlf.classes.CSS;
 	import org.tinytlf.classes.Container;
 	import org.tinytlf.constants.TextBlockProgression;
 	import org.tinytlf.values.Paragraph;
 	
-	import raix.reactive.IObservable;
-	import raix.reactive.ISubject;
+	import raix.reactive.*;
 
 	public class TextField extends Container
 	{
@@ -56,7 +53,7 @@ package org.tinytlf
 				paragraphs.subscribe(onNextParagraph, removeChildren, onError)
 			);
 			
-			new CaretActions(engine, this);
+			new KeyboardActions(engine, this);
 			new CursorActions(engine, this);
 			
 			engine.width = width;
