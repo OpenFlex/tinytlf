@@ -34,12 +34,6 @@ package org.tinytlf.actions
 			const caretSubj:ISubject = engine.getInstance(ISubject, 'caret');
 			const selectionSubj:ISubject = engine.getInstance(ISubject, 'selection');
 			
-			const clickInLine:IObservable = down(textField).filter(targetIsTextLine).
-				peek(stahp).publish().refCount();
-			
-			const clickInParagraph:IObservable = down(textField).filter(targetIsParagraph).
-				peek(stahp).publish().refCount();
-			
 			const shiftOptionArrowLeft:IObservable = shift(option(arrowleft(textField))).
 				peek(stahp).publish().refCount();
 			
@@ -83,7 +77,6 @@ package org.tinytlf.actions
 			
 			// Any time any of these happen, clear selections.
 			engine.subscriptions.add(Observable.merge([
-					clickInLine, clickInParagraph,
 					optionArrowLeft, optionArrowRight,
 					optionArrowUp, optionArrowDown,
 					arrowLeft, arrowRight,
@@ -92,20 +85,6 @@ package org.tinytlf.actions
 				subscribe(function(...args):void {
 					selectionSubj.onNext(new Selection(null, null));
 				}));
-			
-			// Handle clicks inside TextLines
-			engine.subscriptions.add(
-				clickInLine.
-					mapMany(combineSubjectAndSelector(caretSubj, mapLineClick)).
-					repeat().
-					subscribe(caretSubj.onNext, null, engine.onError));
-			
-			// Handle clicks inside paragraphs
-			engine.subscriptions.add(
-				clickInParagraph.
-					mapMany(combineSubjectAndSelector(caretSubj, mapParagraphClick)).
-					repeat().
-					subscribe(caretSubj.onNext, null, engine.onError));
 			
 			// Move the caret left by word boundary
 			engine.subscriptions.add(
@@ -199,42 +178,6 @@ package org.tinytlf.actions
 			g.beginFill(0x00);
 			g.drawRect(0, 0, 1, line.textHeight);
 			g.endFill();
-		}
-		
-		private function targetIsTextLine(event:MouseEvent):Boolean {
-			return event.target is TextLine;
-		}
-		
-		private function targetIsParagraph(event:MouseEvent):Boolean {
-			return event.target is Paragraph || event.target.parent is Paragraph;
-		}
-		
-		private function mapLineClick(caret:Caret, event:MouseEvent):Caret/*<Line, int>*/ {
-			const textLine:TextLine = event.target as TextLine;
-			const index:int = getIndexAtPoint(textLine, event.stageX, event.stageY);
-			const line:Line = textLine.userData as Line;
-			
-			return caret.setValues([line.paragraph, line.block, line, index, line.block.node]);
-		}
-		
-		private function mapParagraphClick(caret:Caret, event:MouseEvent):Caret {
-			const x:Number = event.stageX;
-			const y:Number = event.stageY;
-			const container:DisplayObjectContainer = event.target as DisplayObjectContainer;
-			const bounds:Rectangle = container.getBounds(container.stage);
-			var index:int, textLine:TextLine;
-			
-			if(y < bounds.y + (bounds.height * 0.5)) {
-				textLine = container.getChildAt(0) as TextLine;
-				index = 0;
-			} else {
-				textLine = container.getChildAt(container.numChildren - 1) as TextLine;
-				index = textLine.atomCount;
-			}
-			
-			const line:Line = textLine.userData;
-			
-			return caret.setValues([line.paragraph, line.block, line, index, line.block.node]);
 		}
 		
 		private function combineSubjectAndSelector(subj:ISubject, selector:Function):Function{
