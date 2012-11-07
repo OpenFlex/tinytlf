@@ -13,7 +13,7 @@ package org.tinytlf.streams
 		 * into an IObservable<IObservable<Paragraph>>.
 		 */
 		public function get observable():IObservable {
-			return lines.map(mapBlockLife);
+			return lines.map(mapBlockLife).publish().refCount();
 		}
 		
 		private function mapBlockLife(life:IObservable):IObservable {

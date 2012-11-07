@@ -14,7 +14,7 @@ package org.tinytlf.streams
 		 * Mutates an IObservable<IObservable<Block>> into an IObservable<IObservable<Array<Block, IObservable<TextLine>>>>
 		 */
 		public function get observable():IObservable {
-			return blocks.map(mapBlocks);
+			return blocks.map(mapBlocks).publish().refCount();
 		}
 		
 		private function mapBlocks(blockObs:IObservable):IObservable {

@@ -1,6 +1,7 @@
 package org.tinytlf
 {
 	import flash.display.*;
+	import flash.system.*;
 	
 	import org.swiftsuspenders.*;
 	import org.tinytlf.classes.*;
@@ -13,10 +14,7 @@ package org.tinytlf
 
 	public class TextEngine extends Injector
 	{
-		Styleable.registerDefault('paddingTop', 0);
-		Styleable.registerDefault('paddingRight', 0);
-		Styleable.registerDefault('paddingBottom', 0);
-		Styleable.registerDefault('paddingLeft', 0);
+		public static const mac:Boolean = (/mac/i).test(Capabilities.os);
 		public static var stage:Stage;
 		
 		public function TextEngine()
@@ -51,7 +49,8 @@ package org.tinytlf
 			map(ISubject, 'height').toValue(heightSubj);
 			map(IObservable, 'height').toValue(height);
 			
-			// An Observable stream of Caret infor.
+			// An Observable stream of Caret values.
+			caretSubj.onNext(new Caret(null, null, null, -1, null));
 			map(ISubject, 'caret').toValue(caretSubj);
 			map(IObservable, 'caret').toValue(caret);
 			
@@ -105,7 +104,7 @@ package org.tinytlf
 		}
 		
 		private var started:Boolean = false;
-		private var subscriptions:ICancelable = Cancelable.empty;
+		public const subscriptions:CompositeCancelable = new CompositeCancelable();
 		
 		public function startup():void {
 			if(started) return;
@@ -116,50 +115,50 @@ package org.tinytlf
 			const blocks:IObservable = getInstance(IObservable, 'blocks');
 			const paragraphs:IObservable = getInstance(IObservable, 'paragraphs');
 			
-			subscriptions = new CompositeCancelable([
-				htmlBlockElementObs.subscribe(
-					xmlNodesSubj.onNext,
-					null,
-					function(e:Error):void { trace(e.getStackTrace()); }
-				),
+			subscriptions.add(htmlBlockElementObs.subscribe(
+				xmlNodesSubj.onNext,
+				null,
+				function(e:Error):void { trace(e.getStackTrace()); }
+			));
 			
-				blocks.skip(1).zip(blocks, [].concat).
-					mapMany(function(a:Array):IObservable {
-						const prev:IObservable = a.pop();
-						const now:IObservable = a.pop();
-						return now.zip(prev, [].concat).take(1);
-					}).
-					subscribe(function(a:Array):void {
-						const prev:Block = a.pop();
-						const now:Block = a.pop();
-						prev.next = now;
-						now.prev = prev;
-					}),
-					
-				paragraphs.skip(1).zip(paragraphs, [].concat).
-					mapMany(function(a:Array):IObservable {
-						const prev:IObservable = a.pop();
-						const now:IObservable = a.pop();
-						return now.zip(prev, [].concat).take(1);
-					}).
-					subscribe(function(a:Array):void {
-						const prev:Paragraph = a.pop();
-						const now:Paragraph = a.pop();
-						prev.next = now;
-						now.prev = prev;
-					})
-			]);
+			// Set up the blocks linked-list
+			subscriptions.add(blocks.skip(1).zip(blocks, [].concat).
+				mapMany(function(a:Array):IObservable {
+					const prev:IObservable = a.pop();
+					const now:IObservable = a.pop();
+					return now.zip(prev, [].concat).take(1);
+				}).
+				subscribe(function(a:Array):void {
+					const prev:Block = a.pop();
+					const now:Block = a.pop();
+					prev.next = now;
+					now.prev = prev;
+				}));
+			
+			// Set up the Paragraphs linked list
+			subscriptions.add(paragraphs.skip(1).zip(paragraphs, [].concat).
+				mapMany(function(a:Array):IObservable {
+					const prev:IObservable = a.pop();
+					const now:IObservable = a.pop();
+					return now.zip(prev, [].concat).take(1);
+				}).
+				subscribe(function(a:Array):void {
+					const prev:Paragraph = a.pop();
+					const now:Paragraph = a.pop();
+					prev.next = now;
+					now.prev = prev;
+				}));
 		}
 		
 		override public function teardown():void {
-			
-			subscriptions.cancel();
 			
 			const xmlNodesSubj:ISubject = getInstance(ISubject, 'xml');
 			xmlNodesSubj.onCompleted();
 			
 			const virtualizer:Virtualizer = getInstance(Virtualizer);
 			virtualizer.clear();
+			
+			subscriptions.cancel();
 			
 			super.teardown();
 		}

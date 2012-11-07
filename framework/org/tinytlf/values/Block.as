@@ -15,6 +15,7 @@ package org.tinytlf.values
 			block.userData = this;
 			this['block'] = block;
 			this['content'] = content;
+			this['node'] = content.node;
 		}
 		
 		public var prev:Block;
@@ -23,5 +24,6 @@ package org.tinytlf.values
 		
 		public const block:TextBlock;
 		public const content:Content;
+		public const node:XML;
 	}
 }

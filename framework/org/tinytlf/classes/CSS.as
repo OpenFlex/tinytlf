@@ -88,7 +88,6 @@ package org.tinytlf.classes
 			return merged;
 		}
 		
-		
 		/**
 		 * Parse and inject any number of CSS blocks. CSS blocks can be as
 		 * simple as:
@@ -111,7 +110,7 @@ package org.tinytlf.classes
 		{
 			// Strip out all white space between blocks
 			css.
-				replace(/\s*([@{}:;,]|\)\s|\s\()\s*|\/\*([^*\\\\]|\*(?!\/))+\*\/|[\n\r\t]|(px)/g, '$1').
+				replace(/\s*([@{}:;,]|\)\s|\s\()\s*|\/\*([^*\\\\]|\*(?!\/))+\*\/|[\n\r\t]/g, '$1').
 				// Parse each block
 				match(/[^{]*\{([^}]*)*}/g).
 				forEach(function(block:String, ... args):void {
@@ -198,6 +197,12 @@ use namespace flash_proxy;
 
 internal class StyleLink extends Styleable
 {
+	public function StyleLink() {
+		super();
+		
+		mergeStyles(defaults);
+	}
+	
 	private const styleNames:Array = [];
 	public function get styles():Array
 	{
@@ -233,15 +238,6 @@ internal class StyleLink extends Styleable
 		return this;
 	}
 	
-	override protected function mergeProperty(property:String, source:Object):void
-	{
-		const prop:String = property;
-		if(prop.indexOf('-') != -1)
-			property = convertFromDashed(prop);
-		
-		this[property] = source[prop];
-	}
-	
 	override flash_proxy function setProperty(name:*, value:*):void
 	{
 		const prop:String = name.toString();
@@ -257,7 +253,7 @@ internal class StyleLink extends Styleable
 		if(prop.indexOf('-') != -1)
 			name = convertFromDashed(prop);
 		
-		return super.getProperty(name) || defaults[name];
+		return super.getProperty(name);
 	}
 	
 	private function convertFromDashed(property:String):String
@@ -270,7 +266,8 @@ internal class StyleLink extends Styleable
 	private static const defaults:Object = {
 			padding: 0, paddingLeft: 0, paddingRight: 0, paddingTop: 0,
 			paddingBottom: 0, margin: 0, marginLeft: 0, marginRight: 0,
-			marginTop: 0, marginBottom: 0, width: 0, height: 0, fontSize: 12
+			marginTop: 0, marginBottom: 0, width: 0, height: 0, fontSize: 12,
+			leading: 0, paragraphSpacing: 0
 		};
 }
 
@@ -280,8 +277,7 @@ internal class MergedStyleable extends Styleable
 {
 	override flash_proxy function setProperty(name:*, value:*):void
 	{
-		if(value is String)
-		{
+		if(value is String) {
 			value = processNumberValue(name, value);
 		}
 		
@@ -293,27 +289,38 @@ internal class MergedStyleable extends Styleable
 	private function processNumberValue(styleProp:String, val:String):*
 	{
 		const baseValue:Number = hasOwnProperty(styleProp) ? this[styleProp] :
-			hasOwnProperty('fontSize') ? this['fontSize'] : NaN;
+			hasOwnProperty('fontSize') ? this['fontSize'] : 12;
 		
-		if(val == '' || baseValue != baseValue)
+		const pc:RegExp = /%/ig;
+		const px:RegExp = /px/ig;
+		const pt:RegExp = /pt/ig;
+		const em:RegExp = /em/ig;
+		const ex:RegExp = /ex/ig;
+		const color:RegExp = /\#/ig;
+		
+		if(val == '' || baseValue != baseValue || !(
+			pc.test(val) || 
+			px.test(val) || 
+			pt.test(val) || 
+			em.test(val) || 
+			ex.test(val) || 
+			color.test(val))) {
 			return val;
+		}
 		
-		if(val.lastIndexOf('%') == val.length - 1)
-			baseValue * Number(val.substring(0, val.indexOf('%')));
-		
-		if(val.length < 2)
-			return val;
-		
-		if(val.lastIndexOf('em') == val.length - 2)
-			return baseValue * Number(val.substring(0, val.indexOf('em')));
-		else if(val.lastIndexOf('ex') == val.length - 2)
-			return baseValue * Number(val.substring(0, val.indexOf('ex'))) * 0.5;
-		else if(val.lastIndexOf('pt') == val.length - 2)
-			return (Number(val.substring(0, val.indexOf('pt'))) / 72) * screenDPI;
-		else if(val.indexOf('#') == 0)
-			return uint('0x' + val.substring(1));
-		
-		return parseFloat(val) || val;
+		return pc.test(val) ?
+			baseValue * parseFloat(val.substring(0, pc.exec(val).index)) :
+			px.test(val) ? 
+				parseFloat(val.substring(0, px.exec(val).index)) :
+				pt.test(val) ? 
+					parseFloat(val.substring(0, pt.exec(val).index)) / 72 * screenDPI :
+					em.test(val) ?
+						baseValue * parseFloat(val.substring(0, em.exec(val).index)) :
+						ex.test(val) ?
+							baseValue * parseFloat(val.substring(0, ex.exec(val).index)) * 0.5 :
+							color.test(val) ? 
+								uint('0x' + val.substring(1)) : 
+								parseFloat(val) || val;
 	}
 }
 

@@ -61,6 +61,7 @@ package
 			
 			tf.width = stage.stageWidth - 166;
 			tf.height = 499;
+			tf.y = 1;
 			tf.x = 165;
 		}
 		

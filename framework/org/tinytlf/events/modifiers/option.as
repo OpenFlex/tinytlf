@@ -14,7 +14,7 @@ package org.tinytlf.events.modifiers
 	 */
 	public function option(obs:IObservable):IObservable {
 		return obs.takeWhile(function(event:*):Boolean {
-				return mac ? event.altKey : event.ctrlKey;
+				return TextEngine.mac ? event.altKey : event.ctrlKey;
 			}).
 			takeUntil(keyequals(keyup(TextEngine.stage), Keyboard.ALTERNATE)).
 			repeat();

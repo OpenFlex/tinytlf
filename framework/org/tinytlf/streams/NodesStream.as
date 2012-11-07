@@ -16,12 +16,12 @@ package org.tinytlf.streams
 		public function get observable():IObservable {
 			// Update when the height or vScroll updates.
 			// TODO: Make this work with horizontal block progressions.
-			return height.
-				combineLatest(vScroll, [].concat).
+			return height.combineLatest(vScroll, [].concat).
 				switchMany(selectVisibleNodes).
 				groupByUntil(nodeKeySelector, nodeDurationSelector).
 				map(snatchNodeValues).
-				takeUntil(xmlNodes.ignoreValues());
+				takeUntil(xmlNodes.ignoreValues()).
+				publish().refCount();
 		}
 		
 		// Selects only the visible nodes, or all nodes

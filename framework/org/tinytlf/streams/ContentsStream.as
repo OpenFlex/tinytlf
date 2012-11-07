@@ -16,7 +16,7 @@ package org.tinytlf.streams
 		 */
 		public function get observable():IObservable {
 			// parse each node into a ContentElement
-			return nodes.map(mapGroup);
+			return nodes.map(mapGroup).publish().refCount();
 		}
 		
 		private function mapGroup(group:IObservable/*<XML>*/):IObservable/*<Content>*/ {
@@ -27,6 +27,7 @@ package org.tinytlf.streams
 			
 			const css:CSS = a.pop();
 			const node:XML = a.pop();
+			const styles:Styleable = a.pop() || toStyleable(node, css);
 			
 			const name:String = node.localName();
 			const numChildren:int = node.*.length();
@@ -36,8 +37,8 @@ package org.tinytlf.streams
 					node,
 					(parsers.hasOwnProperty(name) ?
 						parsers[name](node, []) :
-						new TextElement(node.toString(), new ElementFormat())),
-					null
+						new TextElement(node.toString(), toElementFormat(styles))),
+					styles
 				);
 			}
 			
@@ -45,16 +46,16 @@ package org.tinytlf.streams
 			for(var i:int = -1; ++i < numChildren;) {
 				const child:XML = node.children()[i];
 				child.@cssInheritanceChain = getInheritanceChain(child);
-				elements[i] = recurse([child, css]).element;
+				elements[i] = recurse([styles, child, css]).element;
 			}
 			
 			return new Content(
 				node, 
 				(parsers.hasOwnProperty(name) ?
 					parsers[name](node, elements) :
-					new GroupElement(Vector.<ContentElement>(elements), new ElementFormat())
+					new GroupElement(Vector.<ContentElement>(elements), toElementFormat(styles))
 				),
-				toStyleable(node, css)
+				styles
 			);
 		}
 		
