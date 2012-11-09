@@ -14,6 +14,6 @@ package org.tinytlf.lambdas
 		const id:String = node.@id || '';
 		const existingChain:String = parent ? parent.@cssInheritanceChain : 'html';
 		
-		return (index == -1 ? '' : index + ' ') + existingChain + ' ' + name + classes + id
+		return existingChain + ' ' + name + id + (index == -1 ? '' : ':' + index + ' ') + classes;
 	}
 }
