@@ -28,10 +28,12 @@ package org.tinytlf.actions
 			const selectionSubj:ISubject = engine.getInstance(ISubject, 'selection');
 			
 			const clickInLine:IObservable = down(textField).filter(targetIsTextLine).
-				peek(stahp).publish().refCount();
+//				peek(stahp).
+				publish().refCount();
 			
 			const clickInParagraph:IObservable = down(textField).filter(targetIsParagraph).
-				peek(stahp).publish().refCount();
+//				peek(stahp).
+				publish().refCount();
 			
 			engine.subscriptions.add(Observable.merge([
 					clickInLine, clickInParagraph
