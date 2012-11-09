@@ -19,7 +19,9 @@ package org.tinytlf.streams
 		private function mapBlockLife(life:IObservable):IObservable {
 			const paragraph:Paragraph = injector.instantiateUnmapped(Paragraph);
 			paragraph.life = life;
-			return life.map(function(...args):Paragraph { return paragraph; });
+			return life.
+				map(function(...args):Paragraph { return paragraph; }).
+				takeUntil(life.count());
 		}
 		
 		[Inject]

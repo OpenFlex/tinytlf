@@ -18,8 +18,8 @@ package org.tinytlf.streams
 		}
 		
 		private function mapBlocks(blockObs:IObservable):IObservable {
-			return blockObs.
-				combineLatest(width, [].concat).
+			return blockObs.combineLatest(width, [].concat).
+				takeUntil(blockObs.count()).
 				scan(scanBlockAndWidth, [0, 0, 0], true);
 		}
 		
@@ -28,15 +28,13 @@ package org.tinytlf.streams
 			const newWidth:Number = b_w.pop();
 			const block:Block = b_w.pop();
 			
-			return [block, newWidth, createLineBreaker(block, prevWidth, newWidth)];
+			return [block, newWidth, createLineBreaker(block, prevWidth, newWidth).publish().refCount()];
 		}
 		
 		private function createLineBreaker(block:Block, prevWidth:Number, newWidth:Number):IObservable {
-			const validLines:Array = getValidLines(block.block);
 			const blockWidth:Number = newWidth - block['paddingLeft'] - block['paddingRight'];
 			
-			var breakAnother:Boolean = isBlockInvalid(block.block) || blockWidth != prevWidth;
-			
+			var breakAnother:Boolean = false;
 			const predicate:Function = function(line:TextLine):Boolean {
 				return breakAnother;
 			};
@@ -47,12 +45,23 @@ package org.tinytlf.streams
 				return line;
 			};
 			
-			const initial:TextLine = getLineBeforeFirstInvalidLine(block.block) || iterate(null);
+			if(isBlockInvalid(block.block)) {
+				const validLines:Array = getValidLines(block.block);
+				const initial:TextLine = getLineBeforeFirstInvalidLine(block.block);
+				
+				return Observable.concat([
+						Observable.fromArray(validLines),
+						Observable.generate(initial || iterate(null), predicate, iterate, identity)
+					]).
+					map(function(line:TextLine):Line {
+						return new Line(line, block);
+					}).
+					scan(scanLine);
+			}
 			
-			return Observable.concat([
-					Observable.fromArray(validLines),
-					Observable.generate(initial, predicate, iterate, identity)
-				]).
+			breakAnother = true;
+			return Observable.
+				generate(iterate(null), predicate, iterate, identity).
 				map(function(line:TextLine):Line {
 					return new Line(line, block);
 				}).

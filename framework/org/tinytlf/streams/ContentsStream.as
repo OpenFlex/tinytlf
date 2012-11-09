@@ -20,7 +20,9 @@ package org.tinytlf.streams
 		}
 		
 		private function mapGroup(group:IObservable/*<XML>*/):IObservable/*<Content>*/ {
-			return group.combineLatest(css, [].concat).map(recurse);
+			return group.combineLatest(css, [].concat).
+				map(recurse).
+				takeUntil(group.count());
 		}
 		
 		private function recurse(a:Array):Content {

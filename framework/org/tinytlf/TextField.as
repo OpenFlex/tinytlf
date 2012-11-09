@@ -3,9 +3,10 @@ package org.tinytlf
 	import com.bit101.components.*;
 	
 	import flash.display.*;
+	import flash.geom.Rectangle;
 	
-	import org.tinytlf.actions.KeyboardActions;
 	import org.tinytlf.actions.CursorActions;
+	import org.tinytlf.actions.KeyboardActions;
 	import org.tinytlf.classes.CSS;
 	import org.tinytlf.classes.Container;
 	import org.tinytlf.constants.TextBlockProgression;
@@ -45,12 +46,12 @@ package org.tinytlf
 			
 			engine.subscriptions.add(
 				// Recreate the layout container when the CSS changes if need be.
-				cssObs.subscribe(onNextCSS, null, onError)
+				cssObs.subscribe(onNextCSS, null, engine.onError)
 			);
 			
 			engine.subscriptions.add(
 				// Add paragraphs
-				paragraphs.subscribe(onNextParagraph, removeChildren, onError)
+				paragraphs.subscribe(onNextParagraph, removeChildren, engine.onError)
 			);
 			
 			new KeyboardActions(engine, this);
@@ -66,15 +67,17 @@ package org.tinytlf
 		
 		override public function set height(h:Number):void {
 			super.height = h;
+			scrollRect = new Rectangle(-1, -1, width + 2, height + 2);
 			engine.height = h;
 		}
 		
 		override public function set width(w:Number):void {
 			super.width = w;
+			scrollRect = new Rectangle(-1, -1, width + 2, height + 2);
 			engine.width = w;
 		}
 		
-		private var _html:String = '';
+		private var _html:* = '';
 		public function get html():* {
 			return _html;
 		}
@@ -84,18 +87,14 @@ package org.tinytlf
 			engine = new TextEngine();
 		}
 		
-		private var _css:String = '';
-		public function get css():String {
+		private var _css:* = '';
+		public function get css():* {
 			return _css;
 		}
 		
 		public function set css(value:*):void {
 			_css = value;
 			engine.css = _css;
-		}
-		
-		private function onError(e:Error):void {
-			trace(e.getStackTrace());
 		}
 		
 		private function onNextCSS(css:CSS):void {
@@ -106,24 +105,33 @@ package org.tinytlf
 				container.removeChildren();
 				if($contains(container)) $removeChild(container);
 				$addChild(container = new containerType());
-				container['spacing'] = css.getStyle('paragraphSpacing');
 			}
+			
+			container['spacing'] = css.getStyle('paragraphSpacing') * css.getStyle('fontMultiplier');
 		}
 		
 		private function onNextParagraph(life:IObservable):void {
 			var p:Paragraph;
-			engine.subscriptions.add(life.filter(function(p:Paragraph):Boolean {
+			
+			const paragraphSubscriptions:ICancelable = new CompositeCancelable([
+				life.filter(function(p:Paragraph):Boolean {
 					return !contains(p);
 				}).
-				subscribe(
-					function(n:Paragraph):void {
-						addChild(p = n);
-					},
-					function():void {
-						trace("complete", p.block['cssInheritanceChain']);
-					},
-					onError)
-			);
+				subscribe(function(n:Paragraph):void {
+					addChild(p = n);
+					trace("adding", p.block['cssInheritanceChain']);
+				}, null, engine.onError),
+				
+				life.subscribe(null, function():void {
+					trace("complete", p.block['cssInheritanceChain']);
+					if(contains(p)) removeChild(p);
+					
+					paragraphSubscriptions.cancel();
+					engine.subscriptions.remove(paragraphSubscriptions);
+				}, engine.onError)
+			]);
+			
+			engine.subscriptions.add(paragraphSubscriptions);
 		}
 	}
 }

@@ -14,13 +14,20 @@ package org.tinytlf.streams
 		 * node, keyed by each node's @cssInheritanceChain attribute.
 		 */
 		public function get observable():IObservable {
+//			return xmlNodes.
+//				groupByUntil(nodeKeySelector, nodeDurationSelector).
+//				map(snatchNodeValues).
+//				publish().refCount();
 			// Update when the height or vScroll updates.
 			// TODO: Make this work with horizontal block progressions.
-			return height.combineLatest(vScroll, [].concat).
+			return height.combineLatest(width, identity).
+				combineLatest(vScroll, [].concat).
 				switchMany(selectVisibleNodes).
+				map(keyToXML).
 				groupByUntil(nodeKeySelector, nodeDurationSelector).
 				map(snatchNodeValues).
-				takeUntil(xmlNodes.ignoreValues()).
+				takeUntil(xmlNodes.count()).
+				finallyAction(clearXMLDict).
 				publish().refCount();
 		}
 		
@@ -29,11 +36,21 @@ package org.tinytlf.streams
 		private function selectVisibleNodes(a:Array):IObservable {
 			const v:Number = a.pop();
 			const h:Number = a.pop();
-			const visibleNodes:Array = virtualizer.slice(v, v + h)
+			const visibleNodes:Array = virtualizer.slice(v, v + h);
 			
 			return visibleNodes.length > 0 ?
 				Observable.fromArray(visibleNodes).concat(Observable.never()) :
 				xmlNodes;
+		}
+		
+		private var xmlDict:Object = {};
+		private function keyToXML(val:*):XML {
+			const key:String = val is XML ? val.@cssInheritanceChain.toString() : val;
+			return val is XML ? xmlDict[key] = val : xmlDict[val];
+		}
+		
+		private function clearXMLDict():void {
+			xmlDict = {};
 		}
 		
 		// Keys the node lifetime based on its 'cssInheritanceChain' attribute.
@@ -42,17 +59,17 @@ package org.tinytlf.streams
 		}
 		
 		// Emits a value when the node's life is over.
-		private function nodeDurationSelector(group:IObservable):IObservable {
+		private function nodeDurationSelector(group:IGroupedObservable):IObservable {
 			return Observable.merge([
 				nodeScrolledOffScreen(group),
 				nodeContentWasDeleted(group).peek(virtualizer.remove)
 			]);
 		}
 		
-		private function nodeScrolledOffScreen(group:IObservable):IObservable {
-			return height.
+		private function nodeScrolledOffScreen(group:IGroupedObservable):IObservable {
+			return height.combineLatest(width, identity).
 				combineLatest(vScroll, [].concat).
-				combineLatest(group, [].concat).
+				combineLatest(Observable.value(group.key), [].concat).
 				filter(filterNodeVisibility);
 		}
 		
@@ -62,16 +79,16 @@ package org.tinytlf.streams
 		
 		// Terminate if the node is above or below the current viewport.
 		private function filterNodeVisibility(a:Array):Boolean {
-			const node:XML = a.pop();
+			const key:String = a.pop();
 			const v:Number = a.pop();
 			const h:Number = a.pop();
 			
 			// If the node is in the virtualizer, check its position on the
 			// screen. Terminate if it's above or below the current viewport.
-			if(virtualizer.getIndex(node) != -1) {
-				const start:int = virtualizer.getStart(node);
-				const size:int = virtualizer.getSize(node);
-				return (start + size) < v || (start + size) > (v + h);
+			if(virtualizer.getIndex(key) != -1) {
+				const start:int = virtualizer.getStart(key);
+				const size:int = virtualizer.getSize(key);
+				return (start + size) < v || start > (v + h);
 			}
 			
 			// Otherwise return false, indicating this node isn't done

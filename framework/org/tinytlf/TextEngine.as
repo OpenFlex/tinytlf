@@ -73,7 +73,7 @@ package org.tinytlf
 			// An Observable stream of block-level XML nodes.
 			const xmlNodesSubj:ISubject = new Subject();
 			map(ISubject, 'xml').toValue(xmlNodesSubj);
-			map(IObservable, 'xml').toValue(xmlNodesSubj.cast(XML));
+			map(IObservable, 'xml').toValue(xmlNodesSubj.asObservable().cast(XML));
 			
 			hScroll = 0;
 			vScroll = 0;
@@ -179,7 +179,7 @@ package org.tinytlf
 		private const htmlSubj:ISubject = new ReplaySubject(1);
 		
 		public function get html():IObservable {
-			return htmlSubj.map(toXML).cast(XML);
+			return htmlSubj.map(toXML).distinctUntilChanged().cast(XML);
 		}
 		
 		public function set html(w:*):void {
@@ -189,7 +189,7 @@ package org.tinytlf
 		private const cssSubj:ISubject = new ReplaySubject(1);
 		
 		public function get css():IObservable {
-			return cssSubj.cast(CSS);
+			return cssSubj.distinctUntilChanged().cast(CSS);
 		}
 		
 		public function set css(w:*):void {
@@ -199,7 +199,7 @@ package org.tinytlf
 		private const hScrollSubj:ISubject = new ReplaySubject(1);
 		
 		public function get hScroll():IObservable {
-			return hScrollSubj.cast(Number);
+			return hScrollSubj.distinctUntilChanged().cast(Number);
 		}
 		
 		public function set hScroll(w:*):void {
@@ -209,7 +209,7 @@ package org.tinytlf
 		private const vScrollSubj:ISubject = new ReplaySubject(1);
 		
 		public function get vScroll():IObservable {
-			return vScrollSubj.cast(Number);
+			return vScrollSubj.distinctUntilChanged().cast(Number);
 		}
 		
 		public function set vScroll(w:*):void {
@@ -219,7 +219,10 @@ package org.tinytlf
 		private const widthSubj:ISubject = new ReplaySubject(1);
 		
 		public function get width():IObservable {
-			return widthSubj.cast(Number);
+			return widthSubj.
+				filter(function(val:Number):Boolean { return val > 50; }).
+				distinctUntilChanged().
+				cast(Number);
 		}
 		
 		public function set width(w:*):void {
@@ -229,7 +232,7 @@ package org.tinytlf
 		private const heightSubj:ISubject = new ReplaySubject(1);
 		
 		public function get height():IObservable {
-			return heightSubj.cast(Number);
+			return heightSubj.distinctUntilChanged().cast(Number);
 		}
 		
 		public function set height(w:*):void {
@@ -239,7 +242,7 @@ package org.tinytlf
 		private const caretSubj:ISubject = new ReplaySubject(1);
 		
 		public function get caret():IObservable {
-			return caretSubj.cast(Caret);
+			return caretSubj.distinctUntilChanged().cast(Caret);
 		}
 		
 		public function set caret(w:*):void {
@@ -249,7 +252,7 @@ package org.tinytlf
 		private const selectionSubj:ISubject = new ReplaySubject(1);
 		
 		public function get selection():IObservable {
-			return selectionSubj.cast(Selection);
+			return selectionSubj.distinctUntilChanged().cast(Selection);
 		}
 		
 		public function set selection(w:*):void {

@@ -88,11 +88,11 @@ package org.tinytlf.actions
 //					repeat().
 //					subscribe(selectionSubj.onNext, null, engine.onError));
 			
-			engine.subscriptions.add(
-				back.
-					mapMany(combineSubjectAndSelector(caretSubj, mapOneBackspace)).
-					repeat().
-					subscribe(xmlNodesSubj.onNext, null, engine.onError));
+//			engine.subscriptions.add(
+//				back.
+//					mapMany(combineSubjectAndSelector(caretSubj, mapOneBackspace)).
+//					repeat().
+//					subscribe(xmlNodesSubj.onNext, null, engine.onError));
 			
 			// Move the caret left by word boundary
 			engine.subscriptions.add(

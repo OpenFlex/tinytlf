@@ -8,6 +8,7 @@ package org.tinytlf.values
 	import org.tinytlf.TextEngine;
 	import org.tinytlf.classes.Container;
 	import org.tinytlf.classes.Virtualizer;
+	import org.tinytlf.constants.TextAlign;
 	import org.tinytlf.constants.TextBlockProgression;
 	
 	import raix.reactive.*;
@@ -43,6 +44,7 @@ package org.tinytlf.values
 		protected var lineCancelable:ICancelable = Cancelable.empty;
 		
 		protected function onNextLife(a:Array):void {
+			a = a.concat();
 			
 			const paragraph:Paragraph = this;
 			
@@ -60,14 +62,20 @@ package org.tinytlf.values
 			
 			const progression:String = TextBlockProgression.convert(block['textDirection'] || TextBlockProgression.TTB);
 			const containerType:Class = progression == TextBlockProgression.TTB ? VBox : HBox;
+			
 			if(!(container is containerType)) {
 				$removeChild(container);
 				removeChildren();
-				$addChild(container = new containerType());
-				container['spacing'] = block['leading'];
+				container = new containerType();
 			}
-			container.removeChildren();
+			
 			container['spacing'] = block['leading'] * block.getStyle('fontMultiplier');
+			
+			// TODO: HBox alignment
+			container['alignment'] = TextAlign.isValid(block['textAlign']) ? block['textAlign'] : TextAlign.LEFT;
+			
+			$addChild(container);
+			removeChildren();
 			
 			lineCancelable = new CompositeCancelable([
 				
@@ -75,6 +83,8 @@ package org.tinytlf.values
 				textLines.last().
 					subscribe(function(line:TextLine):void {
 						container.height += line.descent;
+						width = container.width + block['paddingLeft'] + block['paddingRight'];
+						height = block['paddingTop'] + container.height + block['paddingBottom']
 					}),
 				
 				// Adjust the container's Y by the first line's ascent
@@ -100,23 +110,29 @@ package org.tinytlf.values
 			height = block['paddingTop'] + container.height + block['paddingBottom']
 			container.y += block['paddingTop'];
 			
-			const g:Graphics = graphics;
-			g.clear();
-			g.beginFill(0x00, 0);
-			g.lineStyle(1, 0xcccccc);
-			g.drawRect(0, 0, width, height);
-			g.endFill();
+//			const g:Graphics = graphics;
+//			g.clear();
+//			g.beginFill(0x00, 0);
+//			g.lineStyle(1, 0xcccccc);
+//			g.drawRect(0, 0, width, height);
+//			g.endFill();
 			
 			height += block['marginTop'] + block['marginBottom'];
 			width += block['marginLeft'] + block['marginRight'];
 			
-			const node:XML = block.content.node;
-			const index:int = virtualizer.getIndex(node);
+			const key:String = node.@cssInheritanceChain.toString();
+			const prevKey:String = prev ? prev.node.@cssInheritanceChain.toString() : '';
 			
-			if(index == -1) {
-				virtualizer.add(node, height); // TODO: make this work with horizontal progressions too.
-			} else {
+			var index:int = virtualizer.getIndex(key);
+			const prevIndex:int = virtualizer.getIndex(prevKey);
+			
+			// TODO: make this work with horizontal progressions too.
+			if(index > -1) {
 				virtualizer.setSizeAt(index, height);
+			} else if(prevIndex > -1) {
+				virtualizer.addAt(key, prevIndex + 1, height);
+			} else {
+				virtualizer.add(key, height);
 			}
 		}
 		
@@ -124,8 +140,8 @@ package org.tinytlf.values
 			lifeCancelable.cancel();
 			lineCancelable.cancel();
 			
-			if(container) container.removeChildren();
-			if(parent) parent.removeChild(this);
+//			removeChildren();
+//			$removeChildren();
 		}
 		
 		protected function error(e:Error):void {

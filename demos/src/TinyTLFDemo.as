@@ -15,10 +15,13 @@ package
 	import org.tinytlf.*;
 	import org.tinytlf.lambdas.*;
 	
+	import raix.reactive.IObservable;
+	import raix.reactive.Observable;
+	
 	[SWF(width = "600", height = "500")]
 	public class TinyTLFDemo extends Sprite
 	{
-		private var helvetica:Helvetica;
+		private const helvetica:Helvetica;
 		private var tf:TextField;
 		private var loadedCSS:String = '';
 		private const mainVbox:VBox = new VBox(null, 0, 10);
@@ -38,20 +41,18 @@ package
 			mainVbox.width = 160;
 			mainVbox.alignment = VBox.RIGHT;
 			
-			addTextField(org.tinytlf.TextField);
+			createDragButtons(addTextField(org.tinytlf.TextField));
 //			createShapeCombobox();
-			createHTMLCombobox();
 			createCSSComponents();
+			createHTMLCombobox();
 			
 			ViewSource.addMenuItem(this, 'http://guyinthechair.com/flash/tinytlf/2.0/explorer/srcview/index.html');
 		}
 		
-		private function addTextField(textFieldClass:Class):void
-		{
+		private function addTextField(textFieldClass:Class):TextField {
 			const newTF:TextField = new textFieldClass();
 			
-			if(tf)
-			{
+			if(tf) {
 				newTF.html = tf.html;
 				newTF.css = tf.css;
 				removeChild(tf);
@@ -59,14 +60,15 @@ package
 			
 			addChild(tf = newTF);
 			
-			tf.width = stage.stageWidth - 166;
+			tf.width = stage.stageWidth - 186;
 			tf.height = 499;
 			tf.y = 1;
-			tf.x = 165;
+			tf.x = 175;
+			
+			return tf;
 		}
 		
-		private function createHTMLCombobox():void
-		{
+		private function createHTMLCombobox():void {
 			const window:Window = new Window(mainVbox, 0, 0, 'HTML Source');
 			window.draggable = false;
 			window.width = 160;
@@ -123,8 +125,7 @@ package
 			tf.html = new HTMLSource.Single().toString();
 		}
 		
-		private function createCSSComponents():void
-		{
+		private function createCSSComponents():void {
 			const window:Window = new Window(mainVbox);
 			window.draggable = false;
 			window.title = 'CSS';
@@ -192,6 +193,49 @@ package
 				stage.addEventListener(MouseEvent.MOUSE_DOWN, onStagePress);
 			});
 			editButton.width = 50;
+		}
+		
+		private function createDragButtons(tf:TextField):void {
+			
+			const wButton:PushButton = new PushButton(this, tf.x + tf.width - 10, tf.y + (tf.height * 0.5), 'x');
+			const hButton:PushButton = new PushButton(this, tf.x + (tf.width * 0.5), tf.y + tf.height - 10, 'y');
+			
+			wButton.width = wButton.height = hButton.width = hButton.height = 20;
+			
+			doDrag(tf, wButton, hButton, 'x', 'width', tf.x + tf.width - 10, tf.width);
+			doDrag(tf, hButton, wButton, 'y', 'height', tf.y + tf.height - 10, tf.height);
+		}
+		
+		private function doDrag(tf:TextField, button:PushButton, other:PushButton, c:String, d:String, maxA:Number, maxB:Number):void {
+			const down:IObservable = Observable.fromEvent(button, MouseEvent.MOUSE_DOWN);
+			const move:IObservable = Observable.fromEvent(stage, MouseEvent.MOUSE_MOVE);
+			const up:IObservable = Observable.fromEvent(stage, MouseEvent.MOUSE_UP);
+			
+			down.mapMany(function(de:MouseEvent):IObservable {
+				return move.scan(function(prev:Object, now:MouseEvent):Object {
+					return {
+						dx: now.stageX,
+						dy: now.stageY,
+						x: now.stageX - prev.dx,
+						y: now.stageY - prev.dy
+					}
+				}, {x: 0, y: 0}, true)
+			}).
+			takeUntil(up).
+			repeat().
+			subscribe(function(obj:Object):void {
+				
+				const n:Number = Math.min(button['$' + c] + obj[c], maxA);
+				const m:Number = Math.min(tf[d] + obj[c], maxB);
+				if(isNaN(n) || isNaN(m)) {
+					return;
+				}
+				
+				button['$' + c] = n;
+				tf[d] = m;
+				
+				other[c] = tf[c] + (m * 0.5);
+			});
 		}
 	}
 }

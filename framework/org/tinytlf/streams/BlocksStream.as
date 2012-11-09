@@ -13,7 +13,7 @@ package org.tinytlf.streams
 	public class BlocksStream implements IStream
 	{
 		/**
-		 * Mutates an IObservable<IObservable<IObservable<Content>>> into an IObservable<IObservable<Block>>
+		 * Mutates an IObservable<IObservable<Content>> into an IObservable<IObservable<Block>>
 		 */
 		public function get observable():IObservable {
 			return contents.map(mapContents).publish().refCount();
