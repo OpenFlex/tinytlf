@@ -267,7 +267,7 @@ internal class StyleLink extends Styleable
 			padding: 0, paddingLeft: 0, paddingRight: 0, paddingTop: 0,
 			paddingBottom: 0, margin: 0, marginLeft: 0, marginRight: 0,
 			marginTop: 0, marginBottom: 0, width: 0, height: 0, fontSize: 12,
-			leading: 0, paragraphSpacing: 0
+			leading: 0, paragraphSpacing: 0, fontMultiplier: 1
 		};
 }
 
@@ -291,12 +291,12 @@ internal class MergedStyleable extends Styleable
 		const baseValue:Number = hasOwnProperty(styleProp) ? this[styleProp] :
 			hasOwnProperty('fontSize') ? this['fontSize'] : 12;
 		
-		const pc:RegExp = /%/ig;
-		const px:RegExp = /px/ig;
-		const pt:RegExp = /pt/ig;
-		const em:RegExp = /em/ig;
-		const ex:RegExp = /ex/ig;
-		const color:RegExp = /\#/ig;
+		const pc:RegExp = /%/i;
+		const px:RegExp = /px/i;
+		const pt:RegExp = /pt/i;
+		const em:RegExp = /em/i;
+		const ex:RegExp = /ex/i;
+		const color:RegExp = /\#/i;
 		
 		if(val == '' || baseValue != baseValue || !(
 			pc.test(val) || 
@@ -308,7 +308,7 @@ internal class MergedStyleable extends Styleable
 			return val;
 		}
 		
-		return pc.test(val) ?
+		const num:* = pc.test(val) ?
 			baseValue * parseFloat(val.substring(0, pc.exec(val).index)) :
 			px.test(val) ? 
 				parseFloat(val.substring(0, px.exec(val).index)) :
@@ -319,8 +319,10 @@ internal class MergedStyleable extends Styleable
 						ex.test(val) ?
 							baseValue * parseFloat(val.substring(0, ex.exec(val).index)) * 0.5 :
 							color.test(val) ? 
-								uint('0x' + val.substring(1)) : 
+								uint('0x' + val.substring(1)): 
 								parseFloat(val) || val;
+		
+		return isNaN(num) ? val : num;
 	}
 }
 
