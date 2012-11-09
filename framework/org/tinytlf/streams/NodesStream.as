@@ -14,39 +14,61 @@ package org.tinytlf.streams
 		 * node, keyed by each node's @cssInheritanceChain attribute.
 		 */
 		public function get observable():IObservable {
-//			return xmlNodes.
-//				groupByUntil(nodeKeySelector, nodeDurationSelector).
-//				map(snatchNodeValues).
-//				publish().refCount();
-			// Update when the height or vScroll updates.
 			// TODO: Make this work with horizontal block progressions.
-			return height.combineLatest(width, identity).
-				combineLatest(vScroll, [].concat).
+			
+			// Do stuff when any of these 3 properties change
+			return height.combineLatest(width, identity).combineLatest(vScroll, [].concat).
+				// Mutate the values into an array of visible XML node keys
+				map(mapVisibleNodeKeys).
+				
+				// But only actually do anything if the list is different than last time.
+				distinctUntilChanged().
+				
+				// If there was a previous subscription, cancel it. Turn the
+				// Array of visible nodes into an Observable sequence...
 				switchMany(selectVisibleNodes).
-				map(keyToXML).
+				
+				// ... that we never allow to complete.
+				concat(Observable.never()).
+				
+				// Group the XML nodes by their @cssInheritanceChain value.
 				groupByUntil(nodeKeySelector, nodeDurationSelector).
+				
+				// Immediately subscribe to each IGroupedObservable with a
+				// ReplaySubject, otherwise we'll lose this value forever?
 				map(snatchNodeValues).
+				
+				// Take until the xmlNodes subject completes.
 				takeUntil(xmlNodes.count()).
+				
+				// Upon completion, clear out the key to XML node cache.
 				finallyAction(clearXMLDict).
+				
+				// Export this Observable for multiple subscriptions.
 				publish().refCount();
+		}
+		
+		private function mapVisibleNodeKeys(a:Array):Array {
+			return virtualizer.slice(a[1], a[1] + a[0]);
 		}
 		
 		// Selects only the visible nodes, or all nodes
 		// if there aren't visible nodes.
-		private function selectVisibleNodes(a:Array):IObservable {
-			const v:Number = a.pop();
-			const h:Number = a.pop();
-			const visibleNodes:Array = virtualizer.slice(v, v + h);
-			
-			return visibleNodes.length > 0 ?
-				Observable.fromArray(visibleNodes).concat(Observable.never()) :
-				xmlNodes;
+		private function selectVisibleNodes(keys:Array):IObservable {
+			return keys.length > 0 ? 
+				// Map the keys to their XML counterparts.
+				toObservable(keys).map(keyToXML) :
+				xmlNodes.peek(cacheXMLNode)
 		}
 		
 		private var xmlDict:Object = {};
-		private function keyToXML(val:*):XML {
-			const key:String = val is XML ? val.@cssInheritanceChain.toString() : val;
-			return val is XML ? xmlDict[key] = val : xmlDict[val];
+		private function keyToXML(key:String):XML {
+			return xmlDict[key];
+		}
+		
+		private function cacheXMLNode(node:XML):void {
+			const key:String = node.@cssInheritanceChain.toString();
+			xmlDict[key] = node;
 		}
 		
 		private function clearXMLDict():void {

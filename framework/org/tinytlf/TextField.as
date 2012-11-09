@@ -3,13 +3,16 @@ package org.tinytlf
 	import com.bit101.components.*;
 	
 	import flash.display.*;
+	import flash.events.Event;
 	import flash.geom.Rectangle;
 	
 	import org.tinytlf.actions.CursorActions;
 	import org.tinytlf.actions.KeyboardActions;
 	import org.tinytlf.classes.CSS;
 	import org.tinytlf.classes.Container;
-	import org.tinytlf.constants.TextBlockProgression;
+	import org.tinytlf.classes.Virtualizer;
+	import org.tinytlf.events.stahp;
+	import org.tinytlf.lambdas.identity;
 	import org.tinytlf.values.Paragraph;
 	
 	import raix.reactive.*;
@@ -20,9 +23,14 @@ package org.tinytlf
 		{
 			super(parent, xpos, ypos);
 			TextEngine.stage ||= parent ? parent.stage : null;
+			
+			$addChild(scrollBar = new VScrollBar(null, 0, 0, function(...args):void {
+				engine.vScroll = scrollBar.value;
+			}));
 		}
 		
 		private var _engine:TextEngine = new TextEngine();
+		private var totalHeight:Number = 0;
 		
 		public function get engine():TextEngine {
 			return _engine;
@@ -35,24 +43,58 @@ package org.tinytlf
 			if(engine) engine.teardown();
 			
 			_engine = value;
+			totalHeight = 0;
 			
 			engine.startup();
 			
 			const textField:TextField = this;
 			
+			const virtualizer:Virtualizer = engine.getInstance(Virtualizer);
 			const cssObs:IObservable = engine.getInstance(IObservable, 'css');
 			const paragraphs:IObservable = engine.getInstance(IObservable, 'paragraphs') as IObservable;
 			const caretSubj:ISubject = engine.getInstance(ISubject, 'caret') as ISubject;
 			
 			engine.subscriptions.add(
 				// Recreate the layout container when the CSS changes if need be.
-				cssObs.subscribe(onNextCSS, null, engine.onError)
-			);
+				cssObs.subscribe(onNextCSS, null, engine.onError));
 			
 			engine.subscriptions.add(
 				// Add paragraphs
-				paragraphs.subscribe(onNextParagraph, removeChildren, engine.onError)
-			);
+				paragraphs.subscribe(onNextParagraph, removeChildren, engine.onError));
+			
+			// update the scrollRect
+			engine.subscriptions.add(
+				engine.width.combineLatest(engine.height, [].concat).
+				combineLatest(engine.vScroll, [].concat).
+				combineLatest(engine.hScroll, [].concat).
+				combineLatest(engine.css, identity).
+				combineLatest(Observable.fromEvent(this, Event.RESIZE).peek(stahp), identity).
+				subscribe(function(a:Array):void {
+					a = a.concat();
+					
+					const hs:Number = a.pop();
+					const vs:Number = a.pop();
+					const h:Number = a.pop();
+					const w:Number = a.pop();
+					
+					if(virtualizer.size > h && !$contains(scrollBar)) {
+						scrollBar.visible = true;
+					} else if(virtualizer.size < h && $contains(scrollBar)) {
+						scrollBar.visible = false;
+					}
+					
+					scrollBar.x = w;
+					scrollBar.y = 0;
+					scrollBar.height = h;
+					scrollBar.maximum = virtualizer.size - h;
+					scrollBar.setThumbPercent(h / virtualizer.size);
+					scrollBar.lineSize = h / 20;
+					scrollBar.pageSize = h / 10;
+					
+					adjustChildren();
+					
+					container.scrollRect = new Rectangle(hs - 1, vs - 1, w + 2, h + 2);
+				}));
 			
 			new KeyboardActions(engine, this);
 			new CursorActions(engine, this);
@@ -67,13 +109,11 @@ package org.tinytlf
 		
 		override public function set height(h:Number):void {
 			super.height = h;
-			scrollRect = new Rectangle(-1, -1, width + 2, height + 2);
 			engine.height = h;
 		}
 		
 		override public function set width(w:Number):void {
 			super.width = w;
-			scrollRect = new Rectangle(-1, -1, width + 2, height + 2);
 			engine.width = w;
 		}
 		
@@ -98,40 +138,26 @@ package org.tinytlf
 		}
 		
 		private function onNextCSS(css:CSS):void {
-			const progression:String = TextBlockProgression.convert(css['progression'] || TextBlockProgression.TTB);
-			const containerType:Class = progression == TextBlockProgression.TTB ? VBox : HBox;
-			
-			if(!(container is containerType)) {
-				container.removeChildren();
-				if($contains(container)) $removeChild(container);
-				$addChild(container = new containerType());
-			}
-			
-			container['spacing'] = css.getStyle('paragraphSpacing') * css.getStyle('fontMultiplier');
+			const virtualizer:Virtualizer = engine.getInstance(Virtualizer);
+			virtualizer.gap = css.getStyle('paragraphSpacing') * css.getStyle('fontMultiplier');
 		}
 		
 		private function onNextParagraph(life:IObservable):void {
+			
+			const field:TextField = this;
 			var p:Paragraph;
-			
-			const paragraphSubscriptions:ICancelable = new CompositeCancelable([
-				life.filter(function(p:Paragraph):Boolean {
-					return !contains(p);
-				}).
-				subscribe(function(n:Paragraph):void {
-					addChild(p = n);
-					trace("adding", p.block['cssInheritanceChain']);
-				}, null, engine.onError),
+			const onNext:Function = function(n:Paragraph):void { addChild(p = n); };
+			const onComplete:Function = function():void { if(p && contains(p)) removeChild(p); }
 				
-				life.subscribe(null, function():void {
-					trace("complete", p.block['cssInheritanceChain']);
-					if(contains(p)) removeChild(p);
-					
-					paragraphSubscriptions.cancel();
-					engine.subscriptions.remove(paragraphSubscriptions);
-				}, engine.onError)
-			]);
-			
-			engine.subscriptions.add(paragraphSubscriptions);
+			engine.subscriptions.add(life.subscribe(onNext, onComplete, engine.onError));
+		}
+		
+		private function adjustChildren():void {
+			const virtualizer:Virtualizer = engine.getInstance(Virtualizer);
+			for(var i:int = -1; ++i < numChildren;) {
+				const p:Paragraph = getChildAt(i) as Paragraph;
+				p.y = virtualizer.getStart(p.node.@cssInheritanceChain.toString());
+			}
 		}
 	}
 }

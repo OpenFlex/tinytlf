@@ -3,6 +3,7 @@ package org.tinytlf.values
 	import com.bit101.components.*;
 	
 	import flash.display.*;
+	import flash.events.Event;
 	import flash.text.engine.*;
 	
 	import org.tinytlf.TextEngine;
@@ -18,7 +19,7 @@ package org.tinytlf.values
 	{
 		public function set life(value:IObservable):void {
 			lifeCancelable.cancel();
-			lifeCancelable = value.subscribe(onNextLife, destroy, error);
+			lifeCancelable = value.subscribe(onNextLife, destroy, engine.onError);
 		}
 		
 		[Inject]
@@ -76,6 +77,7 @@ package org.tinytlf.values
 			
 			$addChild(container);
 			removeChildren();
+			updateVirtualizer();
 			
 			lineCancelable = new CompositeCancelable([
 				
@@ -84,7 +86,7 @@ package org.tinytlf.values
 					subscribe(function(line:TextLine):void {
 						container.height += line.descent;
 						width = container.width + block['paddingLeft'] + block['paddingRight'];
-						height = block['paddingTop'] + container.height + block['paddingBottom']
+						height = block['paddingTop'] + container.height + block['paddingBottom'];
 					}),
 				
 				// Adjust the container's Y by the first line's ascent
@@ -97,7 +99,7 @@ package org.tinytlf.values
 				// Add all the line children
 				// When the lines finish rendering, update the Virtualizer
 				// with our new width and height values.
-				textLines.subscribe(addChild, updateVirtualizer),
+				textLines.subscribe(addChild, addingLinesComplete),
 				
 				lines.connect()
 			]);
@@ -105,7 +107,7 @@ package org.tinytlf.values
 			engine.subscriptions.add(lineCancelable);
 		}
 		
-		protected function updateVirtualizer():void {
+		protected function addingLinesComplete():void {
 			width = container.width + block['paddingLeft'] + block['paddingRight'];
 			height = block['paddingTop'] + container.height + block['paddingBottom']
 			container.y += block['paddingTop'];
@@ -120,32 +122,33 @@ package org.tinytlf.values
 			height += block['marginTop'] + block['marginBottom'];
 			width += block['marginLeft'] + block['marginRight'];
 			
+			updateVirtualizer();
+			
+			// EVERYTHING rides on this event dispatching :/
+			dispatchEvent(new Event(Event.RESIZE, true));
+		}
+		
+		protected function updateVirtualizer(...args):void {
 			const key:String = node.@cssInheritanceChain.toString();
 			const prevKey:String = prev ? prev.node.@cssInheritanceChain.toString() : '';
 			
-			var index:int = virtualizer.getIndex(key);
+			const index:int = virtualizer.getIndex(key);
 			const prevIndex:int = virtualizer.getIndex(prevKey);
 			
-			// TODO: make this work with horizontal progressions too.
 			if(index > -1) {
-				virtualizer.setSizeAt(index, height);
+				virtualizer.setSize(key, height);
 			} else if(prevIndex > -1) {
 				virtualizer.addAt(key, prevIndex + 1, height);
 			} else {
 				virtualizer.add(key, height);
 			}
+			
+			y = virtualizer.getStart(key);
 		}
 		
 		public function destroy():void {
 			lifeCancelable.cancel();
 			lineCancelable.cancel();
-			
-//			removeChildren();
-//			$removeChildren();
-		}
-		
-		protected function error(e:Error):void {
-			trace(e);
 		}
 	}
 }

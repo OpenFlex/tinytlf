@@ -1,5 +1,7 @@
 package org.tinytlf.classes
 {
+	import com.bit101.components.ScrollBar;
+	
 	import flash.display.*;
 	import flash.events.*;
 
@@ -18,9 +20,14 @@ package org.tinytlf.classes
 		}
 		
 		protected var container:DisplayObjectContainer = new Sprite();
+		protected var scrollBar:ScrollBar = new ScrollBar('vertical');
 		
 		override public function addChild(child:DisplayObject):DisplayObject {
 			return container.addChild(child);
+		}
+		
+		override public function addChildAt(child:DisplayObject, index:int):DisplayObject {
+			return container.addChildAt(child, index);
 		}
 		
 		override public function contains(child:DisplayObject):Boolean {
@@ -33,6 +40,10 @@ package org.tinytlf.classes
 		
 		override public function removeChild(child:DisplayObject):DisplayObject {
 			return container.removeChild(child);
+		}
+		
+		override public function removeChildAt(index:int):DisplayObject {
+			return container.removeChildAt(index);
 		}
 		
 		override public function removeChildren(beginIndex:int=0, endIndex:int=int.MAX_VALUE):void {

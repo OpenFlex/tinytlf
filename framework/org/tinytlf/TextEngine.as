@@ -232,7 +232,9 @@ package org.tinytlf
 		private const heightSubj:ISubject = new ReplaySubject(1);
 		
 		public function get height():IObservable {
-			return heightSubj.distinctUntilChanged().cast(Number);
+			return heightSubj.
+				distinctUntilChanged().
+				cast(Number);
 		}
 		
 		public function set height(w:*):void {
