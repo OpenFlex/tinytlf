@@ -26,6 +26,14 @@ package org.tinytlf.classes
 			return indexCache.concat();
 		}
 		
+		public function get gap():Number {
+			return vector.gap;
+		}
+		
+		public function set gap(value:Number):void {
+			vector.gap = value;
+		}
+		
 		public function clear():void
 		{
 			vector = new SparseArray();
