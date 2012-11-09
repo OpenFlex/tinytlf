@@ -27,7 +27,7 @@ package org.tinytlf.lambdas
 		ef.digitCase = obj.digitCase || DigitCase.DEFAULT;
 		ef.digitWidth = obj.digitWidth || DigitWidth.DEFAULT;
 		ef.dominantBaseline = obj.objinantBaseline || TextBaseline.ROMAN;
-		ef.fontSize = valueFilter(obj.fontSize || obj.size || '12', 'number');
+		ef.fontSize = valueFilter(obj.fontSize || obj.size || '12', 'number') * valueFilter(obj.fontMultiplier || '1', 'number');
 		ef.kerning = obj.kerning || Kerning.AUTO;
 		ef.ligatureLevel = obj.ligatureLevel || LigatureLevel.COMMON;
 		ef.locale = obj.locale || 'en_US';

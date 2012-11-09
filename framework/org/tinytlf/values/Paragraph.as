@@ -67,6 +67,7 @@ package org.tinytlf.values
 				container['spacing'] = block['leading'];
 			}
 			container.removeChildren();
+			container['spacing'] = block['leading'] * block.getStyle('fontMultiplier');
 			
 			lineCancelable = new CompositeCancelable([
 				
