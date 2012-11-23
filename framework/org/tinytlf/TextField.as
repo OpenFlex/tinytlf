@@ -6,6 +6,7 @@ package org.tinytlf
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	
+	import org.tinytlf.actions.CaretActions;
 	import org.tinytlf.actions.CursorActions;
 	import org.tinytlf.actions.KeyboardActions;
 	import org.tinytlf.classes.CSS;
@@ -96,13 +97,14 @@ package org.tinytlf
 					container.scrollRect = new Rectangle(hs - 1, vs - 1, w + 2, h + 2);
 				}));
 			
-			new KeyboardActions(engine, this);
-			new CursorActions(engine, this);
-			
 			engine.width = width;
 			engine.height = height;
 			engine.css = css;
 			engine.html = html;
+			
+			new KeyboardActions(engine, this);
+			new CursorActions(engine, this);
+			new CaretActions(engine, this);
 		}
 		
 		private const caret:Sprite = new Sprite();

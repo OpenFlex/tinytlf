@@ -18,7 +18,7 @@ package
 	import raix.reactive.IObservable;
 	import raix.reactive.Observable;
 	
-	[SWF(width = "600", height = "500")]
+	[SWF(width = "600", height = "5000")]
 	public class TinyTLFDemo extends Sprite
 	{
 		private const helvetica:Helvetica;

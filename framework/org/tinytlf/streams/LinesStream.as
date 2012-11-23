@@ -4,6 +4,7 @@ package org.tinytlf.streams
 	
 	import org.tinytlf.classes.Styleable;
 	import org.tinytlf.lambdas.*;
+	import org.tinytlf.pools.TextLines;
 	import org.tinytlf.values.*;
 	
 	import raix.reactive.*;
@@ -28,7 +29,7 @@ package org.tinytlf.streams
 			const newWidth:Number = b_w.pop();
 			const block:Block = b_w.pop();
 			
-			return [block, newWidth, createLineBreaker(block, prevWidth, newWidth).publish().refCount()];
+			return [block, newWidth, createLineBreaker(block, prevWidth, newWidth)];
 		}
 		
 		private function createLineBreaker(block:Block, prevWidth:Number, newWidth:Number):IObservable {
@@ -47,6 +48,8 @@ package org.tinytlf.streams
 			
 			if(isBlockInvalid(block.block)) {
 				const validLines:Array = getValidLines(block.block);
+				TextLines.checkIn.apply(getInvalidLines(block.block));
+				
 				const initial:TextLine = getLineBeforeFirstInvalidLine(block.block);
 				
 				return Observable.concat([

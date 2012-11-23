@@ -14,9 +14,7 @@ package org.tinytlf.actions
 	import org.tinytlf.events.keyboard.backspace;
 	import org.tinytlf.events.modifiers.option;
 	import org.tinytlf.events.modifiers.shift;
-	import org.tinytlf.events.mouse.down;
 	import org.tinytlf.events.stahp;
-	import org.tinytlf.lambdas.getIndexAtPoint;
 	import org.tinytlf.lambdas.getLeafAtIndex;
 	import org.tinytlf.lambdas.identity;
 	import org.tinytlf.lambdas.nextWordBoundary;
@@ -32,9 +30,6 @@ package org.tinytlf.actions
 	{
 		public function KeyboardActions(engine:TextEngine, textField:TextField)
 		{
-			engine.subscriptions.add(engine.caret.subscribe(onNextCaret));
-			engine.subscriptions.add(Observable.timer(0, 350).subscribe(onNextCaretBlink));
-			
 			const caretSubj:ISubject = engine.getInstance(ISubject, 'caret');
 			const selectionSubj:ISubject = engine.getInstance(ISubject, 'selection');
 			const xmlNodesSubj:ISubject = engine.getInstance(ISubject, 'xml');
@@ -164,43 +159,6 @@ package org.tinytlf.actions
 			}));
 		}
 		
-		private const caret:Sprite = new Sprite();
-		
-		private function onNextCaretBlink(val:int):void {
-			caret.visible = val % 2 == 0;
-		}
-		
-		private function onNextCaret(value:Caret):void {
-			const index:int = value.index;
-			
-			if(index == -1) {
-				if(caret.parent)
-					caret.parent.removeChild(caret);
-				
-				return;
-			}
-			
-			caret.visible = true;
-			
-			const line:TextLine = value.line.line;
-			if(line.stage) line.stage.focus = line;
-			
-			const x:Number = index >= line.atomCount ?
-				line.getAtomBounds(line.atomCount - 1).right :
-				line.getAtomBounds(index).left; 
-			
-			caret.x = x;
-			caret.y = -line.ascent;
-			
-			line.addChild(caret);
-			
-			const g:Graphics = caret.graphics;
-			g.clear();
-			g.beginFill(0x00);
-			g.drawRect(0, 0, 1, line.textHeight);
-			g.endFill();
-		}
-		
 		private function combineSubjectAndSelector(subj:ISubject, selector:Function):Function{
 			return function(n:*):IObservable {
 				return subj.take(1).map(function(s:*):* {
@@ -224,7 +182,7 @@ package org.tinytlf.actions
 			const leaf:String = info.pop().toString();
 			const result:String = leaf.substring(0, index - 1) + leaf.substring(index);
 			
-			return setLeafAtIndex(node, result, caret.index);
+			return setLeafAtIndex(node, result, caret.index).normalize();
 		}
 		
 		private function mapWordLeft(caret:Caret, ...args):Caret {

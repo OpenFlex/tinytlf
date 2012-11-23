@@ -7,10 +7,10 @@ package org.tinytlf.pools
 	{
 		public static function cleanLine(line:TextLine):TextLine
 		{
-			if(line.parent)
-				line.parent.removeChild(line);
+			if(line.parent) line.parent.removeChild(line);
 			
 			line.userData = null;
+			line.validity = TextLineValidity.STATIC;
 			
 			return line;
 		}
@@ -18,13 +18,15 @@ package org.tinytlf.pools
 		private static const lines:Dictionary = new Dictionary(false);
 		public static var numLines:int = 0;
 		
-		public static function checkIn(line:TextLine):void
+		public static function checkIn(...lines):void
 		{
-			if(line in lines)
-				return;
-			
-			++numLines;
-			lines[cleanLine(line)] = true;
+			lines.forEach(function(line:TextLine, ...args):void {
+				if(line in lines)
+					return;
+				
+				++numLines;
+				lines[cleanLine(line)] = true;
+			});
 		}
 		
 		public static function checkOut():TextLine

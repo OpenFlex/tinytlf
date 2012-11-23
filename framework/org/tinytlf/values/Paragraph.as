@@ -11,6 +11,8 @@ package org.tinytlf.values
 	import org.tinytlf.classes.Virtualizer;
 	import org.tinytlf.constants.TextAlign;
 	import org.tinytlf.constants.TextBlockProgression;
+	import org.tinytlf.pools.TextBlocks;
+	import org.tinytlf.pools.TextLines;
 	
 	import raix.reactive.*;
 	import raix.reactive.subjects.*;
@@ -112,13 +114,6 @@ package org.tinytlf.values
 			height = block['paddingTop'] + container.height + block['paddingBottom']
 			container.y += block['paddingTop'];
 			
-//			const g:Graphics = graphics;
-//			g.clear();
-//			g.beginFill(0x00, 0);
-//			g.lineStyle(1, 0xcccccc);
-//			g.drawRect(0, 0, width, height);
-//			g.endFill();
-			
 			height += block['marginTop'] + block['marginBottom'];
 			width += block['marginLeft'] + block['marginRight'];
 			
@@ -149,6 +144,10 @@ package org.tinytlf.values
 		public function destroy():void {
 			lifeCancelable.cancel();
 			lineCancelable.cancel();
+			
+			for(var i:int = -1; ++i < numChildren;) {
+				TextLines.checkIn(getChildAt(i) as TextLine);
+			}
 		}
 	}
 }

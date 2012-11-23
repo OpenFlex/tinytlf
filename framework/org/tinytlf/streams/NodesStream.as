@@ -16,8 +16,10 @@ package org.tinytlf.streams
 		public function get observable():IObservable {
 			// TODO: Make this work with horizontal block progressions.
 			
-			// Do stuff when any of these 3 properties change
-			return height.combineLatest(width, identity).combineLatest(vScroll, [].concat).
+			// Do stuff when any of these 4 properties change
+			return height.
+				combineLatest(vScroll, [].concat).
+				combineLatest(width, identity).
 				// Mutate the values into an array of visible XML node keys
 				map(mapVisibleNodeKeys).
 				
@@ -130,6 +132,9 @@ package org.tinytlf.streams
 		
 		[Inject]
 		public var virtualizer:Virtualizer;
+		
+		[Inject(name="css")]
+		public var css:IObservable;
 		
 		[Inject(name="width")]
 		public var width:IObservable;

@@ -189,7 +189,7 @@ package org.tinytlf
 		private const cssSubj:ISubject = new ReplaySubject(1);
 		
 		public function get css():IObservable {
-			return cssSubj.distinctUntilChanged().cast(CSS);
+			return cssSubj.cast(CSS);
 		}
 		
 		public function set css(w:*):void {

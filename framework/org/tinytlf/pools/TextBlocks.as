@@ -4,10 +4,10 @@ package org.tinytlf.pools
 	
 	public final class TextBlocks
 	{
-		public static function cleanBlock(block:TextBlock):void
+		public static function cleanBlock(block:TextBlock):TextBlock
 		{
 			if(!block)
-				return;
+				return block;
 			
 			if(block.firstLine)
 				block.releaseLines(block.firstLine, block.lastLine);
@@ -15,6 +15,7 @@ package org.tinytlf.pools
 			block.releaseLineCreationData();
 			block.content = null;
 			block.userData = null;
+			return block;
 		}
 		
 		private static const blocks:Vector.<TextBlock> = new <TextBlock>[];
@@ -23,8 +24,7 @@ package org.tinytlf.pools
 			if(!block)
 				return;
 			
-			cleanBlock(block);
-			blocks.push(block);
+			blocks.push(cleanBlock(block));
 		}
 		
 		public static function checkOut():TextBlock
