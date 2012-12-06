@@ -24,8 +24,7 @@ package org.tinytlf.actions
 	{
 		public function CursorActions(engine:TextEngine, textField:TextField)
 		{
-			const caretSubj:ISubject = engine.getInstance(ISubject, 'caret');
-			const selectionSubj:ISubject = engine.getInstance(ISubject, 'selection');
+			const caret:IObservable = engine.caret;
 			
 			const clickInLine:IObservable = down(textField).filter(targetIsTextLine).
 //				peek(stahp).
@@ -38,29 +37,27 @@ package org.tinytlf.actions
 			engine.subscriptions.add(Observable.merge([
 					clickInLine, clickInParagraph
 				]).
-				subscribe(function(...args):void{
-					selectionSubj.onNext(new Selection(null, null));
+				subscribe(function(...args):void {
+					engine.selection = new Selection(null, null);
 				}));
 			
-			engine.subscriptions.add(
-				over(textField).subscribe(onNextOver));
+			engine.subscriptions.add(over(textField).subscribe(onNextOver));
 			
-			engine.subscriptions.add(
-				out(textField).subscribe(onNextOut));
+			engine.subscriptions.add(out(textField).subscribe(onNextOut));
 			
 			// Handle clicks inside TextLines
 			engine.subscriptions.add(
 				clickInLine.
-				mapMany(combineSubjectAndSelector(caretSubj, mapLineClick)).
-				repeat().
-				subscribe(caretSubj.onNext, null, engine.onError));
+					mapMany(combineSubjectAndSelector(caret, mapLineClick)).
+					repeat().
+					subscribe(engine.setCaret, null, engine.onError));
 			
 			// Handle clicks inside paragraphs
 			engine.subscriptions.add(
 				clickInParagraph.
-				mapMany(combineSubjectAndSelector(caretSubj, mapParagraphClick)).
-				repeat().
-				subscribe(caretSubj.onNext, null, engine.onError));
+					mapMany(combineSubjectAndSelector(caret, mapParagraphClick)).
+					repeat().
+					subscribe(engine.setCaret, null, engine.onError));
 		}
 			
 		private function onNextOver(...args):void {
@@ -84,7 +81,7 @@ package org.tinytlf.actions
 			const index:int = getIndexAtPoint(textLine, event.stageX, event.stageY);
 			const line:Line = textLine.userData as Line;
 			
-			return caret.setValues([line.paragraph, line.block, line, index, line.block.node]);
+			return caret.clone(line.paragraph, line.block, line, index, line.block.node);
 		}
 		
 		private function mapParagraphClick(caret:Caret, event:MouseEvent):Caret {
@@ -104,10 +101,10 @@ package org.tinytlf.actions
 			
 			const line:Line = textLine.userData;
 			
-			return caret.setValues([line.paragraph, line.block, line, index, line.block.node]);
+			return caret.clone(line.paragraph, line.block, line, index, line.block.node);
 		}
 		
-		private function combineSubjectAndSelector(subj:ISubject, selector:Function):Function{
+		private function combineSubjectAndSelector(subj:IObservable, selector:Function):Function{
 			return function(n:*):IObservable {
 				return subj.take(1).map(function(s:*):* {
 					return selector(s, n);

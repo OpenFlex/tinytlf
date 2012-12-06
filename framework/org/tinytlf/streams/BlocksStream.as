@@ -2,7 +2,6 @@ package org.tinytlf.streams
 {
 	import flash.text.engine.TextBlock;
 	
-	import org.swiftsuspenders.*;
 	import org.tinytlf.classes.*;
 	import org.tinytlf.lambdas.*;
 	import org.tinytlf.pools.*;

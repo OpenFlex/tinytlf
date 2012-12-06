@@ -2,7 +2,6 @@ package org.tinytlf.streams
 {
 	import flash.text.engine.*;
 	
-	import org.swiftsuspenders.*;
 	import org.tinytlf.classes.*;
 	import org.tinytlf.lambdas.*;
 	import org.tinytlf.values.*;
@@ -20,7 +19,7 @@ package org.tinytlf.streams
 		}
 		
 		private function mapGroup(group:IObservable/*<XML>*/):IObservable/*<Content>*/ {
-			return group.combineLatest(css, [].concat).
+			return group.combineLatest(css, concatParams).
 				map(recurse).
 				takeUntil(group.count());
 		}

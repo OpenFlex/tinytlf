@@ -1,34 +1,32 @@
 package org.tinytlf.actions
 {
-	import flash.display.Graphics;
-	import flash.display.Sprite;
-	import flash.text.engine.TextLine;
+	import flash.display.*;
+	import flash.text.engine.*;
 	
 	import org.tinytlf.TextEngine;
 	import org.tinytlf.TextField;
+	import org.tinytlf.lambdas.concatParams;
 	import org.tinytlf.values.Caret;
 	import org.tinytlf.values.Paragraph;
 	
-	import raix.reactive.IObservable;
-	import raix.reactive.ISubject;
-	import raix.reactive.Observable;
+	import raix.reactive.*;
 
 	public class CaretActions
 	{
 		public function CaretActions(engine:TextEngine, textField:TextField)
 		{
-			const caretSubj:ISubject = engine.getInstance(ISubject, 'caret');
-			const vScrollSubj:ISubject = engine.getInstance(ISubject, 'vScroll');
-			const height:IObservable = engine.getInstance(IObservable, 'height');
+			const caret:IObservable = engine.caret;
+			const height:IObservable = engine.height;
+			const vScroll:IObservable = engine.vScroll;
 			
 			engine.subscriptions.add(Observable.timer(0, 350).subscribe(onNextCaretBlink));
-			engine.subscriptions.add(caretSubj.subscribe(onNextCaret));
-			engine.subscriptions.add(caretSubj.mapMany(
+			engine.subscriptions.add(caret.subscribe(onNextCaret));
+			engine.subscriptions.add(caret.mapMany(
 					combineSubjectAndSelector(
-						height.combineLatest(vScrollSubj.take(1), [].concat), 
+						height.combineLatest(vScroll.take(1), concatParams), 
 						mapCaretVScroll)
 				).
-				subscribe(vScrollSubj.onNext, null, engine.onError));
+				subscribe(engine.setVScroll, null, engine.onError));
 		}
 		
 		private const caret:Sprite = new Sprite();

@@ -16,7 +16,7 @@ package org.tinytlf.actions
 	import org.tinytlf.events.modifiers.shift;
 	import org.tinytlf.events.stahp;
 	import org.tinytlf.lambdas.getLeafAtIndex;
-	import org.tinytlf.lambdas.identity;
+	import org.tinytlf.fn.identity;
 	import org.tinytlf.lambdas.nextWordBoundary;
 	import org.tinytlf.lambdas.setLeafAtIndex;
 	import org.tinytlf.values.Caret;
@@ -30,9 +30,8 @@ package org.tinytlf.actions
 	{
 		public function KeyboardActions(engine:TextEngine, textField:TextField)
 		{
-			const caretSubj:ISubject = engine.getInstance(ISubject, 'caret');
-			const selectionSubj:ISubject = engine.getInstance(ISubject, 'selection');
-			const xmlNodesSubj:ISubject = engine.getInstance(ISubject, 'xml');
+			const caret:IObservable = engine.caret;
+			const selection:IObservable = engine.selection;
 			
 			const shiftOptionArrowLeft:IObservable = shift(option(arrowleft(textField))).
 				peek(stahp).publish().refCount();
@@ -92,58 +91,58 @@ package org.tinytlf.actions
 			// Move the caret left by word boundary
 			engine.subscriptions.add(
 				shiftOptionArrowLeft.merge(optionArrowLeft).
-					mapMany(combineSubjectAndSelector(caretSubj, mapWordLeft)).
+					mapMany(combineSubjectAndSelector(caret, mapWordLeft)).
 					repeat().
-					subscribe(caretSubj.onNext, null, engine.onError));
+					subscribe(engine.setCaret, null, engine.onError));
 			
 			// Move the caret left by word boundary
 			engine.subscriptions.add(
 				shiftOptionArrowRight.merge(optionArrowRight).
-					mapMany(combineSubjectAndSelector(caretSubj, mapWordRight)).
+					mapMany(combineSubjectAndSelector(caret, mapWordRight)).
 					repeat().
-					subscribe(caretSubj.onNext, null, engine.onError));
+					subscribe(engine.setCaret, null, engine.onError));
 			
 			// Move the caret to the beginning of the paragraph
 			engine.subscriptions.add(
 				shiftOptionArrowUp.merge(optionArrowUp).
-					mapMany(combineSubjectAndSelector(caretSubj, mapParagraphUp)).
+					mapMany(combineSubjectAndSelector(caret, mapParagraphUp)).
 					repeat().
-					subscribe(caretSubj.onNext, null, engine.onError));
+					subscribe(engine.setCaret, null, engine.onError));
 			
 			// Move the caret to the end of the paragraph
 			engine.subscriptions.add(
 				shiftOptionArrowDown.merge(optionArrowDown).
-					mapMany(combineSubjectAndSelector(caretSubj, mapParagraphDown)).
+					mapMany(combineSubjectAndSelector(caret, mapParagraphDown)).
 					repeat().
-					subscribe(caretSubj.onNext, null, engine.onError));
+					subscribe(engine.setCaret, null, engine.onError));
 			
 			// Move the caret one left
 			engine.subscriptions.add(
 				Observable.merge([shiftArrowLeft, arrowLeft, back]).
-					mapMany(combineSubjectAndSelector(caretSubj, mapOneLeft)).
+					mapMany(combineSubjectAndSelector(caret, mapOneLeft)).
 					repeat().
-					subscribe(caretSubj.onNext, null, engine.onError));
+					subscribe(engine.setCaret, null, engine.onError));
 			
 			// Move the caret one right
 			engine.subscriptions.add(
 				shiftArrowRight.merge(arrowRight).
-					mapMany(combineSubjectAndSelector(caretSubj, mapOneRight)).
+					mapMany(combineSubjectAndSelector(caret, mapOneRight)).
 					repeat().
-					subscribe(caretSubj.onNext, null, engine.onError));
+					subscribe(engine.setCaret, null, engine.onError));
 			
 			// Move the caret one line up
 			engine.subscriptions.add(
 				shiftArrowUp.merge(arrowUp).
-					mapMany(combineSubjectAndSelector(caretSubj, mapOneUp)).
+					mapMany(combineSubjectAndSelector(caret, mapOneUp)).
 					repeat().
-					subscribe(caretSubj.onNext, null, engine.onError));
+					subscribe(engine.setCaret, null, engine.onError));
 			
 			// Move the caret one line down
 			engine.subscriptions.add(
 				shiftArrowDown.merge(arrowDown).
-					mapMany(combineSubjectAndSelector(caretSubj, mapOneDown)).
+					mapMany(combineSubjectAndSelector(caret, mapOneDown)).
 					repeat().
-					subscribe(caretSubj.onNext, null, engine.onError));
+					subscribe(engine.setCaret, null, engine.onError));
 			
 			// And finally, any time any of these happen, clear selections.
 			engine.subscriptions.add(Observable.merge([
@@ -152,14 +151,14 @@ package org.tinytlf.actions
 				arrowLeft, arrowRight,
 				arrowUp, arrowDown
 			]).
-				mapMany(combineSubjectAndSelector(caretSubj, identity)).
+				mapMany(combineSubjectAndSelector(caret, identity)).
 				repeat().
 				subscribe(function(caret:Caret, ...args):void {
-					selectionSubj.onNext(new Selection(caret.setValues([]), caret.setValues([])));
+					engine.selection = new Selection(caret.clone(), caret.clone());
 			}));
 		}
 		
-		private function combineSubjectAndSelector(subj:ISubject, selector:Function):Function{
+		private function combineSubjectAndSelector(subj:IObservable, selector:Function):Function{
 			return function(n:*):IObservable {
 				return subj.take(1).map(function(s:*):* {
 					return selector(s, n);
@@ -190,7 +189,7 @@ package org.tinytlf.actions
 			var textLine:TextLine = caret.line.line;
 			
 			if(index > 0) {
-				return caret.setValues([nextWordBoundary(textLine, index - 1)]);
+				return caret.clone(nextWordBoundary(textLine, index - 1));
 			}
 			
 			return mapOneLeft(caret);
@@ -201,7 +200,7 @@ package org.tinytlf.actions
 			const textLine:TextLine = caret.line.line;
 			
 			if(index < textLine.atomCount) {
-				return caret.setValues([nextWordBoundary(textLine, index, false)]);
+				return caret.clone(nextWordBoundary(textLine, index, false));
 			}
 			
 			return mapOneRight(caret);
@@ -213,7 +212,7 @@ package org.tinytlf.actions
 			if(index > 0) {
 				const paragraph:Paragraph = caret.paragraph;
 				const textLine:TextLine = paragraph.getChildAt(0) as TextLine;
-				return caret.setValues([0, textLine.userData]);
+				return caret.clone(0, textLine.userData);
 			}
 			
 			return mapOneLeft(caret);
@@ -226,7 +225,7 @@ package org.tinytlf.actions
 			if(index < textLine.atomCount) {
 				const paragraph:Paragraph = caret.paragraph;
 				textLine = paragraph.getChildAt(paragraph.numChildren - 1) as TextLine;
-				return caret.setValues([textLine.atomCount, textLine.userData]);
+				return caret.clone(textLine.atomCount, textLine.userData);
 			}
 			
 			return mapOneRight(caret);
@@ -236,17 +235,17 @@ package org.tinytlf.actions
 			const index:int = caret.index;
 			
 			if(index > 0) {
-				return caret.setValues([index - 1]);
+				return caret.clone(index - 1);
 			}
 			
 			const line:Line = caret.line.prev;
-			if(line) return caret.setValues([line, line.line.atomCount]);
+			if(line) return caret.clone(line, line.line.atomCount);
 			
 			const paragraph:Paragraph = caret.paragraph.prev;
 			if(paragraph == null) return caret;
 			
 			const textLine:TextLine = paragraph.getChildAt(paragraph.numChildren - 1) as TextLine;
-			return caret.setValues([paragraph, paragraph.block, textLine.userData, textLine.atomCount, paragraph.node]);
+			return caret.clone(paragraph, paragraph.block, textLine.userData, textLine.atomCount, paragraph.node);
 		}
 		
 		private function mapOneRight(caret:Caret, ...args):Caret {
@@ -254,17 +253,17 @@ package org.tinytlf.actions
 			var textLine:TextLine = caret.line.line;
 			
 			if(index < textLine.atomCount) {
-				return caret.setValues([index + 1]);
+				return caret.clone(index + 1);
 			}
 			
 			const line:Line = caret.line.next;
-			if(line) return caret.setValues([line, 0]);
+			if(line) return caret.clone(line, 0);
 			
 			const paragraph:Paragraph = caret.paragraph.next;
 			if(paragraph == null) return caret;
 			
 			textLine = paragraph.getChildAt(0) as TextLine;
-			return caret.setValues([paragraph, paragraph.block, textLine.userData, 0, paragraph.node]);
+			return caret.clone(paragraph, paragraph.block, textLine.userData, 0, paragraph.node);
 		}
 		
 		private function mapOneUp(caret:Caret, ...args):Caret {
@@ -274,7 +273,7 @@ package org.tinytlf.actions
 			if(line == null) {
 				const paragraph:Paragraph = caret.paragraph.prev;
 				
-				if(paragraph == null) return caret.setValues([0]);
+				if(paragraph == null) return caret.clone(0);
 				
 				line = (paragraph.getChildAt(paragraph.numChildren - 1) as TextLine).userData;
 			}
@@ -291,14 +290,14 @@ package org.tinytlf.actions
 				newTextLine.getAtomIndexAtPoint(newLineStageCoords.x + (bounds.width * 0.5), newLineStageCoords.y);
 			
 			if(newIndex != -1) {
-				return caret.setValues([line.paragraph, line.block, line, newIndex, line.block.node]);
+				return caret.clone(line.paragraph, line.block, line, newIndex, line.block.node);
 			}
 			
 			if(bounds.left > newTextLine.width) {
-				return caret.setValues([line.paragraph, line.block, line, newTextLine.atomCount, line.block.node]);
+				return caret.clone(line.paragraph, line.block, line, newTextLine.atomCount, line.block.node);
 			}
 			
-			return caret.setValues([line.paragraph, line.block, line, 0, line.block.node]);
+			return caret.clone(line.paragraph, line.block, line, 0, line.block.node);
 		}
 		
 		private function mapOneDown(caret:Caret, ...args):Caret {
@@ -312,7 +311,7 @@ package org.tinytlf.actions
 				if(paragraph == null) {
 					paragraph = caret.paragraph;
 					textLine = paragraph.getChildAt(paragraph.numChildren - 1) as TextLine;
-					return caret.setValues([textLine.atomCount]);
+					return caret.clone(textLine.atomCount);
 				}
 				
 				line = (paragraph.getChildAt(0) as TextLine).userData;
@@ -330,14 +329,14 @@ package org.tinytlf.actions
 				newTextLine.getAtomIndexAtPoint(newLineStageCoords.x + (bounds.width * 0.5), newLineStageCoords.y);
 			
 			if(newIndex != -1) {
-				return caret.setValues([line.paragraph, line.block, line, newIndex, line.block.node]);
+				return caret.clone(line.paragraph, line.block, line, newIndex, line.block.node);
 			}
 			
 			if(bounds.left > newTextLine.width) {
-				return caret.setValues([line.paragraph, line.block, line, newTextLine.atomCount, line.block.node]);
+				return caret.clone(line.paragraph, line.block, line, newTextLine.atomCount, line.block.node);
 			}
 			
-			return caret.setValues([line.paragraph, line.block, line, 0, line.block.node]);
+			return caret.clone(line.paragraph, line.block, line, 0, line.block.node);
 		}
 	}
 }

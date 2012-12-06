@@ -20,10 +20,10 @@ package org.tinytlf.values
 		public const index:int;
 		public const node:XML;
 		
-		public function setValues(values:Array):Caret {
+		public function clone(...newValues):Caret {
 			var b:Block, i:int = NaN, l:Line, n:XML, p:Paragraph;
 			
-			values.forEach(function(val:*, ...args):void {
+			newValues.forEach(function(val:*, ...args):void {
 				b ||= val as Block;
 				i ||= val as int;
 				l ||= val as Line;

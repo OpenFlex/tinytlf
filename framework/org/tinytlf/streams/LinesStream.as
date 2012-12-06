@@ -2,7 +2,6 @@ package org.tinytlf.streams
 {
 	import flash.text.engine.*;
 	
-	import org.tinytlf.classes.Styleable;
 	import org.tinytlf.lambdas.*;
 	import org.tinytlf.pools.TextLines;
 	import org.tinytlf.values.*;
@@ -19,7 +18,7 @@ package org.tinytlf.streams
 		}
 		
 		private function mapBlocks(blockObs:IObservable):IObservable {
-			return blockObs.combineLatest(width, [].concat).
+			return blockObs.combineLatest(width, concatParams).
 				takeUntil(blockObs.count()).
 				scan(scanBlockAndWidth, [0, 0, 0], true);
 		}

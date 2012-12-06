@@ -1,7 +1,7 @@
 package org.tinytlf.streams
 {
-	import org.swiftsuspenders.*;
 	import org.tinytlf.classes.*;
+	import org.tinytlf.fn.identity;
 	import org.tinytlf.lambdas.*;
 	
 	import raix.reactive.*;
@@ -18,7 +18,7 @@ package org.tinytlf.streams
 			
 			// Do stuff when any of these 4 properties change
 			return height.
-				combineLatest(vScroll, [].concat).
+				combineLatest(vScroll, concatParams).
 				combineLatest(width, identity).
 				// Mutate the values into an array of visible XML node keys
 				map(mapVisibleNodeKeys).
@@ -92,8 +92,8 @@ package org.tinytlf.streams
 		
 		private function nodeScrolledOffScreen(group:IGroupedObservable):IObservable {
 			return height.combineLatest(width, identity).
-				combineLatest(vScroll, [].concat).
-				combineLatest(Observable.value(group.key), [].concat).
+				combineLatest(vScroll, concatParams).
+				combineLatest(Observable.value(group.key), concatParams).
 				filter(filterNodeVisibility);
 		}
 		

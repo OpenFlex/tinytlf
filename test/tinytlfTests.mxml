@@ -10,9 +10,9 @@
 	<mx:Script>
 		<![CDATA[
 			import org.flexunit.internals.TraceListener;
-			import org.flexunit.listeners.CIListener;
 			import org.flexunit.runner.FlexUnitCore;
 			import org.tinytlf.TextEngineTests;
+			import org.tinytlf.streams.xmlToUITest;
 			
 			private var core:FlexUnitCore;
 			
@@ -25,8 +25,8 @@
 			{
 				core = new FlexUnitCore();
 				core.addListener(new TraceListener());
-				core.addListener(new CIListener());
-				core.run(TextEngineTests);
+//				core.addListener(new CIListener());
+				core.run(TextEngineTests, xmlToUITest);
 			}
 		]]>
 	</mx:Script>

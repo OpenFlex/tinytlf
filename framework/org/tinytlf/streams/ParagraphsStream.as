@@ -1,7 +1,5 @@
 package org.tinytlf.streams
 {
-	import org.swiftsuspenders.*;
-	import org.tinytlf.values.Block;
 	import org.tinytlf.values.Paragraph;
 	
 	import raix.reactive.*;
@@ -17,15 +15,12 @@ package org.tinytlf.streams
 		}
 		
 		private function mapBlockLife(life:IObservable):IObservable {
-			const paragraph:Paragraph = injector.instantiateUnmapped(Paragraph);
+			const paragraph:Paragraph = new Paragraph();
 			paragraph.life = life;
 			return life.
 				map(function(...args):Paragraph { return paragraph; }).
 				takeUntil(life.count());
 		}
-		
-		[Inject]
-		public var injector:Injector;
 		
 		[Inject(name="lines")]
 		public var lines:IObservable;

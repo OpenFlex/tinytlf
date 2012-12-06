@@ -1,7 +1,5 @@
 package org.tinytlf.classes
 {
-	import com.bit101.components.ScrollBar;
-	
 	import flash.display.*;
 	import flash.events.*;
 
@@ -10,17 +8,16 @@ package org.tinytlf.classes
 		public function Container(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number = 0)
 		{
 			super();
+			
 			x = xpos;
 			y = ypos;
-			if(parent) {
-				parent.addChild(this);
-			}
+			
+			if(parent) parent.addChild(this);
 			
 			$addChild(container);
 		}
 		
 		protected var container:DisplayObjectContainer = new Sprite();
-		protected var scrollBar:ScrollBar = new ScrollBar('vertical');
 		
 		override public function addChild(child:DisplayObject):DisplayObject {
 			return container.addChild(child);
@@ -36,6 +33,14 @@ package org.tinytlf.classes
 		
 		override public function getChildAt(index:int):DisplayObject {
 			return container.getChildAt(index);
+		}
+		
+		override public function getChildByName(name:String):DisplayObject {
+			return container.getChildByName(name);
+		}
+		
+		override public function getChildIndex(child:DisplayObject):int {
+			return container.getChildIndex(child);
 		}
 		
 		override public function removeChild(child:DisplayObject):DisplayObject {
@@ -66,8 +71,20 @@ package org.tinytlf.classes
 			return super.getChildAt(index);
 		}
 		
+		public function $getChildByName(name:String):DisplayObject {
+			return super.getChildByName(name);
+		}
+		
+		public function $getChildIndex(child:DisplayObject):int {
+			return super.getChildIndex(child);
+		}
+		
 		public function $removeChild(child:DisplayObject):DisplayObject {
 			return super.removeChild(child);
+		}
+		
+		public function $removeChildAt(index:int):DisplayObject {
+			return super.removeChildAt(index);
 		}
 		
 		public function $removeChildren(beginIndex:int=0, endIndex:int=int.MAX_VALUE):void {

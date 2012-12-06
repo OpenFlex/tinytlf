@@ -33,7 +33,7 @@ package org.tinytlf.streams
 				parsers[name](node) :
 				Observable.empty();
 			
-			return observable.concat(Observable.never())
+			return observable.concat(Observable.never());
 		}
 		
 		private function expandedXMLToDefaults(node:XML):XML {
