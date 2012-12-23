@@ -5,5 +5,5 @@ package org.tinytlf.fn
 	 */
 	public function identify(value:*):Function {
 		return function(...args):* { return value; };
-	}	
+	}
 }
