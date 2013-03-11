@@ -3,8 +3,6 @@ package org.tinytlf.events.modifiers
 	import flash.events.*;
 	import flash.ui.*;
 	
-	import org.tinytlf.values.*;
-	
 	import raix.reactive.*;
 	
 	/**

@@ -3,8 +3,8 @@ package org.tinytlf.events.keyboard
 	import flash.events.*;
 	import flash.ui.*;
 	
-	import org.tinytlf.*;
-	import org.tinytlf.events.modifiers.*;
+	import org.tinytlf.env.mac;
+	import org.tinytlf.events.modifiers.command;
 	
 	import raix.reactive.*;
 
@@ -12,6 +12,6 @@ package org.tinytlf.events.keyboard
 	 * @author ptaylor
 	 */
 	public function end(target:IEventDispatcher):IObservable {
-		return TextEngine.mac ? command(arrowleft(target)) : keyequals(keydown(target), Keyboard.END);
+		return mac ? command(arrowleft(target)) : keyequals(keydown(target), Keyboard.END);
 	}	
 }

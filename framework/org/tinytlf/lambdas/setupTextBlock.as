@@ -1,8 +1,10 @@
 package org.tinytlf.lambdas
 {
-	import flash.text.engine.*;
+	import flash.text.engine.ContentElement;
+	import flash.text.engine.TextBlock;
+	import flash.text.engine.TextRotation;
 	
-	import org.tinytlf.classes.*;
+	import org.tinytlf.types.Styleable;
 
 	/**
 	 * @author ptaylor

@@ -1,6 +1,7 @@
 package org.tinytlf.lambdas
 {
-	import org.tinytlf.classes.*;
+	import org.tinytlf.types.CSS;
+	import org.tinytlf.types.Styleable;
 
 	public function toStyleable(node:XML, root:CSS = null):Styleable {
 		const styleable:Styleable = new Styleable();

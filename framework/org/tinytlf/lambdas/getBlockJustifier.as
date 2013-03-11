@@ -1,18 +1,20 @@
 package org.tinytlf.lambdas
 {
-	import flash.text.engine.*;
+	import flash.text.engine.LineJustification;
+	import flash.text.engine.TextJustifier;
 	
-	import org.tinytlf.classes.*;
-	import org.tinytlf.constants.*;
+	import org.tinytlf.enum.TextAlign;
+	import org.tinytlf.types.Styleable;
 
 	/**
 	 * @author ptaylor
 	 */
 	public function getBlockJustifier(styles:Styleable):TextJustifier {
-		const justification:String = styles['textAlign'] == TextAlign.JUSTIFY ?
+		
+		const justification:String = styles.getStyle('textAlign') == TextAlign.JUSTIFY ?
 			LineJustification.ALL_BUT_LAST : LineJustification.UNJUSTIFIED;
 		
-		const justifier:TextJustifier = TextJustifier.getJustifierForLocale(styles['locale'] || 'en_us');
+		const justifier:TextJustifier = TextJustifier.getJustifierForLocale(styles.getStyle('locale') || 'en_us');
 		justifier.lineJustification = justification;
 		
 		styles.applyTo(justifier);
