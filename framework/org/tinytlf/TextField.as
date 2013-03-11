@@ -1,15 +1,15 @@
 package org.tinytlf
 {
-	import com.bit101.components.*;
+	import com.bit101.components.ScrollBar;
+	import com.bit101.components.VScrollBar;
 	
-	import flash.display.*;
+	import flash.display.DisplayObjectContainer;
+	import flash.display.Sprite;
 	
 	import org.tinytlf.actions.CaretActions;
 	import org.tinytlf.actions.CursorActions;
 	import org.tinytlf.actions.KeyboardActions;
 	import org.tinytlf.classes.Container;
-	
-	import raix.reactive.*;
 
 	public class TextField extends Container
 	{

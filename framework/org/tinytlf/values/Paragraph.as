@@ -1,21 +1,23 @@
 package org.tinytlf.values
 {
-	import com.bit101.components.*;
+	import com.bit101.components.HBox;
+	import com.bit101.components.VBox;
 	
-	import flash.display.*;
 	import flash.events.Event;
-	import flash.text.engine.*;
+	import flash.text.engine.TextLine;
 	
 	import org.tinytlf.TextEngine;
 	import org.tinytlf.classes.Container;
 	import org.tinytlf.classes.Virtualizer;
 	import org.tinytlf.constants.TextAlign;
 	import org.tinytlf.constants.TextBlockProgression;
-	import org.tinytlf.pools.TextBlocks;
 	import org.tinytlf.pools.TextLines;
 	
-	import raix.reactive.*;
-	import raix.reactive.subjects.*;
+	import raix.reactive.Cancelable;
+	import raix.reactive.CompositeCancelable;
+	import raix.reactive.ICancelable;
+	import raix.reactive.IObservable;
+	import raix.reactive.subjects.IConnectableObservable;
 	
 	public class Paragraph extends Container
 	{

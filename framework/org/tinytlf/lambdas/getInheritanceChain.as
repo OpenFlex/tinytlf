@@ -6,8 +6,6 @@ package org.tinytlf.lambdas
 	 */
 	public function getInheritanceChain(node:XML):String
 	{
-		if(node.@cssInheritanceChain) return node.@cssInheritanceChain;
-		
 		const index:int = node.childIndex();
 		const name:String = node.localName();
 		const parent:XML = node.parent();

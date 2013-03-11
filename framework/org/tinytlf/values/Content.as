@@ -1,8 +1,8 @@
 package org.tinytlf.values
 {
-	import flash.text.engine.*;
+	import flash.text.engine.ContentElement;
 	
-	import org.tinytlf.classes.*;
+	import org.tinytlf.classes.Styleable;
 
 	public class Content extends Styleable
 	{
@@ -10,9 +10,7 @@ package org.tinytlf.values
 		{
 			super(styles);
 			
-			element.userData = this;
 			this['node'] = node;
-			this['element'] = element;
 		}
 		
 		public const node:XML;

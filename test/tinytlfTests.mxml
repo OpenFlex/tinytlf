@@ -12,7 +12,7 @@
 			import org.flexunit.internals.TraceListener;
 			import org.flexunit.runner.FlexUnitCore;
 			import org.tinytlf.TextEngineTests;
-			import org.tinytlf.streams.xmlToUITest;
+			import org.tinytlf.streams.iterateXMLTest;
 			
 			private var core:FlexUnitCore;
 			
@@ -26,7 +26,7 @@
 				core = new FlexUnitCore();
 				core.addListener(new TraceListener());
 //				core.addListener(new CIListener());
-				core.run(TextEngineTests, xmlToUITest);
+				core.run(TextEngineTests, iterateXMLTest);
 			}
 		]]>
 	</mx:Script>

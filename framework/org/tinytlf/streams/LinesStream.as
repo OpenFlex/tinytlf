@@ -1,12 +1,20 @@
 package org.tinytlf.streams
 {
-	import flash.text.engine.*;
+	import flash.text.engine.TextLine;
 	
-	import org.tinytlf.lambdas.*;
+	import org.tinytlf.fn.identity;
+	import org.tinytlf.lambdas.concatParams;
+	import org.tinytlf.lambdas.createTextLine;
+	import org.tinytlf.lambdas.getInvalidLines;
+	import org.tinytlf.lambdas.getLineBeforeFirstInvalidLine;
+	import org.tinytlf.lambdas.getValidLines;
+	import org.tinytlf.lambdas.isBlockInvalid;
 	import org.tinytlf.pools.TextLines;
-	import org.tinytlf.values.*;
+	import org.tinytlf.values.Block;
+	import org.tinytlf.values.Line;
 	
-	import raix.reactive.*;
+	import raix.reactive.IObservable;
+	import raix.reactive.Observable;
 
 	public class LinesStream implements IStream
 	{

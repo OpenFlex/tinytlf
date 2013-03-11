@@ -9,14 +9,22 @@
 			   minWidth="955" minHeight="600" creationComplete="onCreationComplete()">
 	<fx:Script>
 		<![CDATA[
-			import org.tinytlf.streams.xmlToUITest;
 			import org.tinytlf.TextEngineTests;
+			import org.tinytlf.lambdas.deriveNodeInheritanceTests;
+			import org.tinytlf.streams.groupRenderableLifetimesTest;
+			import org.tinytlf.streams.iterateXMLTest;
+			import org.tinytlf.streams.selectVisibleXMLNodesTest;
+			import org.tinytlf.streams.visibleXMLLifetimesTest;
 			
 			public function currentRunTestSuite():Array
 			{
 				var testsToRun:Array = new Array();
 				testsToRun.push(org.tinytlf.TextEngineTests);
-				testsToRun.push(org.tinytlf.streams.xmlToUITest);
+				testsToRun.push(org.tinytlf.lambdas.deriveNodeInheritanceTests);
+				testsToRun.push(org.tinytlf.streams.groupRenderableLifetimesTest);
+				testsToRun.push(org.tinytlf.streams.iterateXMLTest);
+				testsToRun.push(org.tinytlf.streams.selectVisibleXMLNodesTest);
+				testsToRun.push(org.tinytlf.streams.visibleXMLLifetimesTest);
 				return testsToRun;
 			}
 			
