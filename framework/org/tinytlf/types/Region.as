@@ -6,6 +6,7 @@ package org.tinytlf.types
 	import asx.fn.distribute;
 	
 	import raix.reactive.IObservable;
+	import raix.reactive.ISubject;
 	import raix.reactive.subjects.BehaviorSubject;
 	
 	import trxcllnt.ds.RTree;
@@ -41,6 +42,16 @@ package org.tinytlf.types
 				filter(greaterThan0).
 				combineLatest(hScroll, parentPlusChild).
 				subscribeWith(hScroll);
+			
+			hScroll.
+				combineLatest(vScroll, args).
+				combineLatest(widthSubj, args).
+				combineLatest(heightSubj, args).
+				map(distribute(function(x:Number, y:Number, w:Number, h:Number):Rectangle {
+					return new Rectangle(x, y, w, h);
+				})).
+				multicast(viewport as ISubject).
+				connect();
 		}
 		
 		public const xSubj:BehaviorSubject = new BehaviorSubject(0);
@@ -97,14 +108,7 @@ package org.tinytlf.types
 			hScroll.onNext(value);
 		}
 		
-		public const layoutCache:IObservable = new BehaviorSubject(new RTree());
-		public const viewport:IObservable = hScroll.
-			combineLatest(vScroll, args).
-			combineLatest(widthSubj, args).
-			combineLatest(heightSubj, args).
-			sample(10).
-			map(distribute(function(x:Number, y:Number, w:Number, h:Number):Rectangle {
-				return new Rectangle(x, y, w, h);
-			}));
+		public const cache:IObservable = new BehaviorSubject(new RTree());
+		public const viewport:IObservable = new BehaviorSubject(new Rectangle());
 	}
 }

@@ -1,39 +1,28 @@
 package org.tinytlf.streams
 {
-	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import flash.events.Event;
-	import flash.geom.Rectangle;
 	
 	import asx.fn.args;
 	import asx.fn.distribute;
-	import asx.fn.getProperty;
+	import asx.fn.partial;
 	
-	import org.tinytlf.lambdas.deriveNodeInheritance;
-	import org.tinytlf.lambdas.toStyleable;
-	import org.tinytlf.types.CSS;
+	import org.tinytlf.lambdas.sideEffect;
 	import org.tinytlf.types.Region;
-	import org.tinytlf.types.Renderable;
-	import org.tinytlf.types.Rendered;
 	
 	import raix.reactive.CompositeCancelable;
-	import raix.reactive.ICancelable;
 	import raix.reactive.IGroupedObservable;
 	import raix.reactive.IObservable;
 	import raix.reactive.ISubject;
-	import raix.reactive.Observable;
 	import raix.reactive.Subject;
-	
-	import trxcllnt.ds.RTree;
 
 	/**
 	 * @author ptaylor
 	 */
 	public function mapContainerRenderable(parent:Region,
-										   uiFactory:Function/*(String):Function(Region):DisplayObjectContainer*/,
-										   childFactory:Function/*(String):Function(Region, Function, Function, IObservable<CSS>, IGroupedObservable<Renderable>):IObservable<Rendered>*/,
-										   styles:IObservable/*<CSS>*/,
-										   lifetime:IGroupedObservable/*<Renderable>*/):IObservable/*<Rendered>*/ {
+											uiFactory:Function/*(String):Function(Region):DisplayObjectContainer*/,
+											childFactory:Function/*(String):Function(Region, Function, Function, IObservable<CSS>, IGroupedObservable<Renderable>):IObservable<Rendered>*/,
+											styles:IObservable/*<CSS>*/,
+											lifetime:IGroupedObservable/*<Renderable>*/):IObservable/*<Rendered>*/ {
 		
 		// Initialize a persistent source subject for XML so the grouping
 		// function persists the cache.
@@ -57,14 +46,15 @@ package org.tinytlf.streams
 		// This allows us to genericize the virtualization logic to show/hide
 		// children inside this container even though the container may not be
 		// entirely out of view itself.
-		const visibleChildren:IObservable = emitVisibleRenderables(source, region.viewport, region.layoutCache);
+		const visibleChildren:IObservable = emitVisibleRenderables(source, region.viewport, region.cache).
+			publish().refCount();
 		
 		// Initialize a persistent grouping Observable to capture the lifetimes
 		// of visible XML nodes. This ensures nodes are transformed into
 		// Observable sequences that complete when they're deleted (in edit
 		// operations), or scrolled out of view.
-		const childLifetimes:IObservable = 
-			groupRenderableLifetimes(visibleChildren, region.viewport, region.layoutCache).
+		const childLifetimes:IObservable =
+			groupRenderableLifetimes(visibleChildren, region.viewport, region.cache).
 			publish().
 			refCount();
 		
@@ -76,96 +66,213 @@ package org.tinytlf.streams
 		
 		const subscriptions:CompositeCancelable = new CompositeCancelable();
 		
-		// Bind the children UIs to the container UI.
-		subscriptions.add(
-			region.layoutCache.
-			combineLatest(childRenderings, args).
-			subscribe(distribute(function(tree:RTree, rendering:IObservable):void {
-				
-				var nodeKey:String = '';
-				var child:DisplayObject;
-				
-				// Observe the rendering lifecycle. Insert the rendered child at the
-				// correct index represented by the XML node on updates.
-				const childSubscription:ICancelable = rendering.subscribe(
-					function(rendered:Rendered):void {
-						const node:XML = rendered.node;
-						const index:int = node.childIndex();
-						nodeKey = deriveNodeInheritance(node);
-						
-						// Add the child to the display list
-						ui.addChildAt(child = rendered.display, Math.min(ui.numChildren, index == -1 ? 0 : index));
-						
-						// Add the child to the region's virtualization cache -- the
-						// parent UI component should update the cache during it's
-						// render phase.
-						tree.insert(nodeKey, new Rectangle(0, 0, 1, 1));
-					},
-					// Remove the child when the sequence completes.
-					function():void {
-						if(child && ui.contains(child)) ui.removeChild(child);
-						
-						childSubscription.cancel();
-						subscriptions.remove(childSubscription);
-					}
-				);
-				
-				// Track the subscriptions for garbage collection.
-				subscriptions.add(childSubscription);
-			})));
+		subscriptions.add(bindChildren(ui, region.cache, childRenderings));
 		
-		// Use switchMany to cancel ongoing inner activity when a new lifetime
-		// is emitted before the inner sequences have completed.
+		// Return an Observable that maps DOM, style, and layout cache updates
+		// to produce the rendering lifecycle of this DOM node and all its
+		// children.
 		return lifetime.
 			combineLatest(styles, args).
-			switchMany(distribute(function(renderable:Renderable, css:CSS):IObservable {
-				
-				const node:XML = renderable.node;
-				const numChildren:int = node.*.length();
-				const rendered:ISubject = renderable.rendered;
-				
-				// Take the appropriate number of child lifetimes, watch their
-				// "rendered" Subjects for completion, then notify our "rendered"
-				// Subject of completion.
-				const childObs:IObservable = childLifetimes.
-					take(numChildren).
-					bufferWithCount(numChildren).
-					concatMany(function(life:IObservable/*<Renderable>*/):IObservable {
-						return life.take(1).map(getProperty('rendered'));
-					}).
-					switchMany(Observable.forkJoin);
-				
-				// An Observable that represents a Rendered value.
-				const currentObs:IObservable = Observable.
-					value(new Rendered(node, ui)).
-					peek(function(rendered:Rendered):void {
-						// Tell the UI to render itself!
-						ui.dispatchEvent(new Event('render'));
-					});
-				
-				// Give this region its styles.
-				region.mergeWith(toStyleable(node, css));
-				
-				// Send the node's children to the source Subject.
-				iterateXMLChildren(node).
-					concat(Observable.never()).
-					subscribeWith(source);
-				
-				// Return the concatonation of the children and this node's
-				// DOM updates.
-				return Observable.concat([
-					childObs,
-					currentObs
-			]).
-			// When the children and the current Observable have completed,
-			// notify our "rendered" Subject.
-			finallyAction(rendered.onCompleted).
-			// Only take the last value from the concatonation, i.e. the
-			// Rendered value.
-			takeLast(1);
-		})).
-		takeUntil(lifetime.count()).
-		// When this sequence terminates, clean up the child subscriptions.
-		finallyAction(subscriptions.cancel);
+			combineLatest(region.cache, args).
+			// Prepare this UI element for rendering...
+			peek(distribute(partial(setupUIForRendering, ui, region))).
+			// ...and listen for when it's finished...
+			peek(distribute(sideEffect(partial(listenForUIRendered, ui), subscriptions))).
+			// ... then emit the XML's child nodes on the shared source Subject...
+			peek(distribute(sideEffect(partial(emitChildNodes, source), subscriptions))).
+			// ...map the combinations into an Observable of Observables that
+			// represents the rendering lifecycle of this DOM node and its
+			// children. If another value is emitted from the lifetime
+			// Observable, be sure to cancel any subscriptions to the pending
+			// rendering lifecycle.
+			switchMany(distribute(partial(mapRenderingLifetime, visibleChildren))).
+			// Keep emitting updates until the lifetime sequence terminates.
+			takeUntil(lifetime.count()).
+			// When this sequence terminates, clean up the child subscriptions.
+			finallyAction(subscriptions.cancel);
 	}
 }
+import flash.display.DisplayObjectContainer;
+import flash.events.Event;
+
+import asx.array.first;
+import asx.fn.K;
+import asx.fn._;
+import asx.fn.areEqual;
+import asx.fn.args;
+import asx.fn.aritize;
+import asx.fn.distribute;
+import asx.fn.getProperty;
+import asx.fn.guard;
+import asx.fn.ifElse;
+import asx.fn.noop;
+import asx.fn.partial;
+import asx.fn.sequence;
+import asx.object.newInstance_;
+
+import org.tinytlf.lambdas.toInheritanceChain;
+import org.tinytlf.lambdas.toStyleable;
+import org.tinytlf.streams.iterateXMLChildren;
+import org.tinytlf.types.CSS;
+import org.tinytlf.types.Region;
+import org.tinytlf.types.Renderable;
+import org.tinytlf.types.Rendered;
+
+import raix.reactive.CompositeCancelable;
+import raix.reactive.ICancelable;
+import raix.reactive.IObservable;
+import raix.reactive.ISubject;
+import raix.reactive.Observable;
+import raix.reactive.scheduling.Scheduler;
+
+import trxcllnt.ds.Envelope;
+import trxcllnt.ds.RTree;
+
+internal function setupUIForRendering(ui:DisplayObjectContainer, region:Region, renderable:Renderable, css:CSS, tree:RTree):void {
+	// Merge the region's styles with styles from the current Style root.
+	region.mergeWith(toStyleable(renderable.node, css));
+	
+	// Tell the UI to render itself!
+	ui.dispatchEvent(new Event('render'));
+	
+	// TODO: This is a hack. Figure out how not to do this.
+	ui.removeChildren();
+}
+
+internal function listenForUIRendered(ui:DisplayObjectContainer, renderable:Renderable, css:CSS, tree:RTree):ICancelable {
+	const node:XML = renderable.node;
+	const nodeKey:String = toInheritanceChain(node);
+	const rendered:ISubject = renderable.rendered;
+	
+	// When the UI dispatches the 'rendered' event...
+	return Observable.fromEvent(ui, 'rendered').
+		// ...take just the first occurrence...
+		first().
+		// ...map it into a new Rendered value...
+		map(partial(newInstance_, Rendered, node, ui)).
+		// ...insert the UI into the tree if it hasn't been there before...
+		peek(ifElse(
+			sequence(K(tree.find(nodeKey)), partial(areEqual, null)),
+			partial(aritize(tree.insert, 2), nodeKey, new Envelope(ui)),
+			noop
+		)).
+		subscribe(sequence(
+			// ...pass the Rendered instance to the Subject's onNext()...
+			rendered.onNext,
+			// ...then complete the rendered subject. This pass is done!
+			guard(rendered.onCompleted)
+		));
+}
+
+internal function emitChildNodes(source:ISubject, renderable:Renderable, css:CSS, tree:RTree):ICancelable {
+	// Send the node's children to the source Subject.
+	return iterateXMLChildren(renderable.node).
+		// Ignore when the iteration has completed.
+		concat(Observable.never()).
+		// ...but subscribe to the iterateXMLChildren Observable on the
+		// greenThread scheduler to allow subscriptions to the
+		// visibleChildren Observable to process before the children
+		// are sent to the actors.
+		subscribeOn(Scheduler.greenThread).
+		// Pipe the children through the shared source Subject...
+		multicast(source).
+		// ...and go!
+		connect();
+}
+
+internal function mapRenderingLifetime(visibleChildren:IObservable, renderable:Renderable, css:CSS, tree:RTree):IObservable {
+	const node:XML = renderable.node;
+	const rendered:ISubject = renderable.rendered;
+	const numChildren:int = node.*.length();
+	
+	// If there aren't any children, wait until this UI element has finished.
+	if(numChildren <= 0) return rendered.asObservable();
+	
+	// Select the 'rendered' Subject from the visibleChildren values...
+	return visibleChildren.map(getProperty('rendered')).
+		// ...but only as many as are about to be emitted from the
+		// shared source Subject...
+		take(numChildren).
+		// ...combine them all into one list...
+		bufferWithCount(numChildren).
+		// ...and append this UI's rendered Subject to the list...
+		map(partial(args, rendered)).
+		// ...wait until the've all completed...
+		mapMany(Observable.forkJoin).
+		// ...and emit just this UI's Rendered value!
+		map(first);
+}
+
+internal function bindChildren(container:DisplayObjectContainer,
+							   cache:IObservable,
+							   childLifetimes:IObservable):ICancelable {
+	
+	const subscriptions:CompositeCancelable = new CompositeCancelable();
+	
+	const combination:IObservable = cache.combineLatest(childLifetimes, args);
+	const outer:ICancelable = combination.subscribe(sequence(
+		distribute(partial(observeChildLifetime, container, _, _, subscriptions)),
+		subscriptions.add
+	));
+	
+	subscriptions.add(outer);
+	
+	return subscriptions;
+}
+
+internal function observeChildLifetime(container:DisplayObjectContainer,
+									   tree:RTree,
+									   lifetime:IObservable,
+									   subscriptions:CompositeCancelable):void {
+	
+	var removeChild:Function = noop;
+	
+	const childRemoved:Function = function():void {
+		removeChild();
+		subscription.cancel();
+		subscriptions.remove(subscription);
+	};
+	
+	const updateRemoveChild:Function = function(rendered:Rendered):void {
+		removeChild = ifElse(
+			partial(container.contains, rendered.display),
+			partial(container.removeChild, rendered.display),
+			noop
+		);
+	};
+	
+	const childUpdated:Function = function(rendered:Rendered):void {
+		// TODO: Real virtualization based on the RTree cache.
+		container.addChild(rendered.display);
+	};
+	
+	const subscription:ICancelable = lifetime.
+		peek(updateRemoveChild).
+		subscribe(childUpdated, childRemoved, aritize(childRemoved, 0));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
