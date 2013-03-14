@@ -1,0 +1,331 @@
+<!-- from http://idlewords.com/2011/08/why_arabic_is_terrific.htm -->
+<div id="entries">
+	<img src="http://idlewords.com/images/ocean_pout.gif" />
+	<br/><br/><br/>
+<table width="440" border="0">
+	<tr>
+		<td valign="top" width="130">
+		
+			<a style="text-decoration:none;font-size:10px;" href="http://idlewords.com//2010/07/mission_burfjord.htm">
+			&lt;&lt;  Mission: Burfjord</a>
+		
+		</td>
+		<td valign="top" align="center">
+		<a style="text-decoration:none;font-size:10px" href="http://idlewords.com/2010/07/">^ July, 2010</a>
+		</td>
+		<td align="right" valign="top" width="130">
+		
+		</td>
+	</tr>
+</table>
+
+	
+	
+<div class="entrybox">
+
+<b>20.08.2011</b><br/><br/>
+<a style="text-decoration:none" class="post_title" href="http://idlewords.com/2011/08/why_arabic_is_terrific.htm">Why Arabic is Terrific</a></p>
+
+<br/>
+
+<p>I just finished a summer studying Arabic at the Monterey Institute for International Studies, an enjoyable adventure that I hope to write about in more detail later.   MIIS offers a nine-week program in a bunch of languages and is just down the road from a grim military counterpart called the Defense Language Institute, where young men and women learn how to eavesdrop on the nation's enemies, provided that the enemies speak slowly and limit their conversation to hobbies and the weather. 
+
+<p>The DLI is big on hiring native speakers, and ever since the scary men in turbans replaced godless Communism as a mortal threat to America it has not been hard to find good hummus in Monterey.  About two thousand soldiers grind their way through a sixty-three week intensive Arabic program each year, while about sixty civilians attend the unrelated and much shorter programs at MIIS.  
+
+<p>Of course, now that Arabic is the key language for career advancement in  places that have no sign out front and a large eagle emblem in the lobby, the civilian programs have begun started to attract the kinds of calculating douchebags who used to make studying Russian so unpleasant.   They are still in the minority, but having even one of these guys (and they're always guys) in your class can lead to needless suffering <a class="footnote" href="#1" style="">*</a>.
+
+<p>So I would like to stand up for the language nerds and give some reasons for studying Arabic that have nothing to do with politics.   The language of the National Designated Other is bound to switch to Chinese in a couple of years, but until colleges start teaching Martian, Arabic is going to remain the strangest, most interesting language you can study in an undergrad classroom.    
+
+<p>And don't fall for the bait and switch with Chinese or Japanese!  They might tempt you with an exotic writing system, but after a few months you find out  that the underlying language is pretty vanilla, and meanwhile there is a stack of three thousand flash cards standing in between you and the ability to skim a newspaper.
+
+<p>Arabic, on the other hand, twists healthy minds in twelve ways:
+
+
+<ol>
+<li>The Root/Pattern System</li>
+
+<p>Nearly all Arabic words consist of a three-consonant root slotted into a pattern of vowels and helper consonants.   The root gives the word its base meaning, while the pattern modifies this meaning in a systematic and predictable way.   This idea is so cool that you'd think it came from a constructed language, and yet Arabic has actual native speakers who live completely normal lives and will not try to talk to you about Runescape.
+
+<p>For example, the pattern <code>ma--a-</code>, where the hyphens are placeholders for three root consonants, is nearly always a place name in Arabic.   The pattern <code>i-a-a-a</code> generates a verb meaning "to cause someone to do X", where the meaning of X is determined by that three-consonant root.
+
+<p>Here are some common patterns using the root <b>k t b</b>, whose basic meaning is 'writing':
+
+<p><table style="border:1px solid #aaa;margin:30px;margin-left:10px" cellspacing=0 cellpadding=5>
+<tr style="background:#ddd"><td>pattern   </td><td>   pattern meaning  </td><td></td><td>    result</td></tr>
+<tr>
+    <td style="background:#ffc;font-family:courier">m--a-a  </td>
+    <td style="padding-left:10px;">    place name  </td><td> مكتبة </td><td>maktaba (library)</td>
+</tr>
+<tr>
+    <td style="background:#ffc;font-family:courier">-aa-i-  </td>
+    <td style="padding-left:10px;">     active participle  </td><td>كاتب  </td><td>kaatib  (writer)</td></tr>
+<tr>
+    <td style="background:#ffc;font-family:courier">ma--uu- </td>
+    <td style="padding-left:10px;">     passive participle </td><td> مكتوب </td><td>maktuub (written)</td></tr>
+<tr>
+    <td style="background:#ffc;font-family:courier">-a-a-a  </td>
+    <td style="padding-left:10px;">     basic verb        </td><td>  كتب </td><td>kataba (to write)</td>
+</tr>
+<tr>
+    <td style="background:#ffc;font-family:courier">a--a-a  </td>
+    <td style="padding-left:10px;">     causative verb        </td><td> أكتب  </td><td>aktaba (to dictate)</td>
+</tr>
+<tr>
+    <td style="background:#ffc;font-family:courier">-i-aa-  </td>
+    <td style="padding-left:10px;">     noun              </td><td> كتاب  </td><td>kitaab (book)</td>
+</tr>
+<tr>
+    <td style="background:#ffc;font-family:courier">-u-u-   </td>
+    <td style="padding-left:10px;">     plural noun      </td><td> كتب  </td><td> kutub (books)</td>
+</tr>
+</table>
+
+<p>The root/pattern approach really goes crazy with verbs.  There are ten common verb patterns in Arabic, and each one alters the base meaning in a semi-predictable way.  
+
+<p>For example, putting a verb into pattern IV will often make it causative (<span style="color:red">baqaa</span> - to stay vs. <span style="color:red">abqii</span> - to keep in place), while putting a transitive verb into pattern VI tends to make it reflexive (<span style="color:red">thakara</span> - to remind; <span style="color:red">tathakara</span> - to remember).   These meanings are not completely predictable, but you can use them to make very good guesses about new vocabulary.
+
+<p>There's even a verb pattern (IX) devoted entirely to changes in color and acquiring a physical disability.
+
+<li style="font-weight:bold">Broken Plurals</li>
+
+<p>In English, you make most words plural by adding a suffix, except for a very small number of words (like 'feet') where there is a vowel change instead.   Arabic does this the other way around.   There are a few words that take a regular plural suffix, but most of the time to make a plural you have to change the structure of the word quite dramatically:
+
+<p>
+<table>
+<tr><td>kitaab </td><td>-></td><td> kutub</td><td>(book)</td></tr>
+<tr><td>ustaath </td><td>-></td><td> asaatitha</td><td>(teacher)</td></tr>
+<tr><td>maqha   </td><td>-> </td><td>maqaahi</td><td>(café)</td></tr>
+<tr><td>dukkan   </td><td>-> </td><td>dakaakiin</td><td>(store)</td></tr>
+<tr><td>ahdar   </td><td>-> </td><td>hudur</td><td>(green)</td></tr>
+</table>
+
+<p>This holds even for borrowed words:
+
+<p><table>
+<tr><td>
+film -> aflaam
+</td>
+</tr>
+<tr><td>
+jaakit -> jawaakat
+</td>
+</tr>
+</table>
+
+<p>Other Semitic languages have broken plurals, but as with other unusual language features Arabic runs this one furthest into the end zone.
+
+<li>The Writing System</li>
+
+<p>The Arabic writing system is exotic looking but easy to learn, which is a rare combination.   The language uses a straightforward alphabet, but because letters change their shape depending on what their neighbors are it is quite impenetrable to the uninitiated.  
+
+<p>For exmaple, here are some "words" consisting of a single letter repeated three times:
+
+<p>ييي ععع ههه ككك للل
+
+<p>You can easily master Arabic writing without learning the language (<a href="http://www.amazon.com/gp/product/1589015061/ref=as_li_tf_tl?ie=UTF8&tag=idlewords-20&linkCode=as2&camp=217145&creative=399369&creativeASIN=1589015061">here is a great book for it</a><img src="http://www.assoc-amazon.com/e/ir?t=idlewords-20&l=as2&o=1&a=1589015061&camp=217145&creative=399369" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+ if you're interested); it will take you about two weeks.  Go to the museum and impress your date with your ability to <a href="http://en.wikipedia.org/wiki/File:Tugra_Mahmuds_II.gif">appreciate Arabic calligraphy</a> on a deeper level! </p>
+
+<li>Dual</li>
+
+<p>Arabic has a grammatical dual — a special form for talking about two of something. That means there's a distinct set of verb conjugations for 'you two' and 'them two' (but not 'we two'!), along with adjective and noun suffixes for pairs of things.    This is pretty cool.
+
+<li>Plural Lite</li>
+
+<p>Some words have separate broken plurals depending on whether you're talking about a small or large number (the cutoff is somewhere around seven).
+
+
+<li>The Feminine Plural</li>
+
+<p>Formal Arabic distinguishes between groups composed entirely of women and groups that contain one or more men, and has distinct pronouns, plural forms, and verb conjugations for feminine dual and feminine plural.
+
+<p>This gives Arabic a total of twelve personal pronouns.  No other language will make you work as hard to avoid speaking formally to pairs of women.</p>
+
+
+<li>Crazy Agreement Rules</li>
+
+<p>Arabic has a number of very unusual agreement rules.  My absolute favorite is that <b>all non-human plurals</b> are grammatically feminine singular:
+
+<p>al-kutub hadra' (الكتب حضراء)
+<p>"The books, she is green"<p>
+
+<li>Phonetics</li>
+
+<p>Several enjoyable consonants wait to greet the foreign learner.  Most of these are  <a href="http://en.wikipedia.org/wiki/Emphatic_consonant">emphatic consonants</a>, which are just like the familiar consonants /k/, /t/, /th/, /s/ and /d/ except that as you pronounce them you must simultaneously try to swallow your tongue.
+
+<p>And then there is <a href="http://en.wikipedia.org/wiki/Ayin">this beast: ع</a> 
+a consonant pronounced so far back in the throat that you must wait two hours after eating to safely attempt it.  Naturally it's one of the most common sounds in the language.
+
+<p>Arabic also treats the <a href="http://en.wikipedia.org/wiki/Glottal_stop">glottal stop</a>  (a soundless catch in the throat) as a regular consonant.  Glottal stops are everywhere in English but we are not trained to hear them, so a long portion of one of your first Arabic classes will be devoted to blowing your mind with the fact that English words like 'apple' and 'elegant' do not start with a vowel.
+
+<li>Funky Numbers</li>
+
+<p>What we call Arabic numerals aren't used in Arabic except in extraordinarily formal contexts.   Instead, Arabic uses "Indian numerals", which look like this:
+
+<p>٩ ٨ ٧ ٦ ٥ ٤ ٣ ٢ ١ 
+
+<p>These are just similar enough to English to ensure that you will always, always do exercise 10 when assigned exercise 15.
+
+<p>The names of the numbers come with truly terrifying agreement rules, like "if the number is greater than three but less than eleven, it must take the opposite gender of the noun that it modifies".    Since it so much easier to talk about unspecified plurals (which you'll remember are always feminine singular!), this gives foreign students of Arabic a positively Oriental tendency towards vagueness.  
+
+<p>Arabs themselves just ignore the agreement rules altogether and talk about whatever number of things they want.
+
+<p>Unlike the rest of the language, numerals are written left-to-right, and pronunced left-to-right until you get to the tens place.  So ٣٤٦٢ is read "three thousand four hundred two and sixty".  This is particularly fun when talking about date ranges, since the earlier date will be written on the right side of the hyphen, but read from left to right:
+
+<p>١٩٢٣-١٩٤٥
+
+<li>Diglossia</li>
+
+<p>Muslims believe that Arabic as written in the 7th century A.D. is the language of divine revalation.   This has served as a tremendously conservative force on written Arabic, with two important consequences.
+
+<p>The first is that texts from over a thousand years ago remain accessible to modern readers.  If you're an English speaker, where even texts from 200 years ago can be rough going, this is quite a treat.
+
+<p>The second is that spoken Arabic has diverged substantially from the written language, so you can study it formally for years and not be able to understand a television commercial.  
+
+<p> This is where it really helps to love language study.  Arabic has a large number of dialects, some of which are not mutually intelligible, but all educated Arabs will know the formal written language, which they consider to be a higher form of their day-to-day speech.   This 'higher' language is used in  speeches, news programs, lectures and other formal contexts, but never in casual conversation unless differences in dialect make it absolutely necessary.    The combination of numerous dialects and a formal/informal continuum is pretty much unique to Arabic and gives rise to  fascinating situations watching Arabs calibrate their lanugage based on the situation and the linguistic background of their interlocutor.  
+
+<li>Learning Materials</li>
+
+<p>Nearly every Arabic program in the country uses a four-part textbook and DVD series called <a href="http://www.amazon.com/gp/product/158901104X/ref=as_li_qf_sp_asin_tl?ie=UTF8&tag=idlewords-20&linkCode=as2&camp=217145&creative=399369&creativeASIN=158901104X">Al-Kitaab</a><img src="http://www.assoc-amazon.com/e/ir?t=idlewords-20&l=as2&o=1&a=158901104X&camp=217145&creative=399369" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+.   Even after studying from it for three years you won't be able to find enough words to express how terrific it is, particularly if you've been exposed to Arabic teaching materials.   The books are stuffed full of authentic texts, and there isn't any of the usual filler or pointless mechanical practice that plagues other textbooks of "hard" languages. </p>
+<p>At the more advanced level, I strongly recommend the <a href="http://www.amazon.com/gp/product/0300104936/ref=as_li_qf_sp_asin_tl?ie=UTF8&tag=idlewords-20&linkCode=as2&camp=217145&creative=399369&creativeASIN=0300104936">Anthology of Arabic Literature</a><img src="http://www.assoc-amazon.com/e/ir?t=idlewords-20&l=as2&o=1&a=0300104936&camp=217145&creative=399369" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> and the very idiosyncratic <a href="http://www.mediafire.com/?1hepkzzczlj5z4i">All the Arabic You Should Have Learned The First Time Around</a>.
+
+</ol>
+
+<p>Finally, for a more detailed and informed geek-out about the Arabic language, please see this excellent <a href="http://www.indiana.edu/~arabic/arabic_history.htm">short essay</a> from Indiana University.
+
+
+
+<hr/>
+
+
+<p class="footnote"><a name="1">1.</a> There's something about intelligence agencies - maybe the familiar comfort of a three-letter acronym on the wall, maybe the late-night spanking parties - that draws fraternity boys like ants to a picnic, and right now the road to bro advancement leads through an Arabic classroom.   Their complete lack of a sense of irony allows these students to combine sincere appreciation for The Fountainhead with a desire for a lifelong career in government service, and the hardest part of studying Arabic is having to listen to their asinine opinions after they have gained enough proficiency to try to express them.</p>
+
+
+
+
+<br/><br/>
+		</div>
+	<img src="http://idlewords.com/images/ocean_pout.gif" />
+	<br/><br/><br/>
+	<!-- from http://idlewords.com/2010/07/ -->
+	<div class="entrybox">
+<br/><br/>
+	<b>07.12.2010</b><br/><br/>
+	<a style="text-decoration:none" class="post_title" href="http://idlewords.com/2010/07/mission_burfjord.htm">
+		Mission: Burfjord</a>
+		<br/><br/>
+
+		 <p>On my fourth day in a <a href="http://www.idlewords.com/2010/06/on_top_of_the_world.htm">remote cabin up in Norway</a> my host Ivar asks me if I would like to come along on a day trip to Burfjord, a little town on the mainland about forty minutes away.
+
+<p>I don't have to think twice.  Going to the mainland means a chance to charge my camera battery, use a flush toilet, and buy some groceries without having to carry them home on my back.   And I know for a fact that Burfjord has TWO grocery stores - I can, if I wish, shop around.  Ivar warns me that the weather is worsening and we may end up windbound for many hours in town, but I am not easily deterred.  "Well," he says, "I suppose anywhere is interesting the first time.  Even Burfjord."
+
+<p>The day is a little breezy, but it's warm enough to be out without a jacket.  Still, I put on a pair of special insulating overalls for the boat ride.  They feel insufferably hot on land but are a grateful presence after five minutes on the water.   They are also buoyant, so that if the boat capsizes we can have the satisfaction of dying of hypothermia rather than drowning.   
+
+<p>The sea is already quite choppy as we pass the shelter of the main breakwater.  Even in the larger boat, motoring along at twenty knots feels like falling down a flight of stairs while holding a bucket of seawater.  The distance between waves is almost equal to the length of our keel,  and so every ten seconds or so the boat falls into a resonance and starts leaping higher and higher in the air, forcing us to slow down for a few seconds in order to break the spell.
+
+<p>Some five minutes after leaving port, Ivar swerves the boat very suddenly to avoid hitting a whale that he sees at the last second.   "It's too bad we missed," he says, "the meat is excellent".  The whales are invisible to me, but every few minutes we get passed by a puffin, crusing low above the water with a  dignity completely unbefitting its little clown beak.   If you can imagine a cross between a penguin and a toucan, then you have gone a long way towards imagining a puffin.   They are numerous over the open water but I never manage to spot one  on land.
+
+<p>The only other boats out today are trawlers fishing for prawns.  Each trawler is followed by a swirling cloud of gulls, looking for an easy meal.     The gulls steal food from fishermen in any way they can, and the fishermen even the score by stealing  eggs from the gulls during the spring laying season.  Gull eggs are large, bigger than a goose egg, and come in a mottled camouflage pattern.   The cooked egg white is translucent and somehow contrives to have less flavor than the white of a chicken egg, but the extremely rich yolk makes the meal worth it.   It's legal to pick these eggs without restriction, I learn later, but if you steal too many from a single bird it will finish the season by laying a final miniature, yolkless egg, and you may feel quite guilty indeed.
+
+<p>Seagulls are so tightly linked in my mind to urban garbage dumps and dirty beaches that I have quite a hard time accepting them as regular animals, making their living here amid postcard scenery.  It's like seeing pigeons or sewer rats out in the wild.   But of course this is the kind of place gulls come from; a landfill is a sumptuous feast rather than a necessity of life.   
+
+<p>Those gull eggs that don't make it to a Norwegian table soon hatch into a surprisingly large ball of fluff very adept at hiding among the rocks while its parents are out stealing more prawns.  If you get too close to its hiding place, the fluff ball waddles away from you in a panic, then freezes motionless and nearly invisible on the nearest patch of grey stone.
+
+<p>Justifying all the gull chick's anxieties is the elegant and lazy <a href="http://en.wikipedia.org/wiki/Sea_eagle">sea eagle</a>, who every day makes his rounds above the island doing his very best never to have to flap his wings.   The gulls know what he is up to and harrass him by diving at him and trying to stall his wing.   The sea eagle bears this with fortitude, sometimes finding an upcurrent that lets him soar to high altitude, where the gulls (who have to flap as hard as they can to match his speed) don't have the strength to follow.   The sea eagle is basically just a bald eagle in different livery, repackaged to meet the demands of the European market.  Here his head is the same brown color as his body, though he retains the pretty white tail of his American cousin.  
+
+<p>On the water there are many grey geese and eider ducks.  Many of the geese trail a flotilla of a half dozen tiny goslings, surprisingly seaworthy.    The eider ducks don't look like much, but a duvet cover made from their down sells for <a href="http://www.thedownstore.com/catalog/eiderdownshop/eidercomforters.htm">as much as a new car</a>.  Their tiny bits of fluff, which have amazing thermal properties, have to be painstakingly gathered by hand from cliffside duck nests by fully unionized Scandinavian workers who are required by statute to receive 25 vacation days a year, massive amounts of parental leave, and a living wage in a country that considers $30 to be the right price for a pizza.  So the cost of an eiderdown anything is astronomical.  
+
+<p>Before synthetic fills were invented, the eider was the Cadillac of sleeping bags, especially for Polar exploration, because of the combination of light weight and unparalleled insulating power.  Now it's the material of choice for rich people in all climates.   If you can afford the luxury of a cozy eiderdown bedspread, you can likely also afford the cost of air conditioning your house to the low temperature required to sleep under it.  Someday someone will figure out how to put this stuff through a <a href="http://en.wikipedia.org/wiki/Kopi_Luwak">civet cat</a> and throw an Apple logo onto it, and then we will have the ultimate luxury.
+
+
+<p>As we round a cape and turn towards the base of the fjord, the waves calm down a bit and human settlement picks up.   Soon there are power lines, phone lines, and then the very backbone of civilization itself, the paved coastal road that runs all the way from Oslo to Kirkenes.   A typical farm in northern Norway consists of a main house, a boathouse, and some outbuildings.    Everything is new.  When the Germans retreated in 1944, they burned this entire province to the ground with legendary Teutonic thoroughness, and the Norwegians have rebuilt with legendary Scandinavian uniformity of design.   The result is identical buildings of different colors at a very, very low density, like a scattered Levittown.
+
+
+<p>Burfjord, population 397, rises out of the mist in the form of an empty pier and a service station.   We lash the boat to the pier in anticipation of rough weather and penetrate inland, where Ivar gives me a tour d'horizon. Two grocery stores face off across a small street, each a cube of corrugated sheet metal, containing miracles of transportation like the five-dollar mango.   Later on I will stand in one of these stores in front of a pyramid of Coke Zero bottles and   consider the fact that a whole infrastructure exists for bringing this substance of no nutritional value from wherever it's bottled in Europe up to a place like this.   I happen to love Coke Zero and whatever cyclopyrimidines or butylated phenols give it its weird fake sweetness, but seeing it stacked in quantity after coming off an island where everything has to be carried in by hand gives me pause.   I feel like the Burfjord grocery store will someday form part of a sanctimonious diorama about the folly of late-period humanity in someone's well-meaning, sustainably-built museum or alien terrarium, and the thought fills me with irritation in advance.  I buy a large bottle of the stuff as my way of shaking a fist at the future.
+
+<p>The social center of Burfjord is the small service station with attendant cafe.    All the rest of the buildings in Burfjord seem to be owned by the government.   There is a school, hospital, nursing home, administrative center, and some kind of cultural meeting hall.   Like in a lot of remote outposts of the first world, pretty much everyone in Burfjord is employed in bringing social services to other people in Burfjord.   One way to see this is as a hideous waste of taxpayer dollars in support of unsustainably fragmented communities; a different way to see this is as an acknowledgement that the only way to preserve a way of life that makes the region so attractive to visitors is to make it feasible for people to continue to live there without turning it into a tourist theme park.
+
+<p>Norway, as a rich country, has the luxury of pursuing this policy quite directly.  There are strict limits on food imports, for example.   If by Herculean effort a crop manages to grow in Norway, then by God you will have to pay if you want to buy its non-Norwegian equivalent.    If you come down with an exotic disease in Burfjord, then the government will make sure you can videoconference in with a specialist in Oslo, and if you don't speak Norwegian they'll throw a translator in the mix at no charge.   The point is to prevent the country from draining into its two or three main urban centers, and losing a distinctive tradition of stoic small farming under ridiculous climactic conditions.  Otherwise Norway would just be another Canada, with fjords.
+
+<p>My haven in Burfjord is the local public library, a cheerful little space full of comfortable chairs that seems to share space with the waiting room to a local clinic.  One of the first things I see on the magazine rack is a glossy thick booklet, in Polish, called "Welcome! Things to Know About Living in Norway".   Norway is extremely popular with Polish workers, who as EU members are allowed to work here with minimal formalities.  There are over 120,000 Poles in Norway doing construction, driving trucks, performing seasonal and domestic labor, and working as nurses and caretakers.  The appeal to Poles is obvious.   Compared to back home, the salaries are princely and you get the full protection of the mighty hammer of Thor that is Norwegian labor law, which it takes half the booklet just to summarize. 
+
+<p>By the time Ivar's meeting is over, I have learned all about my rights and obligations as a Norwegian guest worker, the several types of personal identification numbers, and how car ownership would require an expensive series of annual rituals and sacrifices that would give pause to some of the world's major religions. 
+
+<p>My ride back to Spildra is the scrappy little commuter ferry that connects the various communities in Kvænangen.  Ivar has decided to stay the night in Burfjord and wait for the weather to clear a little bit, so I am condemned to lug my groceries home on foot after all.  Compared to the boat, the ferry is a luxuriously smooth ride.  It's a small twin-hulled catamaran with room for about fifty people that zips along at something like thirty miles an hour.   The boat is clearly designed for rough weather and for the needs of locals who have a lot of stuff to lug.  If you have a pallet of furniture and a large ATV you need brought with you, you just tow it to the dock and make sure things are tied down tight.  One of the young ferry operators hooks it with the ferry's miniature crane, lowers it into the hold, and reverses the operation when you get to your stop.
+
+<p>Half an hour after we depart the ferry drops me at Dunvik pier to start the walk back to my cabin. Burfjord is now mercifully hidden by a long spit of land to the southwest.   Within ten minutes I am out of sight of all the houses and all I see are comic book mountains and open water.    But all around me are the invisible tendrils of Scandinavian socialism, just watching and waiting for a single moment of weakness in order to strike, and provide me with skilful medical attention, or rescue me from the sea, or show me that despite my efforts to hide from the world entirely I am standing on a spot with five bars of cell phone coverage.</p>
+
+<p>I can see the sea eagle circling high above me, but a cold voice in my heart whispers that he has already been banded.  I have left my illusions in Burfjord.</p>
+		 <a style="color:#aaf;text-decoration:none" href="http://idlewords.com/2010/07/mission_burfjord.htm">[link]</a>
+		 <br/><br/><br/>
+	</div>
+
+
+	<div class="entrybox">
+	<b>07.02.2010</b><br/><br/>
+	<a style="text-decoration:none" class="post_title" href="http://idlewords.com/2010/07/the_great_legacy.com_swindle.htm">
+		The Great Legacy.com Swindle</a>
+		<br/><br/>
+(See below for an <a href="#update_legacy">update</a>)<br/>
+<p>Last month my dear friend committed suicide, and in the middle of many emotions I came into contact with that part of the Internet that specializes in the business of dying.  
+
+<p>My friend's parents had bought an online obituary at the <a href="http://www.legacy.com/obituaries/nytimes/">New York Times website</a>, something I later found out was run by an outfit called <a href="http://legacy.com/">legacy.com</a>.  The obituary includes a guest book, where you can send your condolences.  There is a little text generator, in case you're out of ideas; you can "light a candle", and there is also a tie-in to an online florist who very generously offers to say with flowers what you might not be able to express through the text generator at such a difficult time.   I was mildly surprised not to find a selection of tasteful, black-rimmed emoticons, a bit of kitsch that would have delighted my friend.
+
+<p>I wrote a condolence letter (as I had no other way to contact her parents) and when I submitted it, the site warned me that the "guest book" would expire in a little over a month, but if I liked I could pay to extend its life by one year ($29) or keep up "in perpetuity" ($79), presumably meaning for however long legacy.com stays in business.
+
+<p>Since we have for-profit undertakers, it seemed tacky but not unusual that there should be a business in online guest books for dead people.  Knowing a bit about the economics of online services, and what kind of a profit margin that $79 represents, it was perhaps a little galling.  But legacy.com pays moderators to check death notices and screen posts, so they can certainly argue they're providing some kind of value.
+
+<p>Things got decidedly sketchier a few weeks later, when legacy.com decided to email me a reminder that the guest book (which I had only posted to, not created) was about to meet a fate very similar to the person it was honoring if I didn't act promptly to renew, which, legacy.com suggested, would be the perfect way to show my support to a grieving family in a difficult time.
+
+<p>When you are mourning someone, any automated reminder about their death from a website that wants your money is going to cause what you might call a negative customer experience.   It doesn't matter whether you entitle it "A gentle reminder from legacy.com" or "DEAD FRIEND'S NAME IN ALL CAPS Guest Book"  (although guess which one they went with).
+
+<p>I decided to see what the other end of this operation looked like.  As an experiment, I visited the obituary section of the New York Times website and followed the steps to submit my own online death notice, stopping only at the final confirmation screen.
+
+<p>I learned the following things:
+
+<ul>
+<li><p>The death notice section of pretty much every major US newspaper is run by legacy.com, "skinned" to look like the rest of that newspaper's site.</li>
+<li><p>The first step in creating a legacy.com death notice, before anything else, is providing a credit card number.</li>
+<li><p>At no point, including the final confirmation screen, does legacy.com tell you how much you will be charged.</li>
+<li><p>At no point is there a link that you can follow to find out how much you will be charged.</li>
+<li><p>The site requires you to confirm that the transaction you are about to complete is completely non-refundable, even though they never disclose the amount.</li>
+</ul>
+
+<p>Screenshots here: <a href="http://idlewords.com/images/legacy_page_one.png">one</a>, <a href="http://idlewords.com/images/legacy_page_two.png">two</a>, <a href="http://idlewords.com/images/legacy_page_three.png">three</a>, <a href="http://idlewords.com/images/legacy_page_four.png">four</a>.   You can also try this for yourself,  use 4111 1111 1111 1111 as a credit card number. </p>
+
+<p>In other words, the site takes money from bereaved people without disclosing what it's billing them, gambling on the fact that they're probably too preoccupied to care.   Whether or not this kind of thing is legal, it is completely unethical.   Even an undertaker who has upsold you on everything from coffin to funeral buffet has to show you a number before you sign on the dotted line.
+
+<p>If you Google around long enough, you may find your way to the New York Times <a href="http://www.nytimes.com/ref/classifieds/">rate sheet</a>, where the small print tells you that an online death notice costs "from $79".  But you won't find this information from anywhere within the legacy.com payment funnel, nor will you find any more information about that evocative word <i>from</i>.
+
+<p>I find it odious and troubling that the New York Times, along with a raft of <a href="http://www.obituaries.com/Obits.asp">other major newspapers</a>, partners with this kind of website.   It seems like further confirmation that newspapers will now clutch at any revenue stream.
+  
+<p>I would very much like to see an online competitor put these vultures out of business.   I think a respectable and respectful business model would be to charge a small fee for death notices and make comments read-only after some interval unless the creator paid to extend a default moderation period.  </p>
+<br/>
+<div><a name="update_legacy" style="color:#333"><b>Update</b></a></p><p>The day after publishing this post,  I received <a href="http://notes.pinboard.in/u:maciej/c71c8829d76c9205f935/">an email from the Director of Operations at legacy.com</a>, who tells me the direct link to their order form from the NYT obituary page was a mistake.   Legacy.com has changed this link to lead to a page that includes price information.
+</div>
+<br/>
+
+		 <a style="color:#aaf;text-decoration:none" href="http://idlewords.com/2010/07/the_great_legacy.com_swindle.htm">[link]</a>
+		 <br/><br/><br/>
+	</div>
+
+<br/>
+<table style="width:450px;background:#fff;border:0px">
+	<tr>
+ 		<td width=130>
+ 		
+ 			<a style="font-size:10px;text-decoration:none" href="http://idlewords.com/2010/06/">&lt;&lt; June 2010</a>
+ 		
+ </td>
+ <td width=140 align="center">&nbsp;<span style="font-size:10px;font-weight:bold"> 
+ <a style="text-decoration:none" href="http://idlewords.com/2010/">^ 2010</a> &nbsp;</span></td>
+ <td width=130 align="right">
+ 
+</td></tr></table>
+<br/>
+
+
+</div>
+</div>
+
+

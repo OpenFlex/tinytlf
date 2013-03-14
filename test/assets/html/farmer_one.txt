@@ -1,0 +1,845 @@
+<!-- from http://www.livingdigitally.net/books/farmer_one/farmer_one.html -->
+<html>
+<head>
+<title>Farmer One</title>
+<style>
+	p {
+		text-indent: 1.3em;
+		margin-top: 0;
+		margin-bottom: 0;
+		line-height: 25px;
+		padding: 2px;
+		font: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	}
+	
+	hr {
+		width: 50%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	#chapter_heading {
+		font-weight: bold;
+		margin-top: 5em;
+		margin-bottom: 2em;
+		text-align: center;
+	}
+	
+	#chapter_intro {
+		font-weight: bold;
+		margin-bottom: 2em;
+	}
+	
+	#first_letter {
+		font-size: x-large;
+	}
+	
+	#title {
+		text-align: center;
+		margin-top: 5em;
+	}
+	
+	#title_story {
+		font-weight: bold;
+		font-size: x-large;
+	}
+	
+	#license {
+		text-align: center;
+		margin-top: 5em;
+	}
+</style>
+</head>
+
+<body>
+
+<p><center>This work is distributed under the <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 license</a>.</center></p> 
+ 
+<br/> 
+ 
+<div id="cover"><center><img src="http://www.livingdigitally.net/books/farmer_one/farmer_one_350x525.jpg" width="350" height="525"/></center></div> 
+ 
+<!-- Title Page --> 
+<br/><br/><br/><br/><br/><br/> 
+<center><strong><font size="+3">Farmer One</font></strong><br/>by Christian Cantrell</center> 
+ 
+ 
+<!-- TOC --> 
+ 
+<ul> 
+	<li><a href="#ch_1">Chapter 1</a></li>
+	<li><a href="#ch_2">Chapter 2</a></li>
+	<li><a href="#ch_3">Chapter 3</a></li>
+	<li><a href="#ch_4">Chapter 4</a></li>
+	<li><a href="#ch_5">Chapter 5</a></li>
+	<li><a href="#ch_6">Chapter 6</a></li>
+	<li><a href="#ch_7">Chapter 7</a></li>
+	<li><a href="#ch_8">Chapter 8</a></li>
+	<li><a href="#ch_9">Chapter 9</a></li>
+	<li><a href="#ch_10">Chapter 10</a></li>
+	<li><a href="#ch_11">Chapter 11</a></li>
+	<li><a href="#ch_12">Chapter 12</a></li>
+	<li><a href="#footnotes">Footnotes</a></li>
+</ul>
+
+
+
+<a id="ch_1"></a>
+
+<div id="chapter_heading">Chapter 1</div>
+
+<div id="chapter_intro">Homestead Studio Extended Stay Suites<br/>
+Houston, Texas<br/>
+4:14 a.m.</div>
+
+<p><span id="first_letter">B</span>rother Austin Lockwood is awakened by pounding on his door an average of 2.25 times per month. And so far, the news has never been good.</p>
+<p>Why his employer chooses to send men out to his apartment to wake him up and physically bring him in rather than simply picking up the phone, Lockwood has never understood. Perhaps there are international guidelines under which totalitarian governments are expected to operate mandating the use of intimidation over convenience and practicality. Lockwood imagines there is a syllabus for newly minted autocrats with required chapters from texts like <em>Oppression for Dummies,</em> and <em>Ascension: How to Seize Power, Maintain Control, and Ensure Your Own Legacy</em>. Students of despotism must learn the virtues of party emblems, secret police, and building-sized murals of their Dear Leaders. Techniques for getting citizens to accept institutions like Patriotic Reeducation Centers and Departments of Propaganda must be imparted. The subtle art of both promoting vices like excessive drinking and smoking while also condemning them must be mastered, and multitudes of gorillas must be trained to beat down apartment doors at four in the fucking morning.</p>
+<p>The hammering comes again, but this time it sounds slightly different. It is several centimeters lower on the door, and just a hair to the right &mdash; produced, it would seem, by a fist with minutely less mass. Lockwood's dream-laden brain calculates precisely where two shots would need to be placed in the metal to pierce both men's hearts, then imagines himself curling up with the warm smoking high-powered rifle and falling back into a deep and entirely guiltless slumber.</p>
+<p>But he knows he only has a few more seconds before his front door opens one way or another, so he heaves the heavy layers of blankets aside, swings his legs out over the floor, and clears his throat.</p>
+<p>&quot;Coming, goddamnit!&quot;</p>
+<p>The white-footed fox<a id="fnlink1"></a><a href="#fn1"><sup>[1]</sup></a> Lockwood shares his apartment with is excited by the sudden movement, and she pounces on the mound of puffed-up covers, then looks frantically to either side of her as the pile deflates beneath her weight. Lockwood has found his glasses and slippers, and is shuffling in the dark across the wooden subfloor to the combined kitchenette/dining room/entry hall.</p>
+<p>He has been living in the Homestead Studio Extended Stay Suites since it was appropriated by the U.S. government a little under a decade ago. The property is not far from the Johnson Space Center, and it is mostly occupied by NASA personnel who have been compelled by various means to help the United States catch up to, and eventually surpass, the Chinese in space exploration and colonization. It's hard for some of the old-timers to believe that the nation is already on its second Space Race in its relatively brief but singularly tumultuous history.</p>
+<p>Having your very own bed, kitchenette, and toilet were meant to convey the incredible esteem with which the state held aerospace engineers &mdash; a blessing never allowed to wander far from the forefront of NASA employees' minds. <em>You can always quit and go pitch yourself a tent like everyone else</em>, they are frequently reminded by the myriad of managers who oversee their work. The rooms are roughly the shape of a poorly cut slice of pie (and scarcely much larger) with their front doors positioned at the blunt tip. His particular luxury suite was in the process of being remodeled down to its very studs when Lockwood moved in, however the project has been put on indefinite hold pending, it seems, multiple acts of God. The property manager's position is that Lockwood ought to be thankful to have the additional space which would otherwise be occupied by such superfluous indulgences as drywall and carpeting.</p>
+<p>Through the peephole, Lockwood sees precisely what he expects: two bulbous heads with overly gelled hair atop cartoonishly diminished bodies in cheap rumpled suits standing there on the remnants of old moldy lead-laced astroturf in the open-air hallway. Both men wear shades despite the fact that the sun is still somewhere far off over the Atlantic, and their crosses are out over their ties in accordance with the latest in Party fashion.</p>
+<p>Lockwood flips on the fluorescent ring in the kitchenette/dining room/entry hall, unchains the door, and lets the men in along with a rush of frigid April<a id="fnlink2"></a><a href="#fn2"><sup>[2]</sup></a> air.</p>
+<p>&quot;Are you Brother Austin Lockwood?&quot; the tall one asks so convivially that it's a little creepy. Even with all the product in his hair, he is still blond, and up close, Lockwood can see that he's got a little yellow goatee going. He looks unusually well fed for such lean times, and seems to fit the profile of a man named Jones or Baker. Baker, Lockwood decides, since he knows damn well he will never know either man's true identity.</p>
+<p>The other one is smaller and suavely Latino &mdash; Puerto Rican, Lockwood resolves. A name like &quot;Gomez&quot; or &quot;Rodriguez&quot; would be far too common for someone with such perfect and bright white teeth behind such a winning smile. Henceforth he is to be known privately to Lockwood as <em>Se&#241;or</em> <em>Poncherello</em> &mdash; or maybe just Ponch for short.</p>
+<p>&quot;Yeah, that's me,&quot; Lockwood confesses.</p>
+<p>Ponch retires his smile. Apparently it is time to dispense with the pleasantries and get down to business. &quot;Brother Austin, we're going to have to ask you to come with us.&quot;</p>
+<p>&quot;I gathered,&quot; Lockwood says. He notices that both the men's crosses are fashioned out of highly polished nails bound with a kind of thin gold filament. Standing there in his kitchenette/dining room/entry hall, the two of them look like a pair of Mormon vampire hunters.</p>
+<p>In contrast, Lockwood looks exactly like an aerospace engineer who has been roused from his warm bed on a cold morning. He is a short, slight man with a shaggy beard he makes no attempt to shape or tame beyond the trim that comes free with his monthly haircut. His substantial glasses are at least three fads out of fashion.</p>
+<p>&quot;You'll want a coat,&quot; Baker advises. &quot;It's a chilly morning.&quot;</p>
+<p>&quot;Actually, I'll want to brush my teeth, take a shower, and get dressed,&quot; Lockwood tells the men. &quot;Then I'll worry about the coat.&quot;</p>
+<p>&quot;I'm afraid there isn't time,&quot; Baker says. &quot;We need to leave right now.&quot;</p>
+<p>Lockwood is trying to work out a compromise in his head (perhaps these guys can be bribed by a slice of warm toast with marshmallow cream and a Yoo-hoo while he at least puts on a clean pair of underwear) when the mounting tension is shattered by the flushing of a toilet. Baker and Ponch reflexively put their hands inside their coats and lean around Lockwood.</p>
+<p>&quot;Is there someone else here?&quot; Ponch wants to know. The possibility that an engineer with a fierce neckbeard might not be alone clearly didn't even register.</p>
+<p>Lockwood turns in time to see his pet fox prance the few steps from the bathroom to the bed. She leaps effortlessly up as though propelled by unseen pneumatics, sits, and watches the goings-on warily, her tail twitching and ears turning like tiny satellite dishes.</p>
+<p>Ponch is the first to regain enough composure to speak. &quot;Your cat uses the toilet?&quot;</p>
+<p>&quot;She's not a cat,&quot; Lockwood says. &quot;She's a fox. And can I at least feed her before we go?&quot;</p>
+<p>Lockwood doesn't wait for a response. He pulls open the fridge, leans in, and then a raw piece of chicken is heard slapping the plywood subfloor. From the only overhead cabinet, he takes down a bowl and a nearly empty liter of whisky, turns on the kitchen faucet, and mixes a pretty stiff drink. The fox has already started bolting the chicken breast by the time Lockwood sets the bowl down beside it.</p>
+<p>&quot;<em>And</em> she drinks scotch,&quot; Baker says with the matter-of-factness of a man who is just starting to come to terms with his own insanity.</p>
+<p>&quot;She likes a little drink to wind her down at the end of the day,&quot; Lockwood says. He plucks a heavy woolen pea coat off a wooden peg by the door and begins pulling it on.</p>
+<p>&quot;But it's morning,&quot; Ponch says.</p>
+<p>&quot;She's nocturnal.&quot;</p>
+<p>Baker is watching the fox lap up the cocktail in the bowl. &quot;Alcohol is a sin,&quot; he says with a reflexiveness that can only be instilled by very high-quality brainwashing.</p>
+<p>&quot;Not for animals,&quot; Lockwood says, then adds, &quot;and not for the people who take care of them, either.&quot;</p>
+<p>Lockwood finishes buttoning up his coat, then pulls on the ski hat that was stowed in its pocket. The two men are still transfixed by the incongruous combination of fluff and hard alcohol.</p>
+<p>&quot;Shall we go?&quot; Lockwood suggests. &quot;Or should I put on some coffee?&quot;</p>
+<p>&quot;We're going,&quot; Baker says. He takes a step back and gropes behind him for the doorknob. &quot;What's your cat's name?&quot;</p>
+<p>&quot;She's a fox,&quot; Lockwood says. &quot;And her name is Farmer.&quot;</p>
+
+
+
+<a id="ch_2"></a>
+
+<div id="chapter_heading">Chapter 2</div>
+
+<div id="chapter_intro">Johnson Space Center<br/>
+Employee Parking Lot A<br/>
+Houston, Texas<br/>
+4:57 a.m.</div>
+
+<p><span id="first_letter">T</span>he JSC's reserved priority employee parking section has almost enough grass growing up through its fissures to play tackle football on. With patches of snow and frost covering the remaining asphalt, the area looks like an expanse of frozen Siberian tundra.</p>
+<p>There are three men huddled around a campfire close to the entrance, palms offered up to the warmth of the tall blaze, orange cigarette cherries glowing under their noses like fireflies. Lockwood starts to plot a course around the little homeless convention in order to avoid the inevitable solicitation for meal tickets and smokes since he has never been very good at saying no to anyone worse off than he is. In fact, on more than one occasion, Lockwood has given away so many food stamps that he found himself bumming protein and whiskey off Farmer by the end of the month. But as he gets closer to the ragged shivering pack, he recognizes one of the men as possibly the only man on the entire planet he actually enjoys saying no to: his boss.</p>
+<p>Len Sarek looks like a fat Vulcan. He has upswept eyebrows and pointy ears, but instead of telepathy, he has multiple chins. In Lockwood's experience, Sarek is the kind of boss who is not so much interested in actual productivity as he is in creating and maintaining a paper trail that can be used to demonstrate that productivity almost certainly took place. He is such a coffee fiend that his friends and family once staged a caffeine intervention which began well enough with plenty of the requisite tears and hugs, but ended with Sarek relapsing and putting on a fresh pot.</p>
+<p>In the flicker of the firelight, Lockwood now recognizes one of the other men as Christopher Noone &mdash; a fellow engineer and an astronaut who began shaving his head in his 20s when he started going bald, and according to the guys he shares the locker room with, didn't stop there. To supplement his income, Noone works as a snowboard instructor and guide in the Guadalupe Mountains whenever he can liberate one of NASA's twin-turbine choppers without actually signing it out which is usually accomplished by putting bars of chocolate into the right people's hands at the hanger.</p>
+<p>The third man is a tall, dark, beanpole of an Indian with a round bobblehead and asymmetrical mustache that has probably never been in style anywhere during any period of human civilization. His name is Parakala Prabhakar, and when he first started working in NASA's Human Spaceflight Program, he told everyone he liked to be called P.P. Fortunately, his colleagues forced the nickname &quot;Prabs&quot; on him, instead, although thanks to Noone, he has been known to answer to &quot;Crabs&quot; as well. Since neither Lockwood nor Prabs have computers at home, the two occasionally stay late to play old pirated<a id="fnlink3"></a><a href="#fn3"><sup>[3]</sup></a> first-person shooters and real-time military strategy simulations on the LAN. To both men, this feels a lot like friendship.</p>
+<p>&quot;What the hell is this?&quot; Lockwood shouts when he judges he is within earshot. Baker and Ponch are lingering and observing from the shadows as secret police will do.</p>
+<p>&quot;Ah, Brother Austin,&quot; Sarek says. &quot;Thank you for joining us this morning.&quot;</p>
+<p>&quot;Fuck that,&quot; Lockwood says. &quot;What's going on?&quot;</p>
+<p>Sarek takes the cigarette from his mouth and is suddenly grave. &quot;It's the Chinese,&quot; he tells Lockwood. He has the deep, cheek-puffing delivery of an old military man with a lot of authority, but most people don't buy it for long.</p>
+<p>&quot;No, I mean why are we standing around outside?&quot;</p>
+<p>&quot;Mr. Sarek forgot his ID,&quot; Prabs says with the melodious Hindi accent Lockwood loves to listen to, especially when he's talking smack after a virtual beat-down (<em>Mr. Lockwood, I have just made you my bitch</em>). For some reason, he holds his cigarette between his index finger and his thumb, palm up, like he has no idea what he's doing, yet he probably smokes at least sixty percent more than anyone else Lockwood has ever met.</p>
+<p>&quot;So did you!&quot; Sarek fires back.</p>
+<p>&quot;We <em>all</em> forgot our IDs,&quot; Noone says diplomatically from around his cigarette. &quot;Austin, did you bring yours?&quot;</p>
+<p>&quot;I didn't even have time to take a leak,&quot; Lockwood says.</p>
+<p>Sarek turns to Prabs. &quot;Go get another flight manual out of my trunk. The fire's getting low.&quot;</p>
+<p>As Prabs disjoins himself from the group and is swallowed by the frigid darkness, Sarek shouts after him, &quot;Nothing from the Apollo missions! Those are valuable!&quot;</p>
+<p>&quot;What are you doing with flight manuals in your trunk?&quot; Lockwood wants to know.</p>
+<p>&quot;Traction. They're easier for me to get than bricks, and much heavier.&quot;</p>
+<p>This seems to make a lot of sense to both Lockwood and Noone. They nod to themselves until Lockwood has a thought.</p>
+<p>&quot;Wait! Isn't Hank in there?&quot;</p>
+<p>&quot;He won't let us in,&quot; Sarek says.</p>
+<p>&quot;What do you mean he won't let us in? Of course Hank will let us in. We've all known Hank for years.&quot;</p>
+<p>&quot;Not without our IDs.&quot;</p>
+<p>&quot;Nonsense,&quot; Lockwood declares. &quot;I'll talk to him.&quot;</p>
+<p>He leaps up onto the curb, suddenly energized by the prospect of warmth and coffee, and blows into his hands as he jogs to the glass entrance. Hank is inside with a thermos in one hand, and a folded magazine in the other. He is a balding black man with fluffy white hair that looks like glued-on cotton balls and a perpetual expression that leaves no doubt as to who actually runs the place. Lockwood gets his attention by rapping on the glass with a numb knuckle. Hank looks up and seems glad to see his old friend.</p>
+<p>&quot;Hank!&quot; Lockwood shouts through the glass. His breath causes it to fog, and he remembers he has not yet brushed his teeth this morning. &quot;Can you let me in?&quot;</p>
+<p>Hank mouths, <em>DOOO YOOO HAAAVE YOOOUR EYEEE-DEEE?</em></p>
+<p>&quot;I forgot it!&quot; Lockwood shouts, then gives Hank his winning-most grin. &quot;They dragged me out of bed!&quot;</p>
+<p><em>EYEEE NEEEED TOOO SEEEE YOOOUR EYEEE-DEEE.</em></p>
+<p>Lockwood considers bringing up the fact that the two men have known each other for almost two decades, and have greeted each other roughly 6,240 times, but he figures he wouldn't be telling Hank anything the man doesn't already know. Lockwood gives up and jogs back to the bonfire, somehow feeling no ill will toward the lovable and unwavering Hank whatsoever.</p>
+<p>&quot;See?&quot; Sarek says as he hands Lockwood a freshly lit smoke. &quot;The man has his orders. If we took our jobs even half as seriously as Hank, we probably wouldn't all be standing out here right now.&quot;</p>
+<p>Noone is not one to let a good segue go to waste. &quot;So why <em>are</em> we all standing out here, boss? We might as well get started while we wait for the Director.&quot;</p>
+<p>&quot;Oh, no,&quot; Prabs says. He rejoined the group while Lockwood was trying to schmooze Hank, and the Russian translated manual on the operation of zero gravity toilets<a id="fnlink4"></a><a href="#fn4"><sup>[4]</sup></a> is giving the fire entirely new life. &quot;The Director is coming? That is not good.&quot;</p>
+<p>&quot;No, it's not good at all,&quot; Sarek confirms. &quot;It's the Chinese. They launched something during the night.&quot;</p>
+<p>&quot;So what?&quot; Lockwood says. &quot;They're always launching something.&quot;</p>
+<p>&quot;This was big. Very big.&quot;</p>
+<p>&quot;Nuclear waste headed for the sun?&quot;</p>
+<p>&quot;That's illegal.&quot;</p>
+<p>&quot;So what? We do it all the time.&quot;</p>
+<p>&quot;True, but there isn't enough radioactivity coming off it. And we believe the spacecraft is manned.&quot;</p>
+<p>It's Noone's turn to speculate. &quot;Maybe it's just another component for Procellarum<a id="fnlink5"></a><a href="#fn5"><sup>[5]</sup></a>.&quot;</p>
+<p>&quot;Maybe,&quot; Sarek says, &quot;but probably not. The trajectory isn't quite right.&quot;</p>
+<p>If Prabs is anything, he is a trajectory man. &quot;What is wrong with the trajectory? Give me all the juicy details.&quot;</p>
+<p>&quot;I don't know the details, Prabs,&quot; Sarek tells him. &quot;It might just be an error. Or the Chinese might just be putting themselves into an orbit we've never seen them use before to avoid debris, or to steer clear of a lunar satellite we don't know about. But there's one other possibility.&quot;</p>
+<p>Lockwood already knows where his boss is going with this. &quot;That they just want us to <em>think</em> they're going to the moon.&quot;</p>
+<p>&quot;Exactly.&quot;</p>
+<p>&quot;Which, I'm guessing, is why I'm here.&quot;</p>
+<p>&quot;Right again,&quot; Sarek says. &quot;We need the inside scoop on this one, Brother Austin. We need you to tap your contact.&quot;</p>
+<p>Lockwood nods, more to himself than the others. &quot;It won't be cheap,&quot; he tells Sarek.</p>
+<p>&quot;How much?&quot;</p>
+<p>&quot;He doesn't want money,&quot; Lockwood says. &quot;At least not US dollars.&quot;</p>
+<p>&quot;Then what <em>does</em> he want?&quot;</p>
+<p>&quot;Plasma propulsion. He's brought it up before.&quot;</p>
+<p>&quot;No way,&quot; Noone says. He flicks his butt into the fire and begins lighting another. &quot;That's off the table.&quot;</p>
+<p>&quot;You cannot give him plasma propulsion,&quot; Prabs says. &quot;That is our best shot at getting to Mars before the Chinese.&quot;</p>
+<p>&quot;It's kind of a moot point if they're already on their way, isn't it?&quot; Lockwood says. &quot;And I'm not talking about handing over the schematics. It would probably be enough just to confirm that we have it.&quot;</p>
+<p>&quot;How about confirmation that we're working on it?&quot; Sarek says.</p>
+<p>&quot;That might work.&quot;</p>
+<p>&quot;Try it. If that's not enough, you can go as far as confirming a laboratory prototype, but that's it. Nothing beyond a scale model, and absolutely nothing about what we already have in orbit. That stays quiet at all costs.&quot;</p>
+<p>&quot;Got it. Anything else?&quot;</p>
+<p>&quot;Yeah. Assume the worst and start considering a response. If this is what we think it is, I'm putting you in charge of our counterstrategy.&quot;</p>
+<p>Lockwood nods. His boss is showing unusual initiative &mdash; even trace amounts of leadership. His uncharacteristic boldness can only mean that he &mdash; and, by extension, his entire staff &mdash; has absolutely nothing left to lose. Beating the Chinese to Mars was the only reason the federal government even bothered to resurrect the long-defunct NASA. Its sole mission, as so passionately put forth by the President himself at the beginning of his third term, is to ensure that the first footprints mankind makes on an alien planet are made by an American who traveled there in an American-built spacecraft and who is wearing American-made boots. The first broadcast from its surface will not be in filthy and blasphemous Mandarin or Cantonese or whatever gibberish those people speak over there these days, but will be an American prayer dedicating all that we are and all that we do and all that we have to the service and praise of the divine and benevolent Almighty. And now the dreams of the entire nation and probably the entire future of NASA rest on the knobby shoulders of one aerospace engineer who, in graduate school, used to steal liquid oxygen from the propulsion lab to make frozen tequila shots with a Chinese student whose family happens to have ties to The People's National Space Administration in Beijing, and who is sometimes authorized by the Chinese Paramount Leader himself to exchange the odd snippet of intelligence with certain key American engineers. Lockwood's connections have served him well throughout his career, however in this particular case, he has an unsettling premonition that all he will walk away with today is confirmation of exactly what nobody at NASA, nobody in the current administration, and indeed almost nobody in the entire United States wants to hear: that the Chinese are already on their way to Mars while the best minds at NASA are locked out of their offices and smoking cigarettes in the parking lot around an acrid and dwindling bonfire fueled by victories of an era long past.</p>
+
+
+
+<a id="ch_3"></a>
+
+<div id="chapter_heading">Chapter 3</div>
+
+<div id="chapter_intro">Baybrook Mall<br/>
+Dillard's Parking Lot<br/>
+Friendswood, Texas<br/>
+Just before 6 a.m.</div>
+
+<p><span id="first_letter">I</span>t has been well over a decade since anyone has actually shopped in the Baybrook Mall. When it became clear that Americans needed a place to sleep more than they needed premium scented candles, padded satin bras, diamond-chip heart necklaces, or custom-built teddy bears, roughly half of the malls in the country were converted into tenements. Most ethnic groups enjoy the relative luxuries of food courts converted into communal kitchens and perforated hoses mounted high up on bathroom walls forming showers of sorts, but not the Chinese. Those who can not pass themselves off as Japanese, Korean, or some other form of Pacific Asian have had to carve their new lives out of hectares of once-safe, once-convenient, and once-well-lit mall parking, or if they are really lucky, the occasional multi-tiered garage. When weather permits, they grow rice in nearby drainage ditches and the round patches of carbon-scored land inside freeway cloverleaves where passing diesel engines radiate free ambient energy<a id="fnlink6"></a><a href="#fn6"><sup>[6]</sup></a>.</p>
+<p>Lockwood took several buses to make sure he wasn't followed, and is now stepping off in front of the settlement known as Dillardsville. The tents that form the squalor around him are paradoxically cheerful in their assortment of natural colors: slate blue, autumn orange, maple-leaf red, bark brown, and fern green. The space between tents is already starting to fill with lowered straw conical hats and bustling chickens darting and pecking at the patches of grass which have pushed their way up through the asphalt. The smells around him are alternately mouth-watering and gut-wrenching: sweet rolls, then fish entrails; pork broth, then pigeon shit; hot tea, then the blood and steaming bowels of whatever will constitute the bulk of the day's protein. Lockwood knows exactly where he needs to go, but as one final precaution, he carves out an elaborately circuitous route; without his contacts, he knows he is a great deal less valuable to NASA, and therefore much more likely to catch some of the blame those above him are endlessly looking to place.</p>
+<p>He stops at an empty stall and takes a stool on the end, scooting it as far beneath the blue tarp above him as the weathered plywood counter will allow. Eventually his presence is noticed by a small Chinese girl with uncharacteristically wavy hair who emerges from the shadows wearing an expression of very thinly veiled impatience.</p>
+<p>&quot;What?&quot;</p>
+<p>&quot;Can you make <em>zha liang</em>?&quot; Lockwood asks.</p>
+<p>The girl is dressed like a Shaolin Monk and is so small she looks like she subsists on meditation alone, yet she speaks with the thickest Texas drawl Lockwood can ever recall hearing. &quot;You want that with or without sesame?&quot;</p>
+<p>&quot;With, please.&quot;</p>
+<p>She disappears unceremoniously back into the shadows, and Lockwood can hear multiple woks being made ready. He picks at a splinter in the plywood surface in front of him, and when that fails to hold his attention, he turns on his stool to have a look around. There's a row of recently deceased fish &mdash; walleye, if Lockwood is not mistaken &mdash; laid out over ice in the booth behind him, their gaping mouths full of needles and their spinous dorsal fins erect. Behind the ice troughs, motionless live specimens await their turns in stacks of murky tanks. Lockwood wonders if Farmer would accept a fish, and decides he will pick one up on the way out.</p>
+<p>The thump of a heavy plate brings Lockwood back around. The rice noodle rolls are steaming in the chilly morning air, and there is a ceramic cup of chopsticks and a bottle of soy sauce where there wasn't before. The girl is holding an earthen kettle.</p>
+<p>&quot;Tea?&quot;</p>
+<p>&quot;Please.&quot;</p>
+<p>She fills a mug while Lockwood plucks himself some chopsticks, secures a section of roll, and wraps his mouth around the warm fried dough. It occurs to him that if he were at home, he would probably be eating cold hard bread spread with some form of government subsidized synthetic substance. His warm home-cooked breakfast, along with the pretty little girl in front of him, are suddenly making him feel worlds better about his morning.</p>
+<p>The girl lingers as Lockwood eats. Between bites, he decides to risk some conversation.</p>
+<p>&quot;So,&quot; Lockwood says.</p>
+<p>&quot;So,&quot; the girl tosses back.</p>
+<p>&quot;Is it what we think it is?&quot;</p>
+<p>&quot;That depends,&quot; the girl says. &quot;What do you think it is?&quot;</p>
+<p>&quot;I'll tell you what we think it's not. We're pretty sure it isn't a lunar mission.&quot;</p>
+<p>&quot;Go on.&quot;</p>
+<p>&quot;We're thinking it's big, manned, and on a trajectory to intersect with Mars in just over six months.&quot;</p>
+<p>&quot;Is that what the numbers are telling you?&quot;</p>
+<p>&quot;More or less.&quot;</p>
+<p>&quot;Well, numbers don't usually lie, do they?&quot;</p>
+<p>&quot;No, they tend not to. Satellite images are a different story, though.&quot;</p>
+<p>&quot;How's that?&quot;</p>
+<p>&quot;It seems strange that something big enough to make a trip to Mars never showed up on a single satellite image of all known Chinese launch sites.&quot;</p>
+<p>&quot;Maybe the spacecraft was assembled and launched from orbit.&quot;</p>
+<p>&quot;Maybe, but as far as we can tell, there's nothing missing from up there.&quot;</p>
+<p>&quot;Maybe it was something small enough not to be noticed.&quot;</p>
+<p>&quot;We're talking about a propulsion system bigger than a Saturn VII. Even NASA would notice that.&quot;</p>
+<p>&quot;When you put it that way, it does sound mysterious, doesn't it?&quot;</p>
+<p>&quot;Any theories?&quot;</p>
+<p>&quot;About why your spy satellites are woefully inadequate and embarrassingly ineffective? I don't know. A combination of substandard engineering and cheap American technology?&quot;</p>
+<p>&quot;Probably,&quot; Lockwood says. He fills his mouth with another piece of roll, but continues talking despite the considerable obstruction. &quot;Even though I'm the one who designed them. I'm going to consider this conversation confirmation of a Chinese mission to Mars. Any objections?&quot;</p>
+<p>&quot;Who am I to disagree with a highly respected NASA engineer? I'm just a waitress in a mall parking lot.&quot;</p>
+<p>&quot;Any other news this morning?&quot;</p>
+<p>&quot;Not that I can think of.&quot;</p>
+<p>&quot;In that case,&quot; Lockwood says, adding a sip of jasmine to his already overburdened mouth, &quot;your country thanks you.&quot;</p>
+<p>&quot;This isn't my country,&quot; the girl tells him. &quot;I'd be on the next freighter out of the Gulf if I could.&quot;</p>
+<p>&quot;Wouldn't we all,&quot; Lockwood says. This is far more food than he's accustomed to this early, and he's already stuffed. He puts down his chopsticks and gets down off his stool. &quot;Your <em>zha liang</em> is the best in Texas. Put this on my tab, will you?&quot;</p>
+<p>&quot;Not so fast,&quot; the girl says. &quot;What've you got for me?&quot;</p>
+<p>Lockwood glances furtively to either side of him before leaning in close. The girl lifts herself up on her tippy-toes and leans forward right into Lockwood's kiss. When they separate, she is smiling.</p>
+<p>&quot;I guess that covers it.&quot;</p>
+<p>&quot;I gotta get back,&quot; Lockwood says. &quot;I'll come see you again as soon as I can.&quot;</p>
+<p>The girl gives Lockwood a dainty wave and her most adorable smile. &quot;Give Farmer my love.&quot;</p>
+<p>&quot;I will,&quot; Lockwood says. He starts to turn, but stops. &quot;Oh, by the way, we have plasma propulsion.&quot;</p>
+<p>&quot;No shit,&quot; says the cute little Chinese Texan.</p>
+
+
+
+<a id="ch_4"></a>
+
+<div id="chapter_heading">Chapter 4</div>
+
+<div id="chapter_intro">Johnson Space Center<br/>
+Conference Room Armstrong<br/>
+Houston, Texas<br/>
+7:51 a.m.</div>
+
+<p><span id="first_letter">T</span>he pitchers of coffee are empty and the ashtrays are full. The air is thick with smoke which swirls under cones of light as Lockwood pushes through the door.</p>
+<p>&quot;About god-blessed time,&quot; Sarek says. He is at the end of the table, but not at the head.</p>
+<p>&quot;Hi, boss,&quot; Lockwood says breezily. &quot;Where's the Director?&quot;</p>
+<p>&quot;She's on the phone,&quot; Sarek says. &quot;With <em>the President</em>. What did you find out?&quot;</p>
+<p>Lockwood takes an empty chair beside Prabs. He lays a long paper-wrapped package out on the table. Noone leans forward and makes a face as he sniffs.</p>
+<p>&quot;Is that a <em>fish</em>?&quot;</p>
+<p>&quot;It's a walleye,&quot; Lockwood says.</p>
+<p>&quot;It smells like a dead whore.&quot;</p>
+<p>&quot;Like you've smelled a dead whore before,&quot; Lockwood says.</p>
+<p>Sarek is grimacing. &quot;Sweet Jesus on a stick. Why would you bring that thing in here?&quot;</p>
+<p>&quot;It's for Farmer,&quot; Lockwood says.</p>
+<p>&quot;Who the hell is <em>Farmer</em>?&quot;</p>
+<p>Prabs is leaning forward to stub out a cigarette. He doesn't appear remotely offended by the aroma of walleye. &quot;It is his cat.&quot;</p>
+<p>&quot;She's a fox,&quot; Lockwood says.</p>
+<p>&quot;I ought to come over there and slap you with that god-blessed thing,&quot; Sarek says. &quot;The Director will be back any minute and it smells like a goddamn Chinese ghetto in here.&quot;</p>
+<p>&quot;If you slap me with a fish,&quot; Lockwood tells his boss, &quot;I'll report you to HR.&quot;</p>
+<p>&quot;HR got laid off last week,&quot; Noone says. &quot;The entire department. They took turns calling each other into their offices. Isn't that right, Crabs?&quot;</p>
+<p>&quot;It is true,&quot; Prabs says as he lights up again. &quot;Mr. Noone says we are now free to sexually harass anyone we wish.&quot;</p>
+<p>&quot;<em>Enough</em>!&quot; Sarek says. &quot;Do you have anything to share with us other than the stench of a dead fish?&quot;</p>
+<p>&quot;It's confirmed,&quot; Lockwood says. He helps himself to the pack of smokes in front of Prabs. &quot;It's a manned mission to Mars.&quot;</p>
+<p>Sarek shakes his head. &quot;This is one holy Mongolian clusterfuck, gentlemen. Do you have any idea what this means?&quot;</p>
+<p>Before anyone has a chance to put forth his hypothesis, they hear a combination being punched into the keypad outside the room. Sarek gets to his feet so fast that his chair hits the wall behind him.</p>
+<p>&quot;Don't anybody say anything to the Director,&quot; he says. &quot;I'll tell her we still need more data.&quot;</p>
+<p>As the door opens, everyone must adjust his expectations when they see that, rather than the Director, it is the girl known throughout NASA as The Digital Bitch. She leans into the room and wrinkles her nose as she sniffs noisily at the air.</p>
+<p>&quot;Why does it smell like someone in here needs to douche?&quot;</p>
+<p>The Digital Bitch is the screen name of one Stacey McMorrow who is, without a doubt, one of NASA's best electrical engineers. She is a big curvy girl with a wide gap between her front teeth, and a wonderful smile she usually tries to hide. She is also the only girl Lockwood knows who can get away with talking about farting.</p>
+<p>Noone points across the table. &quot;Brother Fuckwood here brought a fish to work.&quot;</p>
+<p>&quot;It smells like a dead whore.&quot;</p>
+<p>&quot;<em>See</em>?&quot; Noone says, relishing in what he clearly interprets as vindication. &quot;That's exactly what I said!&quot;</p>
+<p>Sarek has found his chair again and drops back into it with an exasperated sign. &quot;What is it, Stacey?&quot;</p>
+<p>&quot;I know why the satellites never picked anything up.&quot;</p>
+<p>&quot;Why?&quot;</p>
+<p>&quot;Viruses.&quot;</p>
+<p>Sarek looks doubtful. &quot;That's very unlikely. All of our firmware is repeatedly scanned right up to the moment of launch. You know that.&quot;</p>
+<p>&quot;The viruses aren't in the firmware,&quot; The Digital Bitch says. &quot;Or in the software. They're embedded in the hardware itself.&quot;</p>
+<p>Sarek's expression goes from skepticism to something closer to horror. &quot;Which components?&quot;</p>
+<p>&quot;Most of them. Maybe all of them. It's some very sophisticated shit. We're a long ways from understanding it, but it looks like the whole constellation of Guardians might be compromised.&quot;</p>
+<p>&quot;The whole goddamn constellation? Where the hell did the components come from?&quot;</p>
+<p>&quot;Various factories in Shenzhen, I assume.&quot;</p>
+<p>&quot;<em>Shenzhen</em>? As in Shenzhen, <em>China</em>?&quot;</p>
+<p>&quot;No, as in Shenzhen, Texas. Of course China.&quot;</p>
+<p>&quot;Are you telling me that the United States built an entire constellation of satellites to spy on China using Chinese components?&quot;</p>
+<p>&quot;Duh. How else would we build them? We don't make any of this shit anymore. Even if we did, it would be way too expensive for NASA to afford.&quot;</p>
+<p>Lockwood raises a tentative hand. &quot;We bought them through fake companies, at least. It's not like the purchase orders said they were for American spy satellites.&quot;</p>
+<p>&quot;What companies?&quot;</p>
+<p>&quot;I don't know. A lot of them. One was a consumer electronics company. One was producer of voyeuristic porn. I don't remember the rest.&quot;</p>
+<p>&quot;Christ on a bike, Lockwood! How could you be so stupid?&quot;</p>
+<p>&quot;You signed off on the purchase orders, boss man. Remember?&quot;</p>
+<p>&quot;Anyway, it doesn't matter where the components came from,&quot; Sarek says dismissively. &quot;What matters is that someone obviously tipped the Chinese off.&quot;</p>
+<p>&quot;Maybe,&quot; Lockwood says. &quot;Or maybe they embed viruses in everything they sell these days, just to be sure.&quot;</p>
+<p>&quot;We'll worry about the satellites later,&quot; Sarek says. &quot;The more immediate issue here is that the Chinese are on their way to Mars and we aren't. The Director is going to be back here any minute, and she's going to want to hear what our options are. So, let's hear them.&quot;</p>
+<p>&quot;Two words,&quot; Noone says. &quot;Black. Diamond.&quot;</p>
+<p>&quot;How is an SBSS<a id="fnlink7"></a><a href="#fn7"><sup>[7]</sup></a> going to save our collective asses?&quot; Sarek wants to know. &quot;Are you suggesting we eliminate all two billion Chinese citizens?&quot;</p>
+<p>&quot;Nope. Just two or three. We rotate one of the satellites so that it's pointing away from Earth, and after a little upgrade to the targeting algorithms, <em>bam</em>! The Chinese are no longer on their way to Mars. At least not in one piece.&quot;</p>
+<p>&quot;The ship's way too small,&quot; The Digital Bitch says from the doorway, &quot;but we could probably manage to hit Mars and destroy it before the Chinese get there. Either way, they don't land.&quot;</p>
+<p>&quot;This is all very enlightening,&quot; Sarek says, &quot;but does anyone have an idea that doesn't involve destroying a planet or starting both World Wars III <em>and</em> IV?&quot;</p>
+<p>&quot;I do,&quot; Lockwood says. &quot;EMPP.&quot;</p>
+<p>Noone throws up his hands. &quot;How is an electromagnetic pulse any better than a laser?&quot;</p>
+<p>Prabs has been far more focused on smoking than on the problem at hand, but he is suddenly excited. &quot;Not an electromagnetic pulse,&quot; he says with enlarged bloodshot eyes. &quot;Exhaust-Modulated Plasma Propulsion.&quot;</p>
+<p>&quot;Exactly,&quot; Lockwood says. &quot;It's going to take the Chinese six months to get to Mars at their current speed. With plasma propulsion, we can get a man to Mars in ninety days which means if we can launch in eighty-nine days or less, we can still get there first.&quot;</p>
+<p>Sarek sits up straight for a moment, then deflates. &quot;There's no way we can launch a manned mission using the plasma platform in that amount of time.&quot;</p>
+<p>&quot;We don't have to. We already have a prototype in orbit. All we have to do is get a Zeus command module up there that's been modified to dock with it.&quot;</p>
+<p>&quot;You want to use a completely untested experimental prototype to send a man to Mars?&quot;</p>
+<p>&quot;Sure, why not? The Chinese will have no idea what's going on until they turn on CNN and see an American happily jouncing across the surface. It's perfect.&quot;</p>
+<p>&quot;I hate to be the one to bring this up,&quot; Noone says, &quot;but how do you plan on bringing that happy jouncing American back home? Or are we talking about a one-way ticket?&quot;</p>
+<p>&quot;I haven't figured that part out yet,&quot; Lockwood says. &quot;But I'm pretty sure we can at least get someone there.&quot;</p>
+<p>&quot;How sure?&quot; Sarek wants to know. &quot;Give me a number.&quot;</p>
+<p>Sarek's challenge prompts all the engineers in the room to draw their slide rules and pencils, and apply themselves feverishly to the calculation. The Digital Bitch is using a spiral notepad against the door jamb, and Lockwood is scrawling across butcher paper. Prabs is the first to slam his pencil down.</p>
+<p>&quot;I calculate an eighty-four percent chance of successfully landing,&quot; he announces.</p>
+<p>&quot;I'm getting sixteen percent,&quot; Noone says.</p>
+<p>&quot;I'll split the difference,&quot; Lockwood says. &quot;Fifty percent, give or take.&quot;</p>
+<p>&quot;Stacey?&quot; Sarek says.</p>
+<p>&quot;I'm seeing a ninety-eight point three percent chance,&quot; she says, &quot;of at least one person dying, and all of us losing our jobs.&quot;</p>
+<p>&quot;Good enough,&quot; Sarek says. He thumps the table and stands. &quot;I want a full mission plan in my hands first thing tomorrow morning. If you can figure out how to bring our man home, we're going to Mars.&quot;</p>
+
+
+
+<a id="ch_5"></a>
+
+<div id="chapter_heading">Chapter 5</div>
+
+<div id="chapter_intro">South Shore Harbor Country Club<br/>
+Twelfth Hole<br/>
+League City, Texas<br/>
+11:11 a.m.</div>
+
+<p><span id="first_letter">G</span>olf, as it turns out, only gets better in the cold. Balls sit up nice and high on the frozen rough and can be hit as cleanly as if they had been teed; miscalculated shots which would have otherwise ended up at the bottom of a water hazard are instead propelled off of thick opaque layers of ice and onward toward frosty white greens; and bunkers go from Zen garden sand traps where balls embed themselves with the infuriating <em>thud</em> that makes you want to hurl your club end-over-end into the trees, to concrete kiddy pools that spit dimpled projectiles back out at nearly the same velocity with which they entered.</p>
+<p>Frozen golf courses can do wonders for your game, but they are far less accommodating to lightweight and undersized BMX dirt bikes like the one Lockwood is frantically pedaling toward the twelfth hole's teeing ground. The brake calipers grab the rims sure enough, and the tires instantly seize, but the bike as a whole gives no indication of slowing. If Lockwood were to hold course, he would end up low-siding, which is to say that the bike would pivot out from under him in the direction of the skid and both he and his ride would come to a dramatic but relatively harmless low-impact rest only a few meters from where they are now. However, in a desperate attempt to save himself what would have been, in retrospect, relatively minor embarrassment, Lockwood makes the mistake of releasing the brakes which allows the tires to find just enough purchase at an angle perpendicular to his momentum that he is thrown over the high side of the bike instead. He is aware of achieving actual measurable hang time during which he questions his decision to wear a ski hat rather than a helmet, and wonders how much elasticity a frozen golf course could possibly afford. The answer is predictable little, Lockwood discovers; as he lands more or less on his face, frozen blades of grass stab up through his beard tickling the inside of his nose, and bend against the thick corrective lenses protecting his tightly clenched eyelids. He has just enough time to register that both he and his bike were headed in the same general direction when last they parted ways before he feels the impact of a very strong, but thankfully fairly lightweight, aluminum alloy frame against his back.</p>
+<p>The peace and silence of the crisp morning air is permeated by the popping of a polite and civilized golf clap.</p>
+<p>&quot;Brother Lockwood always knows how to make an entrance,&quot; Sarek tells the Director. &quot;Yesterday it was a dead fish. Today it's acrobatics. Perhaps tomorrow he'll set himself on fire.&quot;</p>
+<p>Lockwood lifts his head enough to see the smiles on Sarek's and Noone's faces. The Director appears only mildly distracted from her game.</p>
+<p>&quot;Don't worry about the bike,&quot; Noone says as Lockwood begins the work of getting to his feet. He bends joints and places weight experimentally. &quot;You broke its fall brilliantly.&quot;</p>
+<p>&quot;No, really,&quot; Lockwood says. &quot;I'm fine. Don't put yourselves out.&quot;</p>
+<p>&quot;Oh, come on,&quot; Noone says. &quot;We've been through far worse in astronaut training. Hell, that looked more fun than dangerous.&quot;</p>
+<p>Lockwood was given astronaut training when he joined the Human Spaceflight Program in the same way a nuclear physicist is given basic training when recruited by the military to build submarine propulsion systems or intercontinental ballistic missiles. That is to say, he mostly watched and tried to stay out of the way.</p>
+<p>The Director has forgotten all about Lockwood's stunt and is back to focusing on her shot. With her perfect blonde bob, bright blue eyes, and decidedly favorable proportions, she is almost certainly the most beautiful woman Lockwood has ever known. In addition, she is an expert in military history and, according to the rumors, a highly competent pilot, both of which add copious amounts of geek cred to her allure. Unfortunately, the intelligent, powerful, and highly provocative Director of NASA is also as asexual as she is irresistible. Lockwood has seen algorithms that exude more warmth than she does. Flirting with an NPC<a id="fnlink8"></a><a href="#fn8"><sup>[8]</sup></a> would be a more productive use of a guy's time. Among the army of code monkeys at NASA, she is known universally as &quot;Fembot.&quot;</p>
+<p>Her shot is straight toward the flag and a good two hundred yards plus, once the ball finally finishes skipping and rolling across the frozen fairway. She has chosen the highly visible color of dark green which, even at this distance, stands out nicely against its white surroundings. As she bends down to recover her tee, Lockwood remembers hearing that the Director can be found kneeling in NASA's chapel no fewer than twice a day which the Chaplain is reportedly quite appreciative of since the view from behind draws gaggles of slack-jawed engineers who would otherwise visit God's home about as frequently as they would the gym or their proctologists.</p>
+<p>How Noone got himself invited along on a golf outing with Sarek and the Director becomes apparent when the Director hands him her club. Noone stows it in the bag he's holding with the kind of subtle resentment largely undetectable to those at the executive level, but that Lockwood recognizes instantly.</p>
+<p>&quot;So, do you have a flight plan for me,&quot; Sarek asks Lockwood as he tees up. &quot;I'm guessing you didn't come all the way out here just to show off your BMX skills.&quot;</p>
+<p>Lockwood's finger has disappeared into a hole in the elbow of his parka. He will have to remember to apply a duct tape patch to contain the synthetic down.</p>
+<p>&quot;Yes, sir,&quot; Lockwood says. He knows that treating Sarek with reverence in front of the Director buys him all kinds of leniency in other contexts. &quot;I think I have it all figured out.&quot;</p>
+<p>&quot;Good. Let's hear the high points.&quot;</p>
+<p>&quot;Basically, we treat the entire mission as a lunar landing except we substitute the Moon for Mars, and we replace the third stage of the Saturn VII with the plasma propulsion prototype we already have in orbit. That should get us to Mars just ahead of the Chinese.&quot;</p>
+<p>&quot;OK,&quot; Sarek says. He is considering the selection of clubs available to him in his golf bag. As far as Lockwood can tell, his options are limited to a putter and a driver. He starts to pull out the putter, thinks better of it, and opts for the driver instead. &quot;But this, we already know. What I want to hear about is how we're going to get our man back home.&quot;</p>
+<p>&quot;We're not,&quot; Lockwood says. Finally something noteworthy enough to interrupt the morning's round of golf has transpired, and both Sarek and the Director turn.</p>
+<p>&quot;Pardon me?&quot; Sarek says.</p>
+<p>&quot;I said we're not. The Chinese are going to do it for us.&quot;</p>
+<p>&quot;I feel like that merits further explanation, Brother Austin,&quot; Sarek says. &quot;If it's not terribly out of your way.&quot;</p>
+<p>&quot;The plasma propulsion prototype we have in orbit is based on an almost completely unmodified third stage of a Saturn VII. That means the third stage we launch into orbit will be empty giving us more weight for food and other expendables to compensate for the longer flight to Mars. That also means the empty third stage is, at least in theory, perfectly interchangeable with the plasma prototype, so all we have to do is figure out how to couple the Zeus modules to the plasma stage while in orbit.&quot;</p>
+<p>&quot;What you're telling me now would generally <em>not</em> be considered high points.&quot;</p>
+<p>&quot;What I'm trying to say is that all the pieces just happen to fit almost perfectly in place for us to get to Mars before the Chinese which is the only reason we even have a prayer. But that's just for the trip out. If we have to design a new launch system for the lunar module to compensate for the difference in Martian gravity, <em>and</em> a way to either reignite the plasma propulsion system (which may not even be possible), or a way to get enough conventional fuel plus expendables to Mars to make the trip home, we can forget it. There's absolutely no way we'll launch in time to beat the Chinese. We'd be lucky to launch before they got home.&quot;</p>
+<p>&quot;So the solution you're proposing, if I'm understanding you correctly, is to politely ask the Chinese for a lift back to Earth?&quot;</p>
+<p>&quot;Exactly. From what I've been able to find out from my sources, the Chinese spacecraft is designed to haul hundreds of pounds of Martian rock and soil back to Earth. So instead of samples, they haul back an American.&quot;</p>
+<p>&quot;What makes you think they would chose an American over dirt?&quot;</p>
+<p>&quot;Pride. We will have beaten them there, so the only way for them to save face is to rescue the poor, stranded, helpless American.&quot;</p>
+<p>&quot;Have you considered the fact that this will make us look like complete fools?&quot; Sarek asks. &quot;How can we possibly justify flying an American all the way out to Mars without the technology to get him back?&quot;</p>
+<p>&quot;We don't <em>tell</em> anyone that,&quot; Lockwood says. &quot;We say the lunar &mdash; or I guess the Martian, in this case &mdash; launch system was damaged during landing. I agree it's not ideal, but we either beat the Chinese to Mars and hitchhike home, or we don't go at all.&quot;</p>
+<p>&quot;What if the Chinese mission fails?&quot; Sarek says. &quot;Or what if your source is wrong about the amount of weight they can take back? Or the amount of air or food they have? What if their CO<sub>2</sub> scrubbers can't handle another breather? What if, at the last minute, the Chinese decide to land on the opposite side of the planet? What if <em>they're</em> planning on bumming a ride back with <em>us</em>?&quot;</p>
+<p>&quot;Admittedly, all of those would be suboptimal scenarios,&quot; Lockwood says. &quot;And there are hundreds if not thousands of other things that could wrong. But if you want the first man on Mars to be an American, this is the only way it's going to happen.&quot;</p>
+<p>Sarek shakes his head at Lockwood. &quot;This is just plain sad,&quot; he tells his scraped-up and bruised protégé who still has frozen grass in his beard and nose. &quot;Pathetic, really.&quot;</p>
+<p>The Director hands her pink and white golf glove to Noone who exchanges it for a pair of thick fleece mittens. &quot;I think it's brilliant,&quot; she says plainly.</p>
+<p>Sarek looks at the Director, then back at Lockwood. &quot;Sad and pathetic that you didn't come to me with this sooner, I mean. The plan itself is brilliant, obviously.&quot;</p>
+<p>&quot;Thanks, boss.&quot;</p>
+<p>&quot;Brother Christopher,&quot; the Director says to Noone, &quot;you will fly the mission. God willing, you will be the first to spread His glory to worlds beyond our own. Congratulations. You can begin training as soon as you're done here.&quot;</p>
+<p>Noone looks on the verge of tears, though it isn't clear to Lockwood whether it's from the distinction of the mission, or the unparalleled risk.</p>
+<p>&quot;Thank you, sir.&quot;</p>
+<p>&quot;And Brother Austin,&quot; the Director continues, &quot;I recommend you plan this mission with the utmost care and attention because <em>you</em> will serve as his backup.&quot;</p>
+
+
+
+<a id="ch_6"></a>
+
+<div id="chapter_heading">Chapter 6</div>
+
+<div id="chapter_intro">South Texas Project Nuclear Power Generator<br/>
+Pressurized Water Reactor C<br/>
+Bay City, Texas<br/>
+4:14 p.m.</div>
+
+<p><span id="first_letter">A</span>ustin Lockwood and Christopher Noone are at the bottom of a concrete containment vessel which was once the final barrier between thousands of enriched uranium-235 fuel rods and the rest of the largely non-irritated world. The reactor core, steam generators, and pressurizers have all been replaced with the third stage of a Saturn VII rocket, models of a Poseidon command/service module (CSM)<a id="fnlink9"></a><a href="#fn9"><sup>[9]</sup></a>, and roughly fifteen million gallons of water.</p>
+<p>For the seventh time today, Noone is about to practice the procedure of manually verifying the hard seal between the CSM and the plasma propulsion stage. The coupling system Lockwood, Prabs, and The Digital Bitch designed does not require manual intervention beyond the in-orbit docking procedure itself, however the plasma rocket's backup ignition system involves the use of its retro thrusters which means, in the unlikely event that the primary ignition system were to fail, the CSM and the plasma stage would briefly be pulled in opposite directions with a force that approached the tolerances of some of the components of the coupling adapter (which was designed to accommodate the widest possible variances in alignment during the docking procedure at the expense of some durability). Should Noone find himself in the position of having to use the plasma rocket's backup ignition system, and should the couplings not be fully seated and engaged, there is a chance (anywhere between 2% and 72%, depending on which slide-rule jockey you happened to ask) that the two components could separate just before plasma ignition which would very likely result in the propulsion system ramming into the CSM at speeds up to almost a kilometer per second (depending on how long the ignition sequence took, and how far apart the two components had drifted), sending the CSM cascading out into deep space with about fifteen weeks of consumables and absolutely no hope whatsoever of recovery.</p>
+<p>A quick EVA<a id="fnlink10"></a><a href="#fn10"><sup>[10]</sup></a> to double-check the couplings, therefore, seemed to everyone &mdash; and in particular, to Brother Christopher Noone &mdash; like the prudent thing to do.</p>
+<p>Lockwood is observing from outside the CSM. He is tethered to a rail bolted to the concrete wall of the reactor container, following as much of the action as he can through his helmet lights. If this procedure happens, it will probably happen in the dark with the Earth between the Sun and the spacecraft, therefore they are not allowed to use any form of illumination that would not be available to them during the actual mission. Fidelity is the watchword when it comes to training exercises like this one.</p>
+<p>&quot;Houston, this is Victoria Seven<a id="fnlink11"></a><a href="#fn11"><sup>[11]</sup></a>,&quot; Lockwood hears Noone say. &quot;Request permission to begin manual coupling verification EVA.&quot;</p>
+<p>&quot;Victoria, this is Houston. You are go for coupling verification EVA.&quot;</p>
+<p>&quot;Roger, Houston. Opening the forward hatch now.&quot;</p>
+<p>The sound of the hatch opening reaches Lockwood's ears through the water, and moments later, he can see the outline of the command module silhouetted against Noone's helmet lights. From this distance, he can just make out the occasional stream of bubbles rising from the exhaust valve in the back of Noone's enormous helmet.</p>
+<p>&quot;Houston, this is Victoria. I have cleared the hatch and attached my safety to the forward anchor point. Request permission to close and seal forward hatch.&quot;</p>
+<p>There's a pause before Houston responds. &quot;Uh, that's a negative, Victoria. Do not &mdash; repeat &mdash; <em>do not</em> close and seal the forward hatch. Do you copy?&quot;</p>
+<p>Lockwood hears someone else's voice come over the radio. &quot;Would you quit fucking around?&quot; It's Sarek. It's <em>pissed off</em> Sarek. &quot;You know god-blessed well there's no ingress mechanism on the CM. You close that hatch, you're never getting back inside. What's the matter with you?&quot;</p>
+<p>&quot;Houston,&quot; Noone says. His breathing is now audible, and the pitch of his voice has risen. &quot;Houston, be advised. What the fuck? Houston, there are <em>bugs</em> in my spacesuit. Jesus Christ, something's crawling on me!&quot;</p>
+<p>&quot;Christopher!&quot; Sarek says. &quot;What the hell's going on?&quot;</p>
+<p>&quot;Oh, God. Oh, no. I think I'm going to hurl.&quot;</p>
+<p>Lockwood breaks in. &quot;Bring in the divers. Get him up. Now!&quot;</p>
+<p>&quot;What the hell's going on down there,&quot; Sarek says.</p>
+<p>&quot;He has decompression sickness, you idiot.&quot;</p>
+<p>&quot;That's impossible.&quot;</p>
+<p>&quot;Obviously it's not. Bring him up <em>now</em>! If he vomits in that helmet, he's dead.&quot;</p>
+<p>Lockwood can see swarms of lights descending on them like fireflies.</p>
+<p>&quot;I think I just pissed myself,&quot; Noone says. &quot;I can't feel my legs.&quot;</p>
+<p>&quot;I'm coming to get you,&quot; Lockwood says.</p>
+<p>&quot;No you're not,&quot; Sarek says. &quot;Leave it to the divers.&quot;</p>
+<p>The divers' lights converge on Noone. The stillness of the figure and the paleness of the suit make him look like a distended corpse. The divers distribute themselves around the arms and legs, inflate their buoyancy control devices, and then they all begin to ascend as a single unit.</p>
+<p>&quot;I'm coming up,&quot; Lockwood says. He is groping in the water for his tether. &quot;This is bad.&quot;</p>
+<p>&quot;You stay right where you are,&quot; Sarek says. At first, Lockwood thinks he has misunderstood his boss, but then he realizes exactly what's coming. &quot;It seems you have a lot of training to do.&quot;</p>
+
+
+
+<a id="ch_7"></a>
+
+<div id="chapter_heading">Chapter 7</div>
+
+<div id="chapter_intro">Homestead Studio Extended Stay Suites<br/>
+Houston, Texas<br/>
+8:31 a.m.</div>
+
+<p><span id="first_letter">L</span>ockwood sleeps in this morning while Farmer plays late. They breakfast together &mdash; Lockwood on a twin pack of frosted blackcurrant toaster pastries with black coffee and two cigarettes, and Farmer on walleye steak and a bowl of scotch and water, neat. The yawning and bleary-eyed white-footed fox then curls up on Lockwood's pillow while Lockwood takes his olive canvas duffle bag down from the dusty top shelf of the closet and begins to pack.</p>
+<p>According to his schedule, he is supposed to engage in autonomous sustained cardiovascular stimulation and augmentation this morning (aka jogging), then meet the primary crew in Building 9 at the JSC for some light Martian surface simulation training until lunch. Since everyone knows Lockwood takes the bus to work, he figures nobody will even start looking for him in earnest until at least 9:15, maybe even 9:30. Leaving his apartment at 8:45, Lockwood has calculated, should provide the correct balance between giving themselves a sufficient head start, and allowing Farmer some much-needed rest after a long night of stalking rubber mice and pouncing on the two tiny tents in the bed pitched by Lockwood's disproportionately large feet.</p>
+<p>The advantages of owning almost nothing are never more apparent than when you wake up one morning and decide to disappear forever. Other than the practical and the necessary (a few changes of clothes, socks, underwear, his toothbrush, a toy for Farmer, a few packs of smokes, and a roll of toilet paper since personal hygiene products are nowhere to be found in public restrooms anymore), there are only a few things Lockwood owns that he cares much about. He puts on his father's Swiss mechanical watch which needs to be cleaned so badly that it only runs for about four hours at a time, and he pries open the tiny felt ring box containing his gold astronaut pin which he was awarded after his first and last suborbital training flight. It strikes Lockwood as ironic that he is compelled to take along a memento of precisely that which he is trying to leave behind, but he figures there is probably some kind of poetic justice or yin-yang thing going on that makes it all good. He snaps the box shut, and buries it below folds of polyester and wool deep down in his duffle.</p>
+<p>Lockwood thinks about the envelope which he keeps pinned behind a loose panel of wood in the back of the closet, but he does not attempt to recover it. Inside are notes from Min which, if he were a smarter man, he would have destroyed as soon as he read them, along with the photograph they bought from a man with an old Polaroid during their trip to Corpus Christi. When they arrived, they discovered that the USS Lexington had been closed because of tears in her hull from the Gulf ice shelf, and the Corpus Christi Museum of Science and History had been converted into the Corpus Christi Church of Jesus Christ and School for Christian Studies. They slept in a bus station because the manager of the hotel Lockwood booked turned them away convinced that Min was an underage Chinese whore, and they both ended up smoking cigarettes off the ground because it was the end of the month and Lockwood only had enough food stamps left for food. In the picture, Lockwood looks tall next to Min. Her head is on his chest and he is holding her tightly against his parka trying to keep her warm. Their faces are red and their lips are chapped and they are smiling while the listing and groaning USS Lexington corrodes and slowly sinks behind them in the cold dead waters of the Gulf.</p>
+<p>Lockwood thinks about the photograph, but he does not pack it since it is not the kind of thing you want to get caught with when you are running away from your life and your mission and, for all intents and purposes, the entire United States of America. He chokes the mouth of his duffle closed, ties it off, and drops into his one and only kitchen chair. The plastic is so thin and soft that even Lockwood's meager weight bends white stress lines into the drab graphite polymer. He overturns his smokes to get at the last one in the pack and sprinkles his table with tiny dry curls of tobacco. As he sits and smokes, he takes one final look around at the bare, unfinished walls he has spent far more hours staring at than even his overly analytical mind cares to calculate.</p>
+<hr/>
+<p>The only thing guaranteed to get Farmer to lift her head from Lockwood's pillow during the day is the prospect of a walk. All Lockwood has to do is take the leash down off the nail in the closet, and no matter how ninja-like he moves, Farmer invariably springs from the bed as though she's been tased<a id="fnlink12"></a><a href="#fn12"><sup>[12]</sup></a>. What it is about walks that gets Farmer so excited, Lockwood has never been able to fully work out, but with almost no training whatsoever, she heels, sits, and obeys impeccably. Lockwood's assumption is that Farmer is highly competitive when it comes to other members of the canine family, and is therefore determined to out-dog every mongrel she comes across. In any case, her behavior, combined with her unparalleled fluffy adorability, grant them both passage to establishments that would otherwise want nothing to do with either pets or Lockwood.</p>
+<p>When he turns from the closet, Farmer is predictably already at his feet, ears back and tail swishing. Lockwood snaps on her collar, shoulders his bag, and checks the peephole. With no bobble-headed henchmen awaiting them outside, the next step is to survey the open-air hallway. He unbolts the door, cracks it, and scans in both directions. Clear.</p>
+<p>The sign on the elevator is turned to &quot;Working&quot; but Lockwood does not trust it. Their window is brief, and cannot accommodate even the twenty short minutes (guaranteed) it takes for the Lift Doctors to arrive should something malfunction. Besides, the cameras in the stairwells, despite their metal cages, have been smashed for years.</p>
+<p>The lobby is deserted, though Lockwood can hear voices. Farmer sits as Lockwood pauses, trying to locate the origin of the conversation which turns out just to be the television in the room behind the counter. The call and response between a tearful female voice and a supportive congregation spurred by the warbling commands of a preacher all tell Lockwood that it is probably the Confession Channel. He and Farmer continue, turning the corner toward the side door, but stop when they see two dark figures silhouetted against the bright outside light. The imposing and approaching forms belong to none other than Baker and Ponch.</p>
+<p>&quot;Good morning, Brother Austin,&quot; Baker says buoyantly. &quot;On our way to work, are we?&quot;</p>
+<p>&quot;Where else?&quot; Austin says. &quot;Can you guys give me a lift to Building 9? I'm running late.&quot;</p>
+<p>&quot;Today must be bring your pet to work day.&quot;</p>
+<p>&quot;Is that why you brought him?&quot; Lockwood says, indicating the man's partner.</p>
+<p>&quot;Don't worry, Brother Austin,&quot; Baker says, entirely unperturbed by Lockwood's slight. &quot;We fully intend to bring you into work. But there's someone who wants to see you first.&quot;</p>
+<p>The two men turn Austin around and walk him back out into the lobby. There is solemn choir music coming from the back room now. It must be independent prayer time. Lockwood considers a quick appeal to any and all higher powers on his own behalf, but figures it's way too late for that. Farmer is trotting ahead, turning frequently to make sure she is out of range of the men's big shoes.</p>
+<p>&quot;In here,&quot; Ponch says, not particularly politely.</p>
+<p>They turn into the continental breakfast nook where Sarek is sitting in a pleather chair, enjoying a complimentary cup of coffee and a half-smoked cigarette. He motions with his head at the chair beside him which Lockwood quickly takes before he is placed there involuntarily. Farmer sits at Lockwood's feet and twitches her nose in the direction of Sarek's cup, probably hoping to pick up the scent of whiskey.</p>
+<p>&quot;What's going on?&quot; Lockwood says.</p>
+<p>&quot;You tell me,&quot; Sarek tosses back. He offers Lockwood a cigarette, and Lockwood accepts with fingers he fights to keep steady.</p>
+<p>Lockwood considers the story he has prepared about his alarm not going off, about Farmer having heart worms and needing medication around the clock, and about the changes of clothes he decided to bring into work so he can spend even more time training before the big day. But in the end, he decides to save them all time.</p>
+<p>&quot;I figured you guys would only be watching me at night.&quot;</p>
+<p>&quot;We figured you'd figure that.&quot;</p>
+<p>&quot;How'd you know it was going to be today?&quot;</p>
+<p>&quot;We scheduled it.&quot;</p>
+<p>&quot;You scheduled my attempt to run?&quot;</p>
+<p>&quot;Of course we did. We're NASA. We schedule everything.&quot;</p>
+<p>&quot;How?&quot;</p>
+<p>&quot;This is the only time between final mission approval and launch when your presence could be unaccounted for for long enough that you could catch a few busses and disappear. That didn't seem strange to you?&quot;</p>
+<p>&quot;I was hoping it was coincidental.&quot;</p>
+<p>&quot;Nothing is coincidental, Brother Austin. Absolutely. Positively. Nothing.&quot;</p>
+<p>Lockwood looks up at Baker and Ponch who are forming double doors in the breakfast nook entrance. &quot;I guess not.&quot;</p>
+<p>&quot;Where did you think you were going to go, anyway?&quot; Sarek says bemusedly. &quot;Nobody can leave the country without the proper papers. Nobody can even cross state lines without permission. Did you really think that the man everyone is counting on to change the entire course of the country could just pack a bag and disappear?&quot;</p>
+<p>&quot;You really want to know?&quot;</p>
+<p>&quot;Not really,&quot; Sarek says. &quot;But if it'll make you feel better, I'll hear your confession.&quot;</p>
+<p>&quot;I knew I probably wouldn't get very far, but I figured this was the only way to make you understand that I'm not the right man for this mission.&quot;</p>
+<p>&quot;Of course you're not the right man,&quot; Sarek says. He hands his empty cup up to Ponch who, knowing just what to do with it, takes it over to the coffee urn. Ponch appears to be every bit as well trained as Farmer. &quot;You're weak and scrawny, and more than just a little pathetic, to be completely frank. But you also happen to be our best shot at Mars, sad as that may sound.&quot;</p>
+<p>&quot;But that doesn't make any sense. I haven't even been through real astronaut training.&quot;</p>
+<p>&quot;You and Christopher went through the same program. And what do you call what you've been doing for the last two months? If that's not real astronaut training, I don't know what is.&quot;</p>
+<p>&quot;I know I'm <em>technically</em> an astronaut, but we all know I'm really just an engineer. I've been in space for a total of probably fifteen minutes and I was sedated the whole time. And now the entire country is counting on me to be the first man to walk on Mars? It's ridiculous!&quot;</p>
+<p>Farmer senses that this is going to be a lengthy exchange, and curls up at Lockwood's feet.</p>
+<p>&quot;Whether you're poking your head up out of the atmosphere, going to the moon, or traveling to another planet, it's basically all the same out there in the black, kid.&quot;</p>
+<p>&quot;Len, I get motion sick on the bus in the mornings. I get jet-lagged from daylight savings time.&quot;</p>
+<p>&quot;You'll be surprised how quickly you adjust,&quot; Sarek says dismissively. He accepts his cup back from Ponch and slurps some off the top. The liquid looks hot enough to melt tungsten steel, but Sarek's mouth has built up an inhuman resistance to hot coffee over the years.</p>
+<p>&quot;How quickly I'll adjust?&quot; Lockwood repeats. &quot;To which part? To the part where I accelerate to over seventeen thousand miles per hour sitting on top of one of the biggest rockets mankind has ever built?&quot;</p>
+<p>&quot;Oh, come on. China has much bigger rockets now.&quot;</p>
+<p>&quot;Or the part where I attempt a hugely complex docking procedure for the very first time?&quot;</p>
+<p>&quot;Which you nail every time in the simulators.&quot;</p>
+<p>&quot;Or to the part where I perform my very first EVA to make sure the plasma propulsion system isn't going to bump me out into deep space where I'll either starve to death, or try to figure out the most pleasant way to commit suicide with a fold-up exercise bike and a sippy cup?&quot;</p>
+<p>&quot;Which will only be necessary if the primary ignition sequence fails. Which it won't. Probably.&quot;</p>
+<p>&quot;Or the part where I hope my brain, eyes, and balls don't get fried by cosmic rays?&quot;</p>
+<p>&quot;Which is why we built your ship out of the finest particle-absorbing plastics available.&quot;</p>
+<p>&quot;Or how about the part where I try to land the Martian module when &mdash; oh, yeah, that's right &mdash; I'm not even a trained pilot?&quot;</p>
+<p>&quot;Mostly automated. No sweat.&quot;</p>
+<p>&quot;Or, finally, the part where &mdash; completely by myself, seventy million kilometers from Earth, without <em>any</em> help from Houston whatsoever because the radio delay will be so long &mdash; I put on a spacesuit, depressurize the lander, climb down a ladder, and take a casual little stroll across the surface of an alien planet with the entire world watching?&quot;</p>
+<p>&quot;Look. Austin. Almost everything you just named is automated, unnecessary, unlikely, or basically idiot-proof. Let's be honest: for the most part, you're just along for the ride.&quot;</p>
+<p>&quot;Then let someone else go along for the ride. I don't want to do it.&quot;</p>
+<p>&quot;Believe me, if there were any other option &mdash; I mean <em>any</em> other option &mdash; we'd be all over it. But you know damn well you're our best chance at pulling this off. Sure, you'll be puking your guts out half the time. And sure, you're not the most physically capable astronaut NASA has ever produced. But you're by far one of the smartest. And if something goes wrong way up there over three light minutes away, intelligence, creativity, resourcefulness, and adaptability are what we're going to need, not muscle. Whether you can bench press fifty pounds or two hundred and fifty pounds isn't going to be what makes a difference in the end.&quot;</p>
+<p>Lockwood's head is between his knees. &quot;Fuck. How the hell did Noone get decompression sickness? He probably did it on purpose because he knows this is a suicide mission.&quot;</p>
+<p>&quot;I don't know how it happened, but one day, you'll be glad as hell that it did. Do you have any idea what your life is going to be like when you get back?&quot;</p>
+<p>&quot;Extra vouchers for food I already can't stand? Perhaps a little drywall in my apartment? If I can be trusted to fly the Martian module, maybe I can even be trusted to drive a car. Man, I'll be living large.&quot;</p>
+<p>&quot;If you pull this off, Austin, I guarantee you that 'large' won't even begin to explain how you'll be living. You'll be treated like a king. You'll be a national hero, and the President keeps American heroes very, very happy.&quot;</p>
+<p>&quot;And if he can't make them happy, they die in mysterious plane crashes, right?&quot;</p>
+<p>&quot;Then I recommend you let yourself be made happy. I recommend you stop bitching and moaning about becoming one of the most famous men in history, and get your scrawny ass back to training.&quot;</p>
+<p>A mirthless and resigned laugh escapes Lockwood's diminutive frame. &quot;Christ. You really think I can pull this off?&quot;</p>
+<p>&quot;Honestly, I don't know whether you can or not,&quot; Sarek says as he lights another cigarette. &quot;But what I do know is that you're sure as hell going to try.&quot;</p>
+<p>&quot;That's really reassuring, boss. Thanks for that.&quot;</p>
+<p>&quot;My job isn't to reassure you. We have shrinks for that kind of thing. Or at least we did &mdash; I don't think we do anymore. Anyway, the bottom line is that my job is to get an American to Mars as soon as humanly possible, and to get him back to Earth safely, and that man is you. Period. End of transmission. Are we on the same channel here?&quot;</p>
+<p>Lockwood nods like a reluctantly repentant child.</p>
+<p>&quot;Austin, I can promise you that you will never come across another opportunity like this again. You need to stop running away from it. It's time to man up and do what needs to be done.&quot;</p>
+<p>&quot;Ok,&quot; Lockwood says. &quot;I'll do it. But I want one thing.&quot;</p>
+<p>&quot;What's that?&quot;</p>
+<p>&quot;I want to rename the Martian module.&quot;</p>
+<p>Sarek squints into the cloud of smoke he has just produced. &quot;That's fair,&quot; he says, nodding slowly. &quot;We'll have to get approval from the Director, of course, but as long as you don't try to name it after some piece of ass you bought yourself with food stamps, I think I can talk her into it. You have a name picked out?&quot;</p>
+<p>Lockwood reaches down and strokes the soft warm fur curled up at his feet. &quot;I want to call it <em>Farmer One</em>.&quot;</p>
+<p>&quot;You want to name the MM after your cat?&quot;</p>
+<p>&quot;She's a fox,&quot; Lockwood says. &quot;And if you want me to go to Mars, this is non-negotiable.&quot;</p>
+
+
+
+<a id="ch_8"></a>
+
+<div id="chapter_heading">Chapter 8</div>
+
+<div id="chapter_intro">Baybrook Mall<br/>
+Dillard's Parking Lot<br/>
+Friendswood, Texas<br/>
+Lunchtime</div>
+
+<p><span id="first_letter">B</span>aker is on the left, Ponch on the right, and Lockwood is sitting on the stool in the center. Min is behind the counter of the stall, trying to reconcile her delight at seeing Lockwood with her disgust at the men he brought with him.</p>
+<p>&quot;Do you have <em>jook-sing</em><a id="fnlink13"></a><a href="#fn13"><sup>[13]</sup></a> noodles today?&quot; Lockwood asks. Both elbows of his parka have been patched with duct tape.</p>
+<p>Min shouts something in Cantonese over her shoulder, then looks back at Lockwood. She is standing on a crate or a bucket, but she still looks short. &quot;What do you want with them?&quot;</p>
+<p>&quot;Fish balls.&quot;</p>
+<p>Baker almost spits out his tea. &quot;<em>Fish balls</em>? I didn't even know fish <em>had</em> balls.&quot;</p>
+<p>&quot;Nice one,&quot; Ponch says.</p>
+<p>Baker and Ponch lean back, peer over their plastic dollar-store shades, extend their arms, and connect in some elaborate and homoerotic fashion behind Lockwood's back. They are both wearing their crosses on the outside of their long dark woolen coats.</p>
+<p>&quot;You two are asshats,&quot; Lockwood says. &quot;Did you know that?&quot;</p>
+<p>Min responds in Chinese to a question from the shadows behind her, then switches back to perfect Texan. &quot;You two want something?&quot;</p>
+<p>&quot;Do you have anything besides Chinese food?&quot; Ponch says.</p>
+<p>&quot;I have water,&quot; Min says. &quot;That's pretty much universal.&quot;</p>
+<p>&quot;Is there anyplace to get boxed rations around here?&quot; Baker asks.</p>
+<p>&quot;Nobody here sells rations,&quot; Min says, &quot;and nobody takes food stamps or vouchers.&quot;</p>
+<p>&quot;Do you have Pop-Tarts?&quot;</p>
+<p>Lockwood thinks Baker is making another very clever joke, but is even more horrified when he looks over and sees that the man is actually serious.</p>
+<p>&quot;Look around you,&quot; Min says. It was not phrased as a request, so the three men do so promptly. Plucked fowl and splayed pigs hang from massive butcher hooks in the openings of tents; long silver fish with wide dry eyes lay agape on mounds of ice; chickens strut noisily by at their feet, and sacks of rice are hauled through narrow passages on bent, osteoporotic backs. Substitute tent poles for bamboo shoots and expanses of cracked asphalt for the South China Sea, and they could just as easily be in Guangdong as suburban Texas. &quot;I can make anything you want out of anything you see, but that's it. No protein patties, no vitamin cups, no cheese foam, and no Fruit Roll-Ups. Got it?&quot;</p>
+<p>&quot;Do you have burrito tubes?&quot; Ponch says.</p>
+<p>&quot;You can get the freshest and tastiest burritos you've had in your life over in Macysburg,&quot; Min tells Ponch.</p>
+<p>&quot;That sounds like a splendid idea,&quot; Lockwood says. &quot;Why don't you two go find yourselves some burrito tubes or chili bars or nacho malts, and let me enjoy my last non-quarantined meal on this planet in peace.&quot;</p>
+<p>&quot;Nice try, Brother Austin,&quot; Baker says. &quot;But we're not taking our eyes off you.&quot;</p>
+<p>&quot;Not even for the prospect of cotton candy?&quot;</p>
+<p>&quot;I'll just stick with tea,&quot; Baker says.</p>
+<p>&quot;I think I'll try some of that water you mentioned,&quot; Ponch says.</p>
+<p>Min fills a plastic cup from a jug and sets it on the bar in front of Ponch. Someone shouts something in Chinese from the back of the stall which must translate roughly to &quot;order up&quot; because Min steps down off her perch, disappears into the shadows, and returns with a steaming plate of pressed duck-egg noodles and fried balls of pounded flathead catfish. Lockwood leans into the dish, chopsticks at the ready, while Baker and Ponch recoil in unison.</p>
+<p>&quot;This is fantastic,&quot; Lockwood says, noodles dripping from his glistening lips. &quot;You have no idea how much I'm going to miss this.&quot;</p>
+<p>&quot;Just the food?&quot; Min asks with a pouty look.</p>
+<p>&quot;<em>And</em> the company,&quot; Lockwood says, then wonders if has just gone too far. If he's not careful, he'll have Baker and Ponch doing a duet of <em>Austin and Chinese Girl, sittin' in a tree</em>.</p>
+<p>&quot;When do you go into quarantine?&quot; Min asks.</p>
+<p>&quot;Pretty much right after this.&quot;</p>
+<p>&quot;When's the launch?&quot;</p>
+<p>&quot;Ten days. I have three more days of training here, then we fly out to Cape Canaveral for another week of preparation.&quot;</p>
+<p>&quot;Preparation for what?&quot;</p>
+<p>Baker does his best to get between the two of them and ends up knocking over a jar of sesame powder. &quot;That's top secret,&quot; he says. &quot;Brother Austin, don't answer that question.&quot;</p>
+<p>&quot;I'm going to the moon,&quot; Lockwood says. &quot;We're thinking of restarting work on the base.&quot;</p>
+<p>&quot;Don't the Chinese already have a base on the moon?&quot;</p>
+<p>&quot;Indeed they do. And a mighty fine one, at that.&quot;</p>
+<p>&quot;And aren't the Chinese already on their way to Mars?&quot;</p>
+<p>&quot;That's the rumor.&quot;</p>
+<p>&quot;Hm. Sounds like you guys are a little behind.&quot;</p>
+<p>Baker is back on his stool, looking at Min with so much disgust that even his oversized plastic sunglasses can't conceal it. &quot;Well if you think China is so great, why don't you just go back?&quot;</p>
+<p>&quot;What, and give up all this?&quot; Min says.</p>
+<p>&quot;She can't leave, you Neanderthal,&quot; Lockwood says. &quot;The government is so paranoid, it won't even let its enemies out. Don't you think she'd rather be back with her family than living in a goddamn mall parking lot talking to a couple of brainwashed fucktards whose idea of a hot meal is a microwaved Twinkie?&quot;</p>
+<p>Baker smiles at Lockwood and gets slowly to his feet. &quot;Keep talking, Brother Austin,&quot; he says. &quot;Someday you and I are going to meet under very different circumstances.&quot;</p>
+<p>&quot;Good. I'll buy you a lollipop.&quot;</p>
+<p>&quot;You may be a big shot now, but once NASA is done with you, you'll be nothing. You understand me? I've seen this happen before. Once you get back to Earth, everything is going to be very different.&quot;</p>
+<p>&quot;I hope so,&quot; Lockwood says. He is leaning over his plate, poised to maul the dense ball of sweet white fish meat caught in his chopsticks, seemingly entirely unperturbed by the bulk looming above him. &quot;Because that, <em>brother</em>, is precisely what I'm counting on.&quot;</p>
+
+
+<a id="ch_9"></a>
+
+<div id="chapter_heading">Chapter 9</div>
+
+<div id="chapter_intro">Kennedy Space Center<br/>
+Launch Complex 39<br/>
+Merritt Island, Florida<br/>
+11:21 a.m.</div>
+
+<p><span id="first_letter">L</span>ockwood is fully suited and strapped down on his back. He is staring up through an eight inch diameter window in the command module's boost protective cover at the blizzard outside. The snow is coming down so hard, it looks like static.</p>
+<p><em>Mark, T minus thirty seconds and counting, and the automatic sequence continues.</em></p>
+<p>These are the worst possible conditions for a launch. The winds coming in from the east are so high that, in the event of an early-stage abort, the command module and launch escape system could be blown back over land where Lockwood would experience a much higher-impact return to Earth than if he were to splashdown in the relatively soft and forgiving Atlantic<a id="fnlink14"></a><a href="#fn14"><sup>[14]</sup></a>; the temperature is well below the point where the fuel tank joint seals could fail and either allow aerodynamic forces to get enough of a grip on the spacecraft to pull it apart in mid-flight, or cause all five million pounds of propellent to ignite in one instantaneous and spectacularly violent explosion rather than in the gradual and controlled form of combustion we call thrust; and finally, lightning could either strike the tower and follow the rocket's contrail up, or strike the spacecraft directly, potentially shorting out any number of critical systems, or &mdash; at several times the temperature of the surface of the Sun &mdash; causing any number of the more than five million moving parts that comprise the ascent engine alone to either melt or fuse.</p>
+<p>When one stops to think about everything that can go wrong, it starts getting hard to find your way back to the point where you imagine anything at all going right.</p>
+<p><em>Seventeen seconds. Swing arm back. We have guidance internal.</em></p>
+<p>But the forecast for the next twelve hours only gets worse, and any delay beyond twelve hours jeopardizes the entire mission. They have waited as long as they can possibly wait. They have postponed out the absolute limits of the schedule. If the first man to walk on Mars is to be an American, Lockwood must launch now.</p>
+<p><em>Ten. Nine. Eight. Ignition sequence start...</em></p>
+<p>He tries to convince himself that, to the Russians, these are probably perfectly acceptable launch conditions. Snow storms might even be considered auspicious at the Cosmodrome in Kazakhstan. The higher the winds, the lower the temperature, and the worse the visibility, the more glory there is to be won for the Motherland. Lockwood has never even met a cosmonaut, so he's making all this up right now to try to keep himself from dwelling on the recent news from CAPCOM<a id="fnlink15"></a><a href="#fn15"><sup>[15]</sup></a> that the manual abort lever inside the capsule has been disabled &mdash; just in case he was starting to have second thoughts.</p>
+<p><em>Three. Two. One.</em></p>
+<p>In a world normally so capricious and unpredictable, Lockwood's current situation is starkly unambiguous: he will either go to Mars, or he will die trying.</p>
+<p><em>All engines running. Commit. Liftoff. We have a liftoff. Eleven twenty-two a.m. Eastern Standard Time.</em></p>
+<p>Lockwood feels himself moving, but the sensation of acceleration is completely overpowered by the shaking. The vibration is so intense that there's no way it can be right &mdash; no way it can be within design parameters. Lockwood remembers Noone saying that the Saturn VII shakes like a dog shitting razor blades, but this goes beyond any reasonable expectation.</p>
+<p><em>The clock is running.</em></p>
+<p>The little Hermes rocket Lockwood rode on his sub-orbital training flight certainly shook during liftoff, but not like this. There's no way the electronics can survive this amount of vibration. There's no way any living thing can survive it. Lockwood's eyes are clenched shut and he has to fight to take in a breath. Everything feels like it is being shaken apart around him, first into pieces, then those pieces down into smaller components, then those components down into tiny particles of dust. By the time he reaches orbit, there will be nothing left of Lockwood or his spacecraft but individual atoms of aluminum and silicon and carbon and oxygen &mdash; elements that were originally synthesized in the bellies of long-dead stars then ejected into space by their violent deaths where they traveled for billions of years to become the catalysts for the formation of a new star, and then a new solar system, and then new planets where life formed and evolved and technology arose that today catapulted Brother Austin Lockwood out into space for no other reason but to return his remains to the cosmos from whence they were borrowed for one brief and miserable and pathetic moment in the history of the cold and indifferent universe.</p>
+<p>The last thing Lockwood hears before losing consciousness is that he has cleared the tower.</p>
+
+
+
+<a id="ch_10"></a>
+
+<div id="chapter_heading">Chapter 10</div>
+
+<div id="chapter_intro">Vastitas Borealis<br/>
+Mars<br/>
+3:12 a.m. CST</div>
+
+<p><span id="first_letter">L</span>ockwood hates it when Sarek is right. But right Sarek was.</p>
+<p>Other than four days of moderate to severe SAS (space adaptation syndrome) during which Lockwood puked sixteen times before finally applying one of the transdermal anti-nausea patches usually reserved for spacewalks to prevent astronauts from vomiting in their helmets and asphyxiating; and other than a great deal of tedium which he attempted to counter by playing weightless solitaire (frustrating almost beyond comprehension) and learning a few words of Chinese (comparatively easy); and other than a steep and unfortunate learning curve associated with the spacecraft's waste management system<a id="fnlink16"></a><a href="#fn16"><sup>[16]</sup></a>, the details of which will go with Lockwood to his grave and certainly will not be recounted here; other than those things, the process of getting to Mars had actually been surprisingly uneventful.</p>
+<p>The little nap Lockwood took during liftoff had been a result of G-LOC, or G-force Induced Loss of Consciousness &mdash; a condition experienced by some pilots and astronauts when sustained g-forces drain too much blood from their brains. Lockwood's brain &mdash; being by far the most active and resource-intensive organ in his body &mdash; requires abnormally high levels of oxygen, so nobody was particularly surprised when he trailed off in the middle of a status report and the flight surgeon jumped up out of his chair and, much to the delight of everyone in mission control including Flight Director Len Sarek, dramatically counted Lockwood out like a boxing referee. When Lockwood woke up about eight minutes later, he found himself parked in a nice stable Earth orbit at well over seventeen thousand miles per hour with Christopher Noone crooning in his ear whatever the opposite of a lullaby is:</p>
+
+<p style="text-align:center"><em>Good morning to you.<br/>
+You're a wimp and a fool.<br/>
+You've pissed in your spacesuit,<br/>
+And you're starting to drool.</em></p>
+
+<p>Two hours and a few good zero-G regurgitations later, Lockwood was pleased to discover that docking with the plasma propulsion system was actually much easier without all the stuck thrusters, micrometeoroids, and snapped brackets the simulation operators seemed to get so much pleasure out of. Additionally, the primary ignition procedure for the plasma stage worked exactly as designed which saved Lockwood from having to perform the manual coupling verification EVA. And finally, both the Martian orbital insertion sequence and the subsequent descent to the Martian surface were flawlessly automated to the point where Lockwood's primary contribution was staying the hell out of the way.</p>
+<p>Austin Lockwood &mdash; aerospace engineer, fox keeper, avid gamer, collector of illicit anime, and now fairly seasoned if reluctant astronaut &mdash; was officially the first human being in history to ever visit another planet. Unfortunately, the matter of getting home was still somewhat TBD<a id="fnlink17"></a><a href="#fn17"><sup>[17]</sup></a>.</p>
+<p>According to Houston, the Zeus CSM overtook the Chinese spacecraft (which Prabs had christened <em>W&#363;gu&#299;</em>, or &quot;The Turtle&quot;) about twenty-six hours ago. Lockwood had watched for it through the command module's windows, hoping to reassure himself that he wasn't the only human being stupid enough to come all the way out here, but after three full hours of staring through the little circle of starboard blackness, he was pretty sure nothing went by. Noone had just started a new shift, and reassured Lockwood that he probably just passed it too quickly, or his rotation was slightly off, or the light from the sun behind them just wasn't hitting the surface of the slower spacecraft in a way that effectively illuminated it. Or maybe Lockwood had simply blinked at the wrong moment. Regardless, recent communications between <em>W&#363;gu&#299;</em> and the Beijing Aerospace Command and Control Center had been intercepted and decrypted by the NSA who then translated, digested, summarized, re-encrypted, and relayed the intelligence to the good folks at NASA. The upshot, according to Noone, was that the Chinese were on schedule to land only about 170 meters from where Farmer One is, at this very moment, perched upon the barren, desolate, and thoroughly oxidized surface of the forth planet from the Sun. In the meantime, Lockwood's orders are to get his skinny ass outside and make some history before the Chinese land and do it first.</p>
+<hr/>
+<p>With an almost four minute radio delay, Lockwood is no longer in constant contact with Houston (once the delay exceeded each party's attention span &mdash; roughly twenty seconds &mdash; they gradually transitioned into a kind of batch system of updates), so Lockwood is acting more or less autonomously, relying on procedure checklists and warning lights to prevent him from accidentally killing himself. After verifying the integrity of his suit more times than any rational human being should feel compelled to do (much less a left-brain-oriented engineer), he begins working his way down the eleven-point checklist labeled &quot;CABIN DEPRESS&quot; which is Scotch-taped to the inside of the hatch. By the time he is finished, the lander is fully depressurized, the hatch is cracked, and his nice warm nitrogen- and oxygen-rich atmosphere has been replaced by carbon dioxide so cold that it doesn't really matter whether it's reported in Celsius or Fahrenheit.</p>
+<p>The light on Mars is a product of the burnt auburn landscape combined with the mustard-yellow sky. The scene is otherworldly, but not entirely unfamiliar. In fact, as Lockwood steps slowly and methodically out onto Farmer One's mesh porch, he can't help but feel like the entire mission could be a hoax &mdash; that he could just as easily be in the Mojave Desert as seventy million kilometers away from his blue and cloud-swirled home. As he stands there watching a dust devil move across the boulder-strewn terrain, it is almost impossible for him to believe that if he were to remove his helmet, rather than taking in a nice hot breath of dry desert air, his head would probably freeze solid before he could even choke to death on the thin poisonous air. The fact that he can hardly believe that he is not on Earth &mdash; that he can only make sense of what he is seeing in terms of that which he knows &mdash; suggests to Lockwood that humankind has once again accomplished something almost beyond its own powers of comprehension.</p>
+<p>Lockwood has given a lot of thought to the very first words to be uttered on the surface of another planet, although he fully realizes that there's really no point. He suspects that his message to the world has already been written and probably even recorded in a studio by an actor whose voice conveys much more of what it means to be an American than Lockwood's. It's even possible that his historical address will change over time in accordance with the current needs of the administration. It might go from inspirational and patriotic discourse, to an endorsement of a key candidate, to praise for our Lord and Savior Jesus Christ, to the promotion of a low-carb sugar-free drink which provides hours of long-lasting energy without the crash.</p>
+<p>But whatever it is that NASA or the government of the United States or the highest bidder eventually dubs over the few brief seconds of footage captured by Lockwood's remote camera, it will not change the fact that the very first and last message Earth received as Lockwood's boot left the final rung of the lander's ladder and made the very first human imprint upon the surface of an alien world &mdash; a message listened to collectively thousands of times and analyzed with every piece of audio technology the government could get its hands on &mdash; was the one thing that absolutely nobody wanted to hear:</p>
+<p><em>Houston, we have a problem.</em></p>
+
+
+<a id="ch_11"></a>
+
+<div id="chapter_heading">Chapter 11</div>
+
+<div id="chapter_intro">Johnson Space Center<br/>
+Conference Room Aldrin<br/>
+Houston, Texas<br/>
+9:22 a.m.</div>
+
+<p><span id="first_letter">T</span>he slouched and thoroughly despondent figures of the Director, Sarek, Noone, Prabs, and The Digital Bitch are all tucked in under the conference room table beneath a thick blanket of stale cigarette smoke and something that started out as tension and urgency, but has since decayed into irritability and exasperation. Even though Sarek has had to excuse himself probably a dozen times already to urinate (his kidneys just aren't what they used to be), his intake of cold black coffee has not abated in the least.</p>
+<p>&quot;I want. To go over this. One more time,&quot; the Director says without looking up. There is a calmness to her voice that can only come from intense but suppressed rage. &quot;From the beginning. Starting with the moment of contact with the Martian surface.&quot;</p>
+<p>Sarek is already shaking his head. &quot;What's the point, Ann? He's dead. He's gone. It's over. And we're not going to know why until we hear from the Chinese. Period. End of story.&quot;</p>
+<p>Prabs uses the cherry of his cigarette to jump-start a fresh one.</p>
+<p>&quot;We are <em>not</em> leaving this room,&quot; the Director tells Sarek, &quot;until we have at least <em>one</em> viable theory.&quot;</p>
+<p>&quot;We <em>have</em> a theory,&quot; Noone interjects. They have all been locked up together for so long that a little insubordination is to be expected. &quot;It was either a mechanical failure or a dust devil. Either way, the little bastard's gone.&quot;</p>
+<p>&quot;Ok,&quot; the Director tells Noone. &quot;So let's figure out which one it was. What did the weather look like from the air? Why aren't we analyzing satellite photos of the landing site from the last six months looking for meteorological patterns? Why isn't someone poring over every byte of telemetry data from the instrument logs looking for some kind of an anomaly? Who's working the simulators?&quot;</p>
+<p>&quot;We have a crew in Building 9 ready to start as soon as they know what systems and procedures they should be looking at.&quot;</p>
+<p>&quot;<em>All of them!</em>&quot; the Director barks. &quot;They should be looking at <em>everything</em>! I need <em>answers</em>, people. Not theories. Not speculation. And sure as <em>hell</em> not more questions. I have to report to the President as soon as he's done tanning, and I need something more concrete than 'it was either a mechanical failure or a dust devil.'&quot;</p>
+<p>Sarek covers his face with both hands. His fingernails are a little long and yellow with nicotine. &quot;We've been over this and over this and &mdash;&quot;</p>
+<p>Someone starts laying down a distinct and surprisingly funky beat on the conference room door with a combination of knuckles, palms, and fists. The rhythm is apparently much more compelling than theories as to how Lockwood met his demise on Mars because suddenly everyone is wide-eyed and paying close attention. Prabs starts wagging his head on his long slender neck and even the Director's stiff body is not immune to the groove. It isn't until the drumming stops and the door opens that everyone realizes nobody remembered to lock it after Sarek's last bathroom break.</p>
+<p>&quot;Yo. S'up, y'all?&quot; It is Randall, an intern<a id="fnlink18"></a><a href="#fn18"><sup>[18]</sup></a> who was brought in to do dramatic renderings and animations of things that NASA can't get footage of, but that they know must look awesome (probes descending through alien atmospheres, conceptual spacecraft giving tours of the Sun's corona, the strange and exotic creatures that probably don't live in the tails comets &mdash; that sort of thing). He's wearing a vintage Star Wars T-shirt over a long underwear top, wraparound sunglasses, and he's sporting a soul patch that works uncommonly well on him. &quot;I'm supposed to bring this to someone in here.&quot;</p>
+<p>The Director has come out of her trance and is back to being annoyed. &quot;What is it?&quot;</p>
+<p>&quot;Oh, hey, what up, Stace?&quot; Randall says to The Digital Bitch. The two exchange what can only be described as a gang sign.</p>
+<p>&quot;What up, homeboy?&quot;</p>
+<p>&quot;Nada. You know. Just chillin' and whatnot. You?&quot;</p>
+<p>&quot;Just solving the mysteries of the universe and shit. You know.&quot;</p>
+<p>&quot;Cool.&quot; Social protocols properly observed, Randall turns his attention back to the Director's question. &quot;Anyway, it's like some kind of a tape or something from like the Chinese embassy or whatever.&quot;</p>
+<p>Sarek jumps to his feet and snatches the envelope from the kid. &quot;Thank you very much. Goodbye.&quot;</p>
+<p>&quot;Dude, chill,&quot; Randall admonishes as he withdraws. &quot;Peace out, y'all.&quot;</p>
+<p>Sarek tears the top off the envelope and removes an enormous cassette tape, then offers it to The Digital Bitch. &quot;Here, put this in.&quot;</p>
+<p>&quot;Why do I always have to be the AV guy?&quot;</p>
+<p>&quot;For Christ's sake, Stacey. Can't you just do this one thing without complaining? We might be about to find out what happened to someone who I believe happens to be a very good friend of yours.&quot;</p>
+<p>&quot;Not <em>that</em> good,&quot; the Digital Bitch says, snatching the cassette from Sarek's hand. &quot;I hate that fucking machine, but I'll do it for Lockwood.&quot;</p>
+<p>The TV and VCR are on a multi-tiered metal cart in the front of the room. The Digital Bitch turns on both devices and feeds the cassette to the component on the bottom shelf. It is accepted with a great deal of mechanical whirring and clicking.</p>
+<p>&quot;Make sure it's on channel three,&quot; Noone says.</p>
+<p>&quot;No shit, Einstein.&quot;</p>
+<p>&quot;That is the wrong clicker,&quot; Prabs says. &quot;It is the other one.&quot;</p>
+<p>&quot;This is pathetic,&quot; The Digital Bitch says as she leans around the cart to check the cabling. &quot;My great-grandmother probably wouldn't even recognize this crap.&quot;</p>
+<p>&quot;We use it until it breaks,&quot; the Director says. &quot;Now get out of the way.&quot;</p>
+<p>When the tube warms up, they see the green and white flag of the People's Democratic Republic of China. There are bands of white static at the top and bottom of the picture.</p>
+<p>&quot;You have to adjust the tracking,&quot; Noone says.</p>
+<p>&quot;Leave it,&quot; Sarek says. &quot;And everyone shut up.&quot;</p>
+<p>The flag transitions into the upper portion of the Chinese ambassador &mdash; a young girl with short, spiky, highlighted hair and a thin platinum lip ring. Her hands are folded on her ultra-modern polished concrete desk, and her laptop is off to the side.</p>
+<p>&quot;Good morning. We have just received a full report from our team on the Martian surface, and unfortunately, the news is not good.&quot; She speaks with a pronounced Australian accent, but her English is perfect. &quot;The lander appears to be fully intact with no obvious signs of damage or malfunction, although admittedly, we are unfamiliar with American technology. The hatch was found to be open and the surface suit is missing, however after conducting a thorough search of the landing site and surrounding terrain, we have uncovered no evidence as to the whereabouts of Mr. Lockwood. We hope you understand that in order to ensure the successful completion of our mission, and the safe return of our own team, we must abandon the recovery effort. On behalf of the Chinese government and all the citizens of the People's Democratic Republic of China, I would like to extend my most sincere condolences.&quot;</p>
+<p>The picture transitions back to the Chinese flag for a few moments, and then switches to a greying, mustached postal worker leaning over a mug of beer on a dark mahogany bar. A laugh track plays for a few moments before The Digital Bitch can find the right button on the remote to shut it off.</p>
+<p>&quot;I'm telling you,&quot; Noone says. &quot;It had to be a dust devil. It must have picked the poor bastard up and flung him miles away.&quot;</p>
+<p>&quot;That is unlikely,&quot; Prabs counters. &quot;Any storm strong enough to carry Austin so far away would have also damaged the lander.&quot;</p>
+<p>&quot;Maybe it is damaged,&quot; The Digital Bitch says, &quot;but the Chinese just couldn't tell.&quot;</p>
+<p>&quot;Half that thing was built out of Chinese parts,&quot; Sarek says. &quot;And if a dust devil big enough to carry away a man in a space suit moved through the area, there'd be evidence all over the place. This just doesn't make any god-blessed sense whatsoever.&quot;</p>
+<p>&quot;No,&quot; the Director says contemplatively. &quot;Actually, it makes <em>perfect</em> sense.&quot;</p>
+<p>The Digital Bitch sits back down. Noone lights a smoke and sends the atmosphere swirling over their heads as he exhales.</p>
+<p>&quot;Would you care to elaborate?&quot; Sarek says.</p>
+<p>The Director ignores him. &quot;Who was the lead engineer on the Guardian constellation?&quot;</p>
+<p>&quot;The spy satellites?&quot; Noone says. &quot;What do they have to do with anything?&quot;</p>
+<p>&quot;They didn't detect the Chinese launch because they were compromised, right? Who was the lead engineer? Who requested the Chinese components?&quot;</p>
+<p>&quot;Lockwood,&quot; Sarek says. &quot;But so what?&quot;</p>
+<p>&quot;Christopher, could Lockwood have tampered with your nitrox<a id="fnlink19"></a><a href="#fn19"><sup>[19]</sup></a> mixture at the NBL?&quot;</p>
+<p>Noone looks skeptical. &quot;I guess, but why would he do that?&quot;</p>
+<p>&quot;Lockwood never showed any signs of decompression sickness, did he? Your mixture was way off, but his was somehow perfect.&quot;</p>
+<p>Sarek chuckles. &quot;I'm sorry, Ann, but I have to stop you right there. If you're suggesting that Lockwood actually wanted this mission, I can personally guarantee you that the last thing that little runt wanted was to break his safe little routine and go to Mars. We caught him trying to desert three weeks before launch.&quot;</p>
+<p>&quot;Or he wanted you to <em>think</em> you caught him trying to desert.&quot;</p>
+<p>&quot;What do you mean?&quot;</p>
+<p>&quot;Think about it,&quot; the Director says. &quot;Lockwood was the lead engineer on a project that failed to detect the Chinese launch. Then he comes up with a plan to get us to Mars first, but it relies on the Chinese to get us home. And when he doesn't get picked for the mission, Christopher mysteriously gets decompression sickness, but Lockwood is fine.&quot;</p>
+<p>&quot;Where are you going with this?&quot;</p>
+<p>&quot;Farmer One,&quot; the Director says. &quot;Do you know what that name means?&quot;</p>
+<p>&quot;It's the name of his cat,&quot; Sarek says. &quot;Farmer.&quot;</p>
+<p>&quot;It is a fox,&quot; Prabs says.</p>
+<p>&quot;Whatever.&quot;</p>
+<p>The Director looks around the table. &quot;During the Cold War, the Chinese built a fighter jet called the <em>Shenyang</em> J-6 based on the Soviet MiG-19 platform. The NATO code name for that aircraft was <em>Farmer</em>.&quot;</p>
+<p>&quot;So?&quot;</p>
+<p>&quot;So occasionally pilots from the People's Liberation Army flew them into Taiwan or South Korea.&quot;</p>
+<p>&quot;What for?&quot;</p>
+<p>The Director can't help but smile. &quot;To defect.&quot;</p>
+<p>The only movement in the room is the smoke rising from numerous cigarettes and the incredulous shifting of wide, stupefied eyes.</p>
+<p>&quot;There's only one way out of this country,&quot; the Director says. &quot;And that's through space. People, I think we're looking at the most expensive, most elaborate, and I have to admit, by far the most ingenious defection in history.&quot;</p>
+<p>Noone hits the table with his fist hard enough to eject cigarette ash into the air and cause coffee to breach the rims of several cups. &quot;That goddamn monkey-fucker could have killed me. What are we going to do?&quot;</p>
+<p>&quot;We have to contact the Chinese,&quot; Sarek says. &quot;We have to demand they give him back. He has to pay for this.&quot;</p>
+<p>The Director is shaking her head. She is smiling in a way that suggests both loathing and reverence. &quot;We <em>can't</em> take him back. The last thing we want is for the man who is about to become one of the most famous Americans in history to turn out to be a traitor. We have to let him go.&quot;</p>
+<p>Noone stabs his cigarette into an already overburdened ashtray. &quot;Then how the hell do we explain the fact that he's gone?&quot;</p>
+<p>&quot;You said it yourself,&quot; the Director says. &quot;It was a dust devil. Lockwood landed safely on Mars, made history by walking on its surface, and then was tragically killed in a sudden violent dust storm. From this moment on, Brother Austin Lockwood is not a traitor. He is an American hero.&quot;</p>
+<p>&quot;His contact,&quot; Sarek says with sudden revelation. &quot;That's how he set the whole thing up. That's how he was communicating with the Chinese this whole time.&quot;</p>
+<p>The Director's smile gets broader. &quot;Find him,&quot; she tells Sarek. &quot;Lockwood might be untouchable, but his contact most certainly is not.&quot;</p>
+
+
+<a id="ch_12"></a>
+
+<div id="chapter_heading">Chapter 12</div>
+
+<div id="chapter_intro">Dillardsville<br/>
+Friendswood, Texas<br/>
+Just after dark</div>
+
+<p><span id="first_letter">A</span> man in a suit and a long wool coat raps with a single gloved knuckle on a pine plank door, then anxiously checks his flanks. Not just this house, but the entire settlement is clearly fashioned out of dubiously appropriated construction site materials: scrap 2x4s, plywood, shingles, foam board insulation, cinder blocks, prefabricated windows of all sizes, multiple compositions and shades of synthetic siding. It is done with surprising fastidiousness and discretion, however. You'd probably think twice before calling it a slum or a ghetto. Rather than straight-up squalor, the homes that form this community manage to convey a sense of resourcefulness, and somehow even a proud defiance.</p>
+<p>When the door opens, the man finds himself looking down at a little Chinese girl cradling a ball of rufous fluff. She is gently kneading the animal's belly while resolutely standing her ground.</p>
+<p>&quot;What do you want?&quot;</p>
+<p>&quot;Are you Min Liu?&quot;</p>
+<p>&quot;That depends.&quot;</p>
+<p>The girl's thick Texas twang and southwestern bravado have caught the man off guard, to say nothing of the fox in her arms. &quot;If I have some good news, then are you Min Liu?&quot;</p>
+<p>&quot;Just say what you came here to say,&quot; the girl tells him, &quot;and say it quick.&quot;</p>
+<p>&quot;Yes, ma'am,&quot; the man says. He is probably fifty percent taller than the girl, but somehow she is the one calling the shots here. &quot;In that case, I'm here to congratulate you. You've won yourself a trip.&quot;</p>
+<p>&quot;Mister, if you're here to try to sell me something, you're in the wrong part of town. Do we look like we need magazine subscriptions or carpet cleaning services?&quot;</p>
+<p>&quot;No, ma'am. I'm not here to sell you anything.&quot; He pauses to take another quick look around. &quot;You know, it would really be better if we could talk about this inside. Would you mind if I came in?&quot;</p>
+<p>&quot;Yes, I would. If you're uncomfortable standing out there, I suggest you try talking faster.&quot;</p>
+<p>&quot;Fair enough,&quot; the man says. &quot;Let me start again. Have you ever heard of Beyond the Blue?&quot;</p>
+<p>&quot;Are you selling toilet bowl cleaner?&quot;</p>
+<p>&quot;It's not toilet bowl cleaner, ma'am. Beyond the Blue is a private space tourism company based in San Antonio with its primary airfield just outside of Victoria. It's an American company, but it has &mdash; how should I put it? &mdash; substantial Chinese financial backing.&quot;</p>
+<p>While it would probably be too much to say that the man has fully piqued the girl's interest, it seems he has at least bought himself some time. &quot;Go on.&quot;</p>
+<p>&quot;I represent Beyond the Blue, Ms. Liu, and I'm here to inform you that you've won yourself a free trip into orbit on one of our nicest and newest spaceplanes.&quot;</p>
+<p>Min looks up at the man with as much incredulity as her little face can possibly hold. &quot;Mister, that may very well be the last thing in the world I was expecting to hear you say.&quot;</p>
+<p>&quot;I understand, ma'am, but I guarantee you that this is no gimmick. I'm being quite sincere.&quot;</p>
+<p>&quot;I'm sure you are, and I appreciate you coming all the way out here, but I didn't enter any contest, and I can't say as I have any interest whatsoever in leaving this planet. My life is plenty dangerous right here on the ground.&quot;</p>
+<p>&quot;Oh, the whole thing is really quite safe, ma'am,&quot; the man reassures her. &quot;The way it works is you get air-launched from something called a mother ship. The spaceplane sits on top, like this, and the mother ship flies you up as high as it can go, and gets you going as fast as it can, then it releases the spaceplane, dips down out of the way, and the spaceplane fires its own thrusters and takes you on up into orbit. When you're done seeing the planet from space, you just glide right on back down to the ground and land just like any other airplane. Simple.&quot;</p>
+<p>&quot;Sounds like quite the adventure, but I still think I'll pass.&quot;</p>
+<p>&quot;I've never done it myself, but from what I'm told, it's an experience you'll never forget. An opportunity of a lifetime, in fact. The only thing is that every once in a while, the spaceplane doesn't land exactly where it's supposed to. Every now and then, it's just a little off target.&quot;</p>
+<p>&quot;Mister, you're welcome to my ticket if you want to try it out for yourself.&quot;</p>
+<p>&quot;When I say a little off target, ma'am, I mean 'little' relative to astronomical distances, of course.&quot;</p>
+<p>&quot;Of course. Good night. I trust you can find your way back to the bus stop.&quot;</p>
+<p>&quot;In fact,&quot; the man says with increasing urgency through the diminishing gap in the door, &quot;one time it was off by over twelve thousand miles. It landed just outside of Xichang City.&quot;</p>
+<p>That stops the door. &quot;Xichang City? As in Xichang City, China?&quot;</p>
+<p>&quot;I believe that's the one, ma'am.&quot;</p>
+<p>&quot;Sometimes these space-whatevers land all the way in China?&quot;</p>
+<p>&quot;It's been known to happen. It's no big deal, though. They got another mother ship at the spaceport there, so they just fuel her up and launch her again. When she gets back to Texas, nobody even knows she missed her target.&quot;</p>
+<p>&quot;Tell me something,&quot; the girl says. &quot;How did I get entered into this contest?&quot;</p>
+<p>&quot;It seems someone saw fit to enter on your behalf. Someone by the name of Al, I believe.&quot;</p>
+<p>&quot;Al,&quot; the girl repeats. &quot;As is A.L.?&quot;</p>
+<p>&quot;Could be.&quot;</p>
+<p>The girl nods. &quot;I'm in.&quot;</p>
+<p>&quot;I'm glad to hear that, Ms. Liu. I think this will make Al a very happy man.&quot;</p>
+<p>&quot;When do we leave?&quot;</p>
+<p>&quot;As soon as you're ready. From what I understand, I'm not the only one trying to track you down. It seems you've won yourself more than one trip, but I reckon the other one won't be nearly as luxurious or hospitable.&quot;</p>
+<p>The girl looks down. The fox cradled in her arms reminds her that her hand has gone idle by putting its paws together and waving them.</p>
+<p>&quot;What am I allowed to take?&quot;</p>
+<p>&quot;Everything you need will be provided,&quot; the man says. &quot;However, on this one particular flight, I've been told that we are allowing pets, so you can bring your cat if you like. I'll wait out here and we'll leave as soon as you're ready.&quot;</p>
+<p>&quot;She a fox,&quot; the girl tells the man. She steps out of the house, pulling the door closed behind her. &quot;And we're ready now.&quot;</p>
+
+
+
+<a id="footnotes"></a>
+
+<div id="chapter_heading">Footnotes</div>
+
+<p><a id="fn1"></a><sup><a href="#fnlink1">[1]</a></sup> The white-footed fox, also know as the desert fox, is a subspecies of the red fox, and has been scientifically classified as one of the cutest animals on the planet. It is indigenous to the deserts of India, Pakistan, Iran, and Iraq, so how one found its way into Texas &mdash; much less into Lockwood's lumpy twin bed &mdash; is anyone's guess. <a href="#fnlink1">[Back]</a></p>
+
+<p><a id="fn2"></a><sup><a href="#fnlink2">[2]</a></sup> As it turns out, we experience climate change as pretty much the exact opposite of global warming. As the temperature rises, so does warm air, creating huge vacuums in both hemispheres which get filled by the dry frigid air of the Arctic and Antarctic Circles. Therefore, at the same time the ice caps are melting, the deserts and tropical rain forests are freezing, so in the end, it's mostly just a wash. <a href="#fnlink2">[Back]</a></p>
+
+<p><a id="fn3"></a><sup><a href="#fnlink3">[3]</a></sup> Lockwood and Prabs have both undergone state-sponsored, court-ordered copyright re-education on multiple occasions, but so far, it hasn't taken. <a href="#fnlink3">[Back]</a></p>
+
+<p><a id="fn4"></a><sup><a href="#fnlink4">[4]</a></sup> The main points of the text are as follows: zero gravity toilets direct waste using air flow and suction, and are therefore not recommended for individuals with moderate to severe hemorrhoids. Solid waste is exposed to the vacuum of space in order to remove liquid, pathogens, and other unpleasantries while liquid waste is collected through anatomically correct "urine funnel adapters" which are not to be shared among crew members, and are particularly unflattering in the context of female astronauts. Urine is either vented into space where it immediately boils then freezes into sparkly yellow crystals which orbit for centuries, or it is collected and stored in bottles. Waste collected on space stations can be disposed of in expendable Russian freighters which are de-orbited and destroyed in the atmosphere, or it can be returned to Earth where it is seen to either by the most recent intern, or the last software engineer to break the build. <a href="#fnlink4">[Back]</a></p>
+
+<p><a id="fn5"></a><sup><a href="#fnlink5">[5]</a></sup> In 2011, India's first unmanned lunar probe, Chandrayaan-1, discovered a 1.7 km long cave beneath the Ocean of Storms near the moon's equator which the Chinese later used as the site for mankind's first permanent lunar base. The underground structure provides Chinese settlers with a more consistent temperature than that of the lunar surface as well as protection from solar radiation, micro-meteoritic impacts, and dust storms. When India demanded compensation for the Procellarum discovery, China shipped them somewhere north of 1.5 billion fortune cookies to be distributed as they saw fit, and have since considered the matter closed. <a href="#fnlink5">[Back]</a></p>
+
+<p><a id="fn6"></a><sup><a href="#fnlink6">[6]</a></sup> Meanwhile, and in incredibly stark contrast, the standard of living in the most populous country in the world (now pushing two billion) rose significantly after the transformation of the PRC (People's Republic of China) into the PDRC (People's Democratic Republic of China). Most historians trace the origins of the Chinese Democratic Revolution all the way back to a 23-year-old US Army soldier from Oklahoma who obtained and leaked over a quarter of a million classified US diplomatic cables over what was once a free, open, decentralized, and global network of interconnected computers and devices. The path from leaked diplomatic cables to revolution in China was a convoluted if highly disputed one involving nothing less than riots, protests, torture, covert operations, decidedly <em>overt</em> operations, propaganda campaigns, sexual allegations, NATO resolutions, highly sophisticated government-sponsored cyber attacks, terrorists/revolutionaries (depending on whose side you were on), cover-ups, expos&#233;s, plenty of condemnation in the strongest possible terms, social networking, social engineering, sex (presumably, since what self-respecting controversial event does not?), decentralized internet subcultures, distributed digital currencies, onion routing (a form of largely anonymous communication over a computer network which the United States Congress never could fully grasp, but was more than happy to outlaw anyway), plausible deniability, resignations, assassinations, executions, intelligence, counterintelligence, profoundly disturbing unintelligence, and both summer and winter Olympic athletes. <a href="#fnlink6">[Back]</a></p>
+
+<p><a id="fn7"></a><sup><a href="#fnlink7">[7]</a></sup> Space-Based Solid-State laser. Naturally, these do not actually exist in any official capacity. If they did, however, there would be one in geosynchronous orbit over the capitals of every country with a leader whose actions the United States has ever had to strongly condemn. The technology would also be several decades old, and in various states of disrepair which means that the results of actually firing one would be anyone's guess. <a href="#fnlink7">[Back]</a></p>
+
+<p><a id="fn8"></a><sup><a href="#fnlink8">[8]</a></sup> Non-player character. A player in a game that is controlled by a computer rather than by a human is usually referred to as an NPC. Female NPCs in massively multiplayer online role playing games are frequently rendered with an abundance of impeccable polygons which makes the realization that you have been cybering with a bot all the more regrettable. <a href="#fnlink8">[Back]</a></p>
+
+<p><a id="fn9"></a><sup><a href="#fnlink9">[9]</a></sup> The Poseidon CSM is the underwater version of the Zeus CSM for use in NASA's Neutral Buoyancy Laboratory. The fact that it shares its designation with the P-8 Poseidon &mdash; a Boeing 737 heavily modified for anti-surface and anti-submarine warfare which is currently and perpetually (though, of course, very much unofficially) straddling the line between international and Chinese waters &mdash; is just a happy coincidence, and not at all intended to send the Chinese a subtle but unambiguous message. <a href="#fnlink9">[Back]</a></p>
+
+<p><a id="fn10"></a><sup><a href="#fnlink10">[10]</a></sup> Extra-vehicular activity. EVAs refer to any type of excursion outside of a spacecraft. They include spacewalks (performed while in orbit), moonwalks (performed while on the lunar surface), and, at least in theory, planetwalks, as well. <a href="#fnlink10">[Back]</a></p>
+
+<p><a id="fn11"></a><sup><a href="#fnlink11">[11]</a></sup> Officially, Noone's spacecrafts are all named after his favorite mountain peaks in Texas, but it is common knowledge that the designations are in fact tributes to the various girls he managed to bed while on snowboarding expeditions followed by the number of orgasms he claims to have delivered. He once tried to name a probe designed to analyze the tail of comet Swift-Tuttle "Big Bush" after, he vehemently insisted, the second highest peak in the Guadalupe Range, however the Director would have none of it. <a href="#fnlink11">[Back]</a></p>
+
+<p><a id="fn12"></a><sup><a href="#fnlink12">[12]</a></sup> Verbification of the word &quot;taser&quot; meaning to cause neuromuscular incapacitation in someone you probably don't like very much. The Taser was invented in the late 1960's by a NASA engineer who named the device after his childhood science fiction hero, Tom Swift (the word is actually an acronym for "Thomas A. Swift's Electric Rifle"). There has been much debate over the years as to whether the proper derivative of "Taser" is "tased" or "tasered" similar to the debate over whether the proper informal shortening of "pornography" is "porno" or "porn" (or, more recently, "pr0n" &mdash; but that's an entirely different topic). Given that brevity is the soul of wit, this writer favors both "tased" and "porn." <a href="#fnlink12">[Back]</a></p>
+
+<p><a id="fn13"></a><sup><a href="#fnlink13">[13]</a></sup> 1. A form of Chinese duck-egg noodle which is traditionally prepared by a chef who sits on a thick bamboo shoot and rides it back and forth over the dough. Because of the rarity of the ingredients, and the intense (not to mention somewhat comical) labor involved in preparation, true <em>jook-sing</em> noodles are only available in a few spots in Hong Kong, the Sunset district of San Francisco, and in the parking lot of Dillard's in Friendswood, Texas.<br/>2. A Cantonese term used to describe a fully Westernized individual of Chinese descent. It is borrowed from a term referring to a length of bamboo used to measure grain, but it is a more direct and poetic reference to the compartmentalized and discontinuous nature of the internal structure of the bamboo shoot. The term was once used pejoratively, however it has since been adopted with a certain amount of pride by Chinese Americans who wish to return to their homeland. <a href="#fnlink13">[Back]</a></p>
+
+<p><a id="fn14"></a><sup><a href="#fnlink14">[14]</a></sup> Since Russian and Chinese rockets launch over land, their capsules are equipped with braking rockets in addition to parachutes which enable them to come down safely over either land or sea. The American philosophy has always been that NASA has access to more water than they do spare engineering resources, so splashdowns have remained the preferred method by which US capsules return to Earth. With a full 70 percent of our planet's surface covered with water, what could possibly go wrong? <a href="#fnlink14">[Back]</a></p>
+
+<p><a id="fn15"></a><sup><a href="#fnlink15">[15]</a></sup> Capsule communicator. Rather than everyone in mission control shouting orders simultaneously, all communication with the spacecraft goes through a single individual &mdash; usually another astronaut who is as much an interpreter as he is a relay. In this case, it is one very disgruntled Christopher Noone who only recently completed several long sessions of hyperbaric oxygen therapy in a re-compression chamber so small he couldn't even scratch his nose. Rather than potentially being remembered for all eternity as the first man to walk on Mars, Noone will now be the man who attempts to lead Lockwood to immortality while he himself is quietly relegated to the footnotes of history. <a href="#fnlink15">[Back]</a></p>
+
+<p><a id="fn16"></a><sup><a href="#fnlink16">[16]</a></sup> On the trip out, Lockwood's onboard waste management system was nothing so luxurious as a zero gravity toilet. In order to save both engineering time and cargo weight, his relief options consisted of a simple urine collection hose (which vented out into space implying that one wanted to be very careful not to open the vacuum purge valve too far while one was still attached), and plastic bags with adhesive rims, finger pockets (use your imagination &mdash; or better still, don't), and several blue germicide capsules which were key components in a procedure that I can promise you nobody who has ever dreamt of being an astronaut has ever seriously pondered. <a href="#fnlink16">[Back]</a></p>
+
+<p><a id="fn17"></a><sup><a href="#fnlink17">[17]</a></sup> &quot;To be determined&quot; or &quot;to be decided.&quot; The term &quot;TBD&quot; is generally used to convey that certain critical logistical details relating to an event have yet to be resolved. The letters &quot;TBD&quot; are also sometimes inserted as a placeholder in early drafts of documents in order to indicate the need to revisit sections requiring additional detail or further consideration. This is almost certainly the very first documented use of the term referring to the method by which an astronaut will find his way back to his planet of origin. <a href="#fnlink17">[Back]</a></p>
+
+<p><a id="fn18"></a><sup><a href="#fnlink18">[18]</a></sup> NASA has a long and proud tradition of employing interns as a form of cheap and humiliating labor. In fact, ever since the main display broke in mission control, it has been the distinct honor of an intern to hold up a paper cutout of whatever spacecraft is currently being tracked (sometimes even more than one), and to simultaneously calculate its trajectory, and move it along its simulated path. Puppeteering a paper spacecraft while juggling a slide rule, drafting compass, protractor, pencil, and a pad of graph paper is no small feat, and comprises a set of skills that engineers are unlikely to acquire anywhere else in the world but NASA. <a href="#fnlink18">[Back]</a></p>
+
+<p><a id="fn19"></a><sup><a href="#fnlink19">[19]</a></sup> A combination of nitrogen and oxygen. The air we breathe is approximately 78% nitrogen, 21% oxygen, and 1% other gases (primarily argon). Nitrox mixtures used in scuba diving typically contain less nitrogen and more oxygen in order to reduce the risks of decompression sickness, a notable exception being Christopher Noone's mixture during manual coupling verification EVA training at the Neutral Buoyancy Laboratory about a month ago. <a href="#fnlink19">[Back]</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

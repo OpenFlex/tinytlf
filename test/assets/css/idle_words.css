@@ -1,0 +1,25 @@
+html, body{
+	font-name: Helvetica;
+	font-size: 16px;
+	text-align: justify;
+	text-direction: topToBottom;
+}
+
+p{
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+a{
+	color: #0000FF;
+}
+
+a:active {
+	color: #FF0000;
+}
+
+.post_title {
+	font-size: 2em;
+}
