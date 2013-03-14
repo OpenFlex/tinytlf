@@ -1,16 +1,18 @@
 package org.tinytlf.lambdas
 {
+	import asx.array.filter;
+
 	/**
 	 * @author ptaylor
 	 */
-	// parent#parentId .one .two child#id .one .two
+	// parent#parentId .one .two child#id:0 .one .two
 	public function getNodeNameFromInheritance(key:String):String {
-		return key.
-			split(' ').
+		return key.split(' ').
 			filter(function(token:String, ...args):Boolean {
 				return token.indexOf('.') == -1;
 			}).
 			pop().
-			split('#')[0];
+			split(':').shift().
+			split('#').shift();
 	}
 }

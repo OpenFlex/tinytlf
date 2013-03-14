@@ -3,7 +3,7 @@ package org.tinytlf.streams
 	import asx.fn.getProperty;
 	import asx.fn.sequence;
 	
-	import org.tinytlf.lambdas.deriveNodeInheritance;
+	import org.tinytlf.lambdas.toInheritanceChain;
 	
 	import raix.reactive.IObservable;
 
@@ -14,7 +14,7 @@ package org.tinytlf.streams
 											 viewport:IObservable,
 											 layout:IObservable):IObservable {
 		return source.groupByUntil(
-			sequence(getProperty('node'), deriveNodeInheritance),
+			sequence(getProperty('node'), toInheritanceChain),
 			filterXMLLifetime(viewport, layout)
 		);
 	}

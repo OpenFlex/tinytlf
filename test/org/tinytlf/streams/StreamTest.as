@@ -2,7 +2,7 @@ package org.tinytlf.streams
 {
 	import flash.geom.Rectangle;
 	
-	import org.tinytlf.lambdas.deriveNodeInheritance;
+	import org.tinytlf.lambdas.toInheritanceChain;
 	import org.tinytlf.types.CSS;
 	import org.tinytlf.types.Renderable;
 	
@@ -37,7 +37,7 @@ package org.tinytlf.streams
 		protected function cacheNodeKeys(tree:RTree):Function {
 			var i:int = 0;
 			return function(renderable:Renderable):void {
-				const key:String = deriveNodeInheritance(renderable.node);
+				const key:String = toInheritanceChain(renderable.node);
 				
 				if(tree.find(key) == null)
 					tree.insert(key, new Rectangle(0, i++ * 75, 75, 75));

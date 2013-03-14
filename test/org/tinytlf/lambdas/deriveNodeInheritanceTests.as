@@ -14,9 +14,9 @@ package org.tinytlf.lambdas
 
 		[Test]
 		public function testDerive():void {
-			const body:String = deriveNodeInheritance(xml);
-			const div:String = deriveNodeInheritance(xml.div[0]);
-			const p:String = deriveNodeInheritance(xml.div[0].p[0]);
+			const body:String = toInheritanceChain(xml);
+			const div:String = toInheritanceChain(xml.div[0]);
+			const p:String = toInheritanceChain(xml.div[0].p[0]);
 			
 			assertTrue(body == 'body#container .first .second');
 			assertTrue(div == 'div#section:0 .third .fourth');

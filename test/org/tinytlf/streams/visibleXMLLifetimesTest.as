@@ -11,7 +11,7 @@ package org.tinytlf.streams
 	import org.flexunit.asserts.assertNotNull;
 	import org.flexunit.asserts.assertTrue;
 	import org.flexunit.async.Async;
-	import org.tinytlf.lambdas.deriveNodeInheritance;
+	import org.tinytlf.lambdas.toInheritanceChain;
 	
 	import raix.reactive.IGroupedObservable;
 	import raix.reactive.IObservable;
@@ -48,7 +48,7 @@ package org.tinytlf.streams
 			
 			nodeLifetimes.subscribe(function(group:IGroupedObservable):void {
 				const index:int = nodes.
-					map(guard(deriveNodeInheritance)).
+					map(guard(toInheritanceChain)).
 					indexOf(group.key);
 				
 				assertNotNull(group);
