@@ -29,7 +29,7 @@ package org.tinytlf.streams
 			const xml:ISubject = new Subject();
 			const asyncHandler:Function = Async.asyncHandler(this, I, 500);
 			
-			groupRenderableLifetimes(xml, viewport, layout).
+			groupRenderableLifetimes(xml, viewport, cache).
 				subscribe(function(group:IGroupedObservable):void {
 					assertThat(group != null);
 					asyncHandler();
@@ -43,7 +43,7 @@ package org.tinytlf.streams
 			const xml:ISubject = new Subject();
 			const asyncHandler:Function = Async.asyncHandler(this, I, 500);
 			
-			groupRenderableLifetimes(xml, viewport, layout).
+			groupRenderableLifetimes(xml, viewport, cache).
 				subscribe(function(body:IGroupedObservable):void {
 					body.
 						map(getProperty('node')).
@@ -69,7 +69,7 @@ package org.tinytlf.streams
 			const xml:ISubject = new Subject();
 			const asyncHandler:Function = Async.asyncHandler(this, I, 500);
 			
-			groupRenderableLifetimes(xml, viewport, layout).
+			groupRenderableLifetimes(xml, viewport, cache).
 				subscribe(function(body:IGroupedObservable):void {
 					body.subscribe(I, asyncHandler, partial(fail, 'An error occurred.'));
 				});
@@ -85,9 +85,9 @@ package org.tinytlf.streams
 			
 			css.setStyle('textDirection', TextBlockProgression.TTB);
 			
-			groupRenderableLifetimes(xml, viewport, layout).
+			groupRenderableLifetimes(xml, viewport, cache).
 				subscribe(function(group:IGroupedObservable):void {
-					tree.insert(group.key, new Rectangle(0, 0, 50, 50));
+					cache.insert(group.key, new Rectangle(0, 0, 50, 50));
 					
 					group.subscribe(I, asyncHandler, partial(fail, 'An error occurred.'));
 					
@@ -107,9 +107,9 @@ package org.tinytlf.streams
 			
 			css.setStyle('textDirection', TextBlockProgression.LTR);
 			
-			groupRenderableLifetimes(xml, viewport, layout).
+			groupRenderableLifetimes(xml, viewport, cache).
 				subscribe(function(group:IGroupedObservable):void {
-					tree.insert(group.key, new Rectangle(0, 0, 50, 50));
+					cache.insert(group.key, new Rectangle(0, 0, 50, 50));
 					
 					group.subscribe(I, asyncHandler, partial(fail, 'An error occurred.'));
 					

@@ -40,9 +40,9 @@ package org.tinytlf.streams
 		[Test(async)]
 		public function visibleXMLNodesGetLifetimes():void {
 			
-			const xml:IObservable = iterateXMLChildren(body).concat(Observable.never());
-			const visibleNodes:IObservable = emitVisibleRenderables(xml, viewport, layout);
-			const nodeLifetimes:IObservable = groupRenderableLifetimes(visibleNodes, viewport, layout);
+			const xml:IObservable = iterateXMLElements(body).concat(Observable.never());
+			const visibleNodes:IObservable = emitVisibleRenderables(xml, viewport, cache);
+			const nodeLifetimes:IObservable = groupRenderableLifetimes(visibleNodes, viewport, cache);
 			
 			const asyncHandler:Function = Async.asyncHandler(this, I, 500);
 			
@@ -61,10 +61,10 @@ package org.tinytlf.streams
 		[Test(async)]
 		public function visibleXMLNodeLifetimesUpdateOnViewportChange():void {
 			
-			const xml:IObservable = iterateXMLChildren(body).concat(Observable.never());
+			const xml:IObservable = iterateXMLElements(body).concat(Observable.never());
 			
-			const visibleNodes:IObservable = emitVisibleRenderables(xml, viewport, layout).peek(cacheNodeKeys(tree));
-			const nodeLifetimes:IObservable = groupRenderableLifetimes(visibleNodes, viewport, layout);
+			const visibleNodes:IObservable = emitVisibleRenderables(xml, viewport, cache).peek(cacheNodeKeys(cache));
+			const nodeLifetimes:IObservable = groupRenderableLifetimes(visibleNodes, viewport, cache);
 			
 			const completedHandler:Function = Async.asyncHandler(this, partial(assertTrue, true), 500);
 			const failDispatcher:IEventDispatcher = new EventDispatcher();

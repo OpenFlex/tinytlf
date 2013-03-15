@@ -11,7 +11,7 @@ package org.tinytlf.streams
 		public function fxnIteratesCorrectNumberOfChildren():void {
 			const asyncHandler:Function = Async.asyncHandler(this, I, 500);
 			
-			iterateXMLChildren(<body><div/><div/><div/></body>).
+			iterateXMLElements(<body><div/><div/><div/></body>).
 				count().
 				subscribe(function(total:Number):void {
 					assertTrue(total == 3);

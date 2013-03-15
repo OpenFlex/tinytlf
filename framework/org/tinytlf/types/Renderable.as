@@ -1,7 +1,7 @@
 package org.tinytlf.types
 {
 	import raix.reactive.ISubject;
-	import raix.reactive.Subject;
+	import raix.reactive.subjects.ReplaySubject;
 
 	public class Renderable
 	{
@@ -10,7 +10,7 @@ package org.tinytlf.types
 		}
 		
 		public const node:XML;
-		public const rendered:ISubject = new Subject();
+		public const rendered:ISubject = new ReplaySubject(2);
 		
 		public static function compare(a:Renderable, b:Renderable):Boolean {
 			if(!a || !b) return true;

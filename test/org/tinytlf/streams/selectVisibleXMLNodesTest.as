@@ -36,12 +36,12 @@ package org.tinytlf.streams
 			const xml:ISubject = new Subject();
 			const asyncHandler:Function = Async.asyncHandler(this, I, 500);
 			
-			const visibleNodes:IConnectableObservable = emitVisibleRenderables(xml, viewport, layout).publish();
+			const visibleNodes:IConnectableObservable = emitVisibleRenderables(xml, viewport, cache).publish();
 			
 			visibleNodes.connect();
 			
 			visibleNodes.
-				peek(cacheNodeKeys(tree)).
+				peek(cacheNodeKeys(cache)).
 				take(nodes.length).
 				map(getProperty('node')).
 				all(function(node:XML):Boolean {
@@ -57,20 +57,20 @@ package org.tinytlf.streams
 			
 			const xml:ISubject = new Subject();
 			const asyncHandler:Function = Async.asyncHandler(this, I, 500);
-			const visibleNodesObs:IObservable = emitVisibleRenderables(xml, viewport, layout)
+			const visibleNodesObs:IObservable = emitVisibleRenderables(xml, viewport, cache)
 			
 			const firstVisiblePass:IConnectableObservable = visibleNodesObs.publish();
 			firstVisiblePass.connect();
 			
 			firstVisiblePass.
-				peek(cacheNodeKeys(tree)).
+				peek(cacheNodeKeys(cache)).
 				take(nodes.length).
 				subscribe(I, function():void {
 					
 					const secondVisiblePass:IConnectableObservable = visibleNodesObs.publish();
 					
 					secondVisiblePass.
-						peek(cacheNodeKeys(tree)).
+						peek(cacheNodeKeys(cache)).
 						take(2).
 						map(getProperty('node')).
 						all(function(node:XML):Boolean {
@@ -90,12 +90,12 @@ package org.tinytlf.streams
 			const xml:ISubject = new Subject();
 			const asyncHandler:Function = Async.asyncHandler(this, I, 500);
 			
-			const visibleNodes:IConnectableObservable = emitVisibleRenderables(xml, viewport, layout).publish();
+			const visibleNodes:IConnectableObservable = emitVisibleRenderables(xml, viewport, cache).publish();
 			
 			visibleNodes.connect();
 			
 			visibleNodes.
-				peek(cacheNodeKeys(tree)).
+				peek(cacheNodeKeys(cache)).
 				// Skip the initial nodes.
 				skip(nodes.length).
 				// Wait 250 ms to see if we hear any more messages.
@@ -113,12 +113,12 @@ package org.tinytlf.streams
 			const xml:ISubject = new Subject();
 			const asyncHandler:Function = Async.asyncHandler(this, I, 500);
 			
-			const visibleNodesObs:IConnectableObservable = emitVisibleRenderables(xml, viewport, layout).publish();
+			const visibleNodesObs:IConnectableObservable = emitVisibleRenderables(xml, viewport, cache).publish();
 			
 			visibleNodesObs.connect();
 			
 			visibleNodesObs.
-				peek(cacheNodeKeys(tree)).
+				peek(cacheNodeKeys(cache)).
 				// Skip the initial nodes, take the last two, count them.
 				skip(nodes.length).take(2).count().
 				subscribe(

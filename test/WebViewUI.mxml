@@ -24,6 +24,6 @@
 				bottom="0">
 		<views:WebView
 			css="{new CSSSource.Default().toString()}"
-			html="{new HTMLSource.Small().toString()}" />
+			html="{new HTMLSource.Small().toString()}"/>
 	</s:Scroller>
 </s:Application>

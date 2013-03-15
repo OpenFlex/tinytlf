@@ -7,6 +7,7 @@ package org.tinytlf.streams
 	import asx.fn.partial;
 	
 	import org.tinytlf.lambdas.sideEffect;
+	import org.tinytlf.subscriptions.listenForUIRendered;
 	import org.tinytlf.types.Region;
 	
 	import raix.reactive.CompositeCancelable;
@@ -18,11 +19,11 @@ package org.tinytlf.streams
 	/**
 	 * @author ptaylor
 	 */
-	public function mapContainerRenderable(parent:Region,
-											uiFactory:Function/*(String):Function(Region):DisplayObjectContainer*/,
-											childFactory:Function/*(String):Function(Region, Function, Function, IObservable<CSS>, IGroupedObservable<Renderable>):IObservable<Rendered>*/,
-											styles:IObservable/*<CSS>*/,
-											lifetime:IGroupedObservable/*<Renderable>*/):IObservable/*<Rendered>*/ {
+	public function mapContainerRenderable(region:Region,
+										   uiFactory:Function/*(String):Function(Region):DisplayObjectContainer*/,
+										   childFactory:Function/*(String):Function(Region, Function, Function, IObservable<CSS>, IGroupedObservable<Renderable>):IObservable<Rendered>*/,
+										   styles:IObservable/*<CSS>*/,
+										   lifetime:IGroupedObservable/*<Renderable>*/):IObservable/*<Rendered>*/ {
 		
 		// Initialize a persistent source subject for XML so the grouping
 		// function persists the cache.
@@ -71,13 +72,11 @@ package org.tinytlf.streams
 		// Return an Observable that maps DOM, style, and layout cache updates
 		// to produce the rendering lifecycle of this DOM node and all its
 		// children.
-		return lifetime.
-			combineLatest(styles, args).
-			combineLatest(region.cache, args).
+		return lifetime.combineLatest(styles, args).
 			// Prepare this UI element for rendering...
 			peek(distribute(partial(setupUIForRendering, ui, region))).
 			// ...and listen for when it's finished...
-			peek(distribute(sideEffect(partial(listenForUIRendered, ui), subscriptions))).
+			peek(distribute(sideEffect(partial(listenForUIRendered, ui, region.cache), subscriptions))).
 			// ... then emit the XML's child nodes on the shared source Subject...
 			peek(distribute(sideEffect(partial(emitChildNodes, source), subscriptions))).
 			// ...map the combinations into an Observable of Observables that
@@ -85,7 +84,7 @@ package org.tinytlf.streams
 			// children. If another value is emitted from the lifetime
 			// Observable, be sure to cancel any subscriptions to the pending
 			// rendering lifecycle.
-			switchMany(distribute(partial(mapRenderingLifetime, visibleChildren))).
+			switchMany(distribute(partial(mapRenderingLifetime, ui, visibleChildren))).
 			// Keep emitting updates until the lifetime sequence terminates.
 			takeUntil(lifetime.count()).
 			// When this sequence terminates, clean up the child subscriptions.
@@ -93,26 +92,20 @@ package org.tinytlf.streams
 	}
 }
 import flash.display.DisplayObjectContainer;
-import flash.events.Event;
 
-import asx.array.first;
 import asx.fn.K;
 import asx.fn._;
-import asx.fn.areEqual;
-import asx.fn.args;
 import asx.fn.aritize;
-import asx.fn.distribute;
 import asx.fn.getProperty;
-import asx.fn.guard;
 import asx.fn.ifElse;
 import asx.fn.noop;
 import asx.fn.partial;
 import asx.fn.sequence;
-import asx.object.newInstance_;
 
-import org.tinytlf.lambdas.toInheritanceChain;
+import org.tinytlf.events.render;
 import org.tinytlf.lambdas.toStyleable;
-import org.tinytlf.streams.iterateXMLChildren;
+import org.tinytlf.procedures.applyNodeInheritance;
+import org.tinytlf.streams.iterateXMLElements;
 import org.tinytlf.types.CSS;
 import org.tinytlf.types.Region;
 import org.tinytlf.types.Renderable;
@@ -125,94 +118,67 @@ import raix.reactive.ISubject;
 import raix.reactive.Observable;
 import raix.reactive.scheduling.Scheduler;
 
-import trxcllnt.ds.Envelope;
 import trxcllnt.ds.RTree;
 
-internal function setupUIForRendering(ui:DisplayObjectContainer, region:Region, renderable:Renderable, css:CSS, tree:RTree):void {
+internal function setupUIForRendering(ui:DisplayObjectContainer, region:Region, renderable:Renderable, css:CSS):void {
 	// Merge the region's styles with styles from the current Style root.
 	region.mergeWith(toStyleable(renderable.node, css));
-	
-	// Tell the UI to render itself!
-	ui.dispatchEvent(new Event('render'));
 	
 	// TODO: This is a hack. Figure out how not to do this.
 	ui.removeChildren();
 }
 
-internal function listenForUIRendered(ui:DisplayObjectContainer, renderable:Renderable, css:CSS, tree:RTree):ICancelable {
-	const node:XML = renderable.node;
-	const nodeKey:String = toInheritanceChain(node);
-	const rendered:ISubject = renderable.rendered;
-	
-	// When the UI dispatches the 'rendered' event...
-	return Observable.fromEvent(ui, 'rendered').
-		// ...take just the first occurrence...
-		first().
-		// ...map it into a new Rendered value...
-		map(partial(newInstance_, Rendered, node, ui)).
-		// ...insert the UI into the tree if it hasn't been there before...
-		peek(ifElse(
-			sequence(K(tree.find(nodeKey)), partial(areEqual, null)),
-			partial(aritize(tree.insert, 2), nodeKey, new Envelope(ui)),
-			noop
-		)).
-		subscribe(sequence(
-			// ...pass the Rendered instance to the Subject's onNext()...
-			rendered.onNext,
-			// ...then complete the rendered subject. This pass is done!
-			guard(rendered.onCompleted)
-		));
-}
-
-internal function emitChildNodes(source:ISubject, renderable:Renderable, css:CSS, tree:RTree):ICancelable {
-	// Send the node's children to the source Subject.
-	return iterateXMLChildren(renderable.node).
+internal function emitChildNodes(source:ISubject, renderable:Renderable, css:CSS):ICancelable {
+	// Send the node's children to the source Subject. Dispatch the
+	// iterateXMLChildren Observable on the greenThread scheduler to allow
+	// subscriptions to the visibleChildren Observable to process before the
+	// children are sent to the actors.
+	return iterateXMLElements(renderable.node, Scheduler.greenThread).
+		map(applyNodeInheritance).
 		// Ignore when the iteration has completed.
 		concat(Observable.never()).
-		// ...but subscribe to the iterateXMLChildren Observable on the
-		// greenThread scheduler to allow subscriptions to the
-		// visibleChildren Observable to process before the children
-		// are sent to the actors.
-		subscribeOn(Scheduler.greenThread).
 		// Pipe the children through the shared source Subject...
 		multicast(source).
 		// ...and go!
 		connect();
 }
 
-internal function mapRenderingLifetime(visibleChildren:IObservable, renderable:Renderable, css:CSS, tree:RTree):IObservable {
+internal function mapRenderingLifetime(container:DisplayObjectContainer, visibleChildren:IObservable, renderable:Renderable, css:CSS):IObservable {
 	const node:XML = renderable.node;
 	const rendered:ISubject = renderable.rendered;
-	const numChildren:int = node.*.length();
+	const numChildren:int = node.elements().length();
 	
 	// If there aren't any children, wait until this UI element has finished.
-	if(numChildren <= 0) return rendered.asObservable();
+	if(numChildren <= 0) {
+		// Tell the UI to render itself.
+		container.dispatchEvent(render());
+		return rendered.asObservable();
+	}
 	
 	// Select the 'rendered' Subject from the visibleChildren values...
 	return visibleChildren.map(getProperty('rendered')).
 		// ...but only as many as are about to be emitted from the
-		// shared source Subject...
-		take(numChildren).
-		// ...combine them all into one list...
+		// shared source Subject. Combine them all into one list...
 		bufferWithCount(numChildren).
-		// ...and append this UI's rendered Subject to the list...
-		map(partial(args, rendered)).
+		// ...complete after the buffer is done...
+		take(1).
 		// ...wait until the've all completed...
 		mapMany(Observable.forkJoin).
-		// ...and emit just this UI's Rendered value!
-		map(first);
+		// Tell the UI to render itself. Do this after the children have rendered!
+		peek(sequence(K(render()), container.dispatchEvent)).
+		// ...and emit this UI's Rendered value!
+		mapMany(K(rendered)).
+		concat(Observable.never());
 }
 
 internal function bindChildren(container:DisplayObjectContainer,
-							   cache:IObservable,
+							   cache:RTree,
 							   childLifetimes:IObservable):ICancelable {
 	
 	const subscriptions:CompositeCancelable = new CompositeCancelable();
 	
-	const combination:IObservable = cache.combineLatest(childLifetimes, args);
-	const outer:ICancelable = combination.subscribe(sequence(
-		distribute(partial(observeChildLifetime, container, _, _, subscriptions)),
-		subscriptions.add
+	const outer:ICancelable = childLifetimes.subscribe(partial(
+		observeChildLifetime, container, cache, _, subscriptions
 	));
 	
 	subscriptions.add(outer);
@@ -221,7 +187,7 @@ internal function bindChildren(container:DisplayObjectContainer,
 }
 
 internal function observeChildLifetime(container:DisplayObjectContainer,
-									   tree:RTree,
+									   cache:RTree,
 									   lifetime:IObservable,
 									   subscriptions:CompositeCancelable):void {
 	
@@ -249,6 +215,8 @@ internal function observeChildLifetime(container:DisplayObjectContainer,
 	const subscription:ICancelable = lifetime.
 		peek(updateRemoveChild).
 		subscribe(childUpdated, childRemoved, aritize(childRemoved, 0));
+	
+	subscriptions.add(subscription);
 }
 
 

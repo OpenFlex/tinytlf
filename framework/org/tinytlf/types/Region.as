@@ -31,26 +31,39 @@ package org.tinytlf.types
 				return val >= 0;
 			};
 			
-			pvScroll.combineLatest(ySubj, args).
-				map(distribute(parentMinusChild)).
+			pvScroll.distinctUntilChanged().
+				combineLatest(ySubj.distinctUntilChanged(), parentMinusChild).
 				filter(greaterThan0).
-				combineLatest(vScroll, parentPlusChild).
-				subscribeWith(vScroll);
+				combineLatest(vScroll.distinctUntilChanged(), parentPlusChild).
+				map(function(y:Number):Rectangle {
+					const r:Rectangle = _viewport.value.clone();
+					r.offset(0, y - r.y);
+					return r;
+				}).
+				multicast(_viewport).
+				connect();
 			
-			phScroll.combineLatest(xSubj, args).
-				map(distribute(parentMinusChild)).
+			phScroll.distinctUntilChanged().
+				combineLatest(xSubj.distinctUntilChanged(), parentMinusChild).
 				filter(greaterThan0).
-				combineLatest(hScroll, parentPlusChild).
-				subscribeWith(hScroll);
+				combineLatest(hScroll.distinctUntilChanged(), parentPlusChild).
+				map(function(x:Number):Rectangle {
+					const r:Rectangle = _viewport.value.clone();
+					r.offset(x - r.x, 0);
+					return r;
+				}).
+				multicast(_viewport).
+				connect();
 			
-			hScroll.
-				combineLatest(vScroll, args).
-				combineLatest(widthSubj, args).
-				combineLatest(heightSubj, args).
-				map(distribute(function(x:Number, y:Number, w:Number, h:Number):Rectangle {
-					return new Rectangle(x, y, w, h);
+			widthSubj.distinctUntilChanged().
+				combineLatest(heightSubj.distinctUntilChanged(), args).
+				map(distribute(function(w:Number, h:Number):Rectangle {
+					const r:Rectangle = _viewport.value.clone();
+					r.width = w;
+					r.height = h;
+					return r;
 				})).
-				multicast(viewport as ISubject).
+				multicast(_viewport).
 				connect();
 		}
 		
@@ -108,7 +121,9 @@ package org.tinytlf.types
 			hScroll.onNext(value);
 		}
 		
-		public const cache:IObservable = new BehaviorSubject(new RTree());
-		public const viewport:IObservable = new BehaviorSubject(new Rectangle());
+		public const cache:RTree = new RTree();
+		
+		private const _viewport:BehaviorSubject = new BehaviorSubject(new Rectangle());
+		public const viewport:IObservable = _viewport.asObservable();
 	}
 }

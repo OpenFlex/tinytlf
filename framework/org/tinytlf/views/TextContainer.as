@@ -1,11 +1,9 @@
 package org.tinytlf.views
 {
+	import flash.display.Sprite;
 	import flash.events.Event;
 	
 	import mx.core.IUIComponent;
-	import mx.core.UIComponent;
-	
-	import spark.core.IViewport;
 	
 	import asx.array.filter;
 	import asx.array.forEach;
@@ -14,24 +12,23 @@ package org.tinytlf.views
 	import asx.array.zip;
 	import asx.fn.I;
 	import asx.fn.aritize;
-	import asx.fn.callFunction;
-	import asx.fn.callProperty;
 	import asx.fn.distribute;
 	import asx.fn.getProperty;
-	import asx.fn.guard;
-	import asx.fn.partial;
 	import asx.fn.sequence;
 	import asx.object.isA;
-	import asx.object.newInstance_;
 	
+	import org.tinytlf.events.render;
+	import org.tinytlf.events.rendered;
 	import org.tinytlf.types.Region;
 	
 	import raix.reactive.CompositeCancelable;
 	import raix.reactive.IObservable;
 	import raix.reactive.Observable;
-	import raix.reactive.Plan;
+	import raix.reactive.scheduling.Scheduler;
 	
-	public class TextContainer extends UIComponent implements IViewport
+	import trxcllnt.ds.RTree;
+	
+	public class TextContainer extends Sprite
 	{
 		public function TextContainer(region:Region)
 		{
@@ -39,23 +36,11 @@ package org.tinytlf.views
 			
 			this['region'] = region;
 			
-			const cache:IObservable = region.cache;
 			const subscriptions:CompositeCancelable = new CompositeCancelable();
 			
 			// When "render" is dispatched, invalidate the size and display list.
-			subscriptions.add(
-				Observable.fromEvent(this, 'render').
-				subscribe(sequence(aritize(invalidateSize, 0), aritize(invalidateDisplayList, 0)))
-			);
-			
-			const measured:IObservable = Observable.fromEvent(this, 'measure');
-			const updated:IObservable = Observable.fromEvent(this, 'updateDisplayList');
-			
-			const rendered:Plan = measured.and(updated).then(aritize(partial(newInstance_, Event, 'rendered'), 0));
-			
-			// Dispatch the "rendered" event after "measure" and
-			// "updateDisplayList" have both dispatched.
-			subscriptions.add(Observable.when([rendered]).subscribe(dispatchEvent));
+			subscriptions.add(Observable.fromEvent(this, render().type).
+				subscribe(aritize(draw, 0)));
 			
 			// Clean up subscriptions when we get taken off the screen.
 			subscriptions.add(
@@ -73,19 +58,16 @@ package org.tinytlf.views
 			return kids;
 		}
 		
-		override protected function measure():void {
-			super.measure();
+		protected function draw():void {
+			x = region.x;
+			y = region.y;
 			
-			dispatchEvent(new Event('measure'));
-		}
-		
-		override protected function updateDisplayList(w:Number, h:Number):void {
-			super.updateDisplayList(w, h);
+			const w:Number = region.width;
+			const h:Number = region.height;
 			
-			region.width = w;
-			region.height = h;
-			
-			// TODO: Abstract layouts
+			// TODO: Abstract layouts.
+			// 
+			// Size/layout any UIComponent children
 			const components:Array = filter(children, isA(IUIComponent));
 			const sizes:Array = zip(
 				pluck(components, 'getExplicitOrMeasuredWidth()'),
@@ -98,7 +80,7 @@ package org.tinytlf.views
 				fn(size);
 			}));
 			
-			dispatchEvent(new Event('updateDisplayList'));
+			dispatchEvent(rendered());
 		}
 		
 		// TODO: layouts, measure content width, etc.
@@ -154,6 +136,38 @@ package org.tinytlf.views
 		
 		public function set clipAndEnableScrolling(value:Boolean):void
 		{
+		}
+		
+		override public function get x():Number {
+			return region.x;
+		}
+		
+		override public function set x(value:Number):void {
+			super.x = region.x = value;
+		}
+		
+		override public function get y():Number {
+			return region.y;
+		}
+		
+		override public function set y(value:Number):void {
+			super.y = region.y = value;
+		}
+		
+		override public function get width():Number {
+			return region.width;
+		}
+		
+		override public function set width(value:Number):void {
+			region.width = value;
+		}
+		
+		override public function get height():Number {
+			return region.height;
+		}
+		
+		override public function set height(value:Number):void {
+			region.height = value;
 		}
 	}
 }

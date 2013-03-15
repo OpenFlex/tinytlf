@@ -20,17 +20,15 @@ package org.tinytlf.streams
 		}
 		
 		protected const css:CSS = new CSS();
-		protected const tree:RTree = new RTree();
+		protected const cache:RTree = new RTree();
 		protected const dimensions:Rectangle = new Rectangle(0, 0, 100, 100);
 		
 		protected const styles:ISubject = new ReplaySubject(1);
-		protected const layout:ISubject = new ReplaySubject(1);
 		protected const viewport:ISubject = new ReplaySubject(1);
 		
 		public function setUp():void
 		{
 			styles.onNext(css);
-			layout.onNext(tree);
 			viewport.onNext(dimensions);
 		}
 		
