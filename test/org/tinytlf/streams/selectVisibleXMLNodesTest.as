@@ -16,6 +16,7 @@ package org.tinytlf.streams
 	import raix.reactive.Subject;
 	import raix.reactive.scheduling.Scheduler;
 	import raix.reactive.subjects.IConnectableObservable;
+	import org.tinytlf.actors.emitVisibleRenderables;
 
 	public class selectVisibleXMLNodesTest extends StreamTest
 	{

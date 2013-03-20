@@ -4,6 +4,7 @@ package org.tinytlf.streams
 	
 	import org.flexunit.asserts.assertTrue;
 	import org.flexunit.async.Async;
+	import org.tinytlf.actors.elementsOfXML;
 
 	public class iterateXMLTest
 	{
@@ -11,7 +12,7 @@ package org.tinytlf.streams
 		public function fxnIteratesCorrectNumberOfChildren():void {
 			const asyncHandler:Function = Async.asyncHandler(this, I, 500);
 			
-			iterateXMLElements(<body><div/><div/><div/></body>).
+			elementsOfXML(<body><div/><div/><div/></body>).
 				count().
 				subscribe(function(total:Number):void {
 					assertTrue(total == 3);

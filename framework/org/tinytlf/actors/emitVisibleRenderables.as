@@ -1,4 +1,4 @@
-package org.tinytlf.streams
+package org.tinytlf.actors
 {
 	import asx.array.pluck;
 	import asx.fn._;
@@ -22,6 +22,7 @@ package org.tinytlf.streams
 										   cache:RTree):IObservable {
 		
 		const terminated:IConnectableObservable = source.count().peek(trace).publish();
+		
 		terminated.connect();
 		
 		// Terminate if the source Observable terminates. 
@@ -33,7 +34,7 @@ package org.tinytlf.streams
 			// When they change, pull the visible XML node keys from the tree.
 			// But only notify if the visible nodes have changed since we last rendered.
 			distinctUntilChanged(compareNodeKeys).
-			// wrap the keys Array in another Array.
+			// wrap the keys Array in another Array
 			map(partial(newInstance_, Array));
 		
 		// Update the nodes when the distinctKeysStream emits a value and

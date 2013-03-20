@@ -1,4 +1,4 @@
-package org.tinytlf.streams
+package org.tinytlf.actors
 {
 	import flash.display.DisplayObjectContainer;
 	
@@ -33,7 +33,7 @@ package org.tinytlf.streams
 		// This isn't an actual UI, it's just a collection of observable
 		// properties. This is to decouple the UI rendering from tinytlf's
 		// internal representation, allowing us to skin the UI however we please.
-		const region:Region = new Region(parent.vScroll, parent.hScroll);
+//		const region:Region = new Region(parent.vScroll, parent.hScroll);
 		
 		// Call out to initialize a UI component for this renderable region.
 		// The only UI logic tinytlf handles itself is binding the list of child
@@ -102,10 +102,10 @@ import asx.fn.noop;
 import asx.fn.partial;
 import asx.fn.sequence;
 
-import org.tinytlf.events.render;
+import org.tinytlf.events.renderEvent;
 import org.tinytlf.lambdas.toStyleable;
 import org.tinytlf.procedures.applyNodeInheritance;
-import org.tinytlf.streams.iterateXMLElements;
+import org.tinytlf.actors.elementsOfXML;
 import org.tinytlf.types.CSS;
 import org.tinytlf.types.Region;
 import org.tinytlf.types.Renderable;
@@ -133,7 +133,7 @@ internal function emitChildNodes(source:ISubject, renderable:Renderable, css:CSS
 	// iterateXMLChildren Observable on the greenThread scheduler to allow
 	// subscriptions to the visibleChildren Observable to process before the
 	// children are sent to the actors.
-	return iterateXMLElements(renderable.node, Scheduler.greenThread).
+	return elementsOfXML(renderable.node, Scheduler.greenThread).
 		map(applyNodeInheritance).
 		// Ignore when the iteration has completed.
 		concat(Observable.never()).
@@ -151,7 +151,7 @@ internal function mapRenderingLifetime(container:DisplayObjectContainer, visible
 	// If there aren't any children, wait until this UI element has finished.
 	if(numChildren <= 0) {
 		// Tell the UI to render itself.
-		container.dispatchEvent(render());
+		container.dispatchEvent(renderEvent());
 		return rendered.asObservable();
 	}
 	
@@ -165,7 +165,7 @@ internal function mapRenderingLifetime(container:DisplayObjectContainer, visible
 		// ...wait until the've all completed...
 		mapMany(Observable.forkJoin).
 		// Tell the UI to render itself. Do this after the children have rendered!
-		peek(sequence(K(render()), container.dispatchEvent)).
+		peek(sequence(K(renderEvent()), container.dispatchEvent)).
 		// ...and emit this UI's Rendered value!
 		mapMany(K(rendered)).
 		concat(Observable.never());

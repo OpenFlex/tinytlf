@@ -16,6 +16,7 @@ package org.tinytlf.streams
 	import raix.reactive.ISubject;
 	import raix.reactive.Subject;
 	import raix.reactive.scheduling.Scheduler;
+	import org.tinytlf.actors.groupRenderableLifetimes;
 
 	public class groupRenderableLifetimesTest extends StreamTest
 	{

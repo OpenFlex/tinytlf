@@ -9,16 +9,14 @@ package org.tinytlf.subscriptions
 	import asx.fn.sequence;
 	import asx.object.newInstance_;
 	
-	import org.tinytlf.events.rendered;
+	import org.tinytlf.events.renderedEvent;
 	import org.tinytlf.lambdas.toInheritanceChain;
-	import org.tinytlf.types.CSS;
 	import org.tinytlf.types.Renderable;
 	import org.tinytlf.types.Rendered;
 	
 	import raix.reactive.ICancelable;
 	import raix.reactive.ISubject;
 	import raix.reactive.Observable;
-	import raix.reactive.scheduling.Scheduler;
 	
 	import trxcllnt.ds.Envelope;
 	import trxcllnt.ds.RTree;
@@ -26,13 +24,13 @@ package org.tinytlf.subscriptions
 	/**
 	 * @author ptaylor
 	 */
-	public function listenForUIRendered(ui:DisplayObjectContainer, cache:RTree, renderable:Renderable, css:CSS):ICancelable {
+	public function listenForUIRendered(ui:DisplayObjectContainer, cache:RTree, renderable:Renderable):ICancelable {
 		const node:XML = renderable.node;
 		const nodeKey:String = toInheritanceChain(node);
 		const renderedSubj:ISubject = renderable.rendered;
 		
 		// When the UI dispatches the 'rendered' event...
-		return Observable.fromEvent(ui, rendered().type).
+		return Observable.fromEvent(ui, renderedEvent().type).
 			// ...take just the first occurrence...
 			first().
 			// ...map it into a new Rendered value...

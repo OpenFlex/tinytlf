@@ -1,4 +1,4 @@
-package org.tinytlf.streams
+package org.tinytlf.actors
 {
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
@@ -8,7 +8,7 @@ package org.tinytlf.streams
 	import asx.fn.distribute;
 	import asx.fn.partial;
 	
-	import org.tinytlf.events.render;
+	import org.tinytlf.events.renderEvent;
 	import org.tinytlf.types.CSS;
 	import org.tinytlf.types.Region;
 	import org.tinytlf.types.Renderable;
@@ -65,7 +65,7 @@ package org.tinytlf.streams
 				
 				const container:IObservable = Observable.value(new Rendered(node, ui)).
 					peek(function(rendered:Rendered):void {
-						ui.dispatchEvent(render());
+						ui.dispatchEvent(renderEvent());
 					});
 				
 				return Observable.concat([paragraph, container]).
@@ -96,7 +96,7 @@ import org.tinytlf.lambdas.toStyleable;
 import org.tinytlf.pools.TextBlocks;
 import org.tinytlf.pools.TextLines;
 import org.tinytlf.procedures.applyNodeInheritance;
-import org.tinytlf.streams.iterateXMLElements;
+import org.tinytlf.actors.elementsOfXML;
 import org.tinytlf.types.CSS;
 import org.tinytlf.types.Styleable;
 
@@ -118,7 +118,7 @@ internal function content(uiFactory:Function/*(String):Function(XML):ContentElem
 		return Observable.value(element);
 	}
 	
-	return iterateXMLElements(node).
+	return elementsOfXML(node).
 		map(applyNodeInheritance).
 		concatMany(partial(content, css, uiFactory)).
 		bufferWithCount(numChildren).

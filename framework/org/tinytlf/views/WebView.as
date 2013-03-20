@@ -5,26 +5,20 @@ package org.tinytlf.views
 	
 	import spark.core.IViewport;
 	
-	import asx.fn.args;
-	import asx.fn.aritize;
 	import asx.fn.getProperty;
-	import asx.fn.noop;
 	import asx.fn.partial;
-	import asx.fn.sequence;
 	import asx.object.newInstance_;
 	
+	import org.tinytlf.actors.mapContainerRenderable;
+	import org.tinytlf.actors.renderContainer;
+	import org.tinytlf.handlers.printNext;
 	import org.tinytlf.lambdas.getNodeNameFromInheritance;
 	import org.tinytlf.lambdas.toXML;
 	import org.tinytlf.procedures.applyNodeInheritance;
-	import org.tinytlf.streams.emitVisibleRenderables;
-	import org.tinytlf.streams.groupRenderableLifetimes;
-	import org.tinytlf.streams.mapContainerRenderable;
 	import org.tinytlf.types.CSS;
+	import org.tinytlf.types.DOMElement;
 	import org.tinytlf.types.Region;
-	import org.tinytlf.types.Renderable;
 	
-	import raix.reactive.IGroupedObservable;
-	import raix.reactive.IObservable;
 	import raix.reactive.ISubject;
 	import raix.reactive.Observable;
 	import raix.reactive.Subject;
@@ -36,11 +30,11 @@ package org.tinytlf.views
 			
 			super();
 			
-			addParser('body', mapContainerRenderable);
-			addParser('div', mapContainerRenderable);
-			addParser('section', mapContainerRenderable);
-			addParser('article', mapContainerRenderable);
-			addParser('p', mapRedBoxRenderable);
+			addParser('body', renderContainer);
+			addParser('div', renderContainer);
+			addParser('section', renderContainer);
+			addParser('article', renderContainer);
+			addParser('p', renderRedBox);
 			
 			addUI('body', partial(newInstance_, TextContainer));
 			addUI('div', partial(newInstance_, TextContainer));
@@ -48,7 +42,9 @@ package org.tinytlf.views
 			addUI('article', partial(newInstance_, TextContainer));
 			addUI('p', partial(newInstance_, RedBox));
 			
-			Observable.fromEvent(this, FlexEvent.CREATION_COMPLETE).first().subscribe(creationComplete);
+			Observable.fromEvent(this, FlexEvent.UPDATE_COMPLETE).
+				first().
+				subscribe(onFirstUpdateDisplayList);
 		}
 		
 		private const region:Region = new Region(Observable.value(0), Observable.value(0));
@@ -93,47 +89,25 @@ package org.tinytlf.views
 			return this;
 		}
 		
-		override protected function createChildren():void {
-			htmlSubj.distinctUntilChanged().
-				combineLatest(cssSubj.distinctUntilChanged(), args).
-				subscribe(sequence(aritize(invalidateSize, 0), aritize(invalidateDisplayList, 0)));
-		}
-		
-		private function creationComplete(...args):void {
+		private function onFirstUpdateDisplayList(...args):void {
+			const root:ISubject = new Subject();
+			const body:DOMElement = new DOMElement('body');
+			body.source = root;
 			
-			const htmlDispatcher:ISubject = new Subject();
+			region.width = width;
+			region.height = height;
 			
-			const group:IGroupedObservable = new GroupedObservable('body', htmlDispatcher);
-			
-			CSS(cssSubj.value).inject('body {' +
-				'width: ' + width + 'px;' +
-				'height: ' + height + 'px;' +
-			'}');
-			
-			const visible:IObservable = emitVisibleRenderables(htmlDispatcher, region.viewport, region.cache).
-				publish().refCount();
-			
-			const lifetimes:IObservable = groupRenderableLifetimes(visible, region.viewport, region.cache).
-				publish().
-				refCount();
-			
-			lifetimes.
-				mapMany(partial(mapContainerRenderable, region, getUI, getParser, cssSubj)).
+			renderContainer(region, body, getUI, getParser, cssSubj.asObservable()).
+				peek(printNext('root render')).
 				map(getProperty('display')).
-				subscribe(addChild, noop, trace);
+				peek(printNext('root render display')).
+				subscribe(addChild);
 			
 			htmlSubj.distinctUntilChanged().
 				map(toXML).
 				map(applyNodeInheritance).
-				multicast(htmlDispatcher).
+				multicast(root).
 				connect();
-		}
-		
-		override protected function updateDisplayList(w:Number, h:Number):void {
-			super.updateDisplayList(w, h);
-			
-			region.width = w;
-			region.height = h;
 		}
 		
 		// TODO: layouts, measure content width, etc.
@@ -144,7 +118,7 @@ package org.tinytlf.views
 		}
 		
 		// TODO: layouts, measure content height, etc.
-		private var cHeight:Number = 2000;
+		private var cHeight:Number = 13000;
 		public function get contentHeight():Number
 		{
 			return cHeight;
@@ -191,32 +165,36 @@ package org.tinytlf.views
 	}
 }
 
-import flash.display.DisplayObject;
+import flash.display.DisplayObjectContainer;
+import flash.text.TextField;
+import flash.text.TextFieldAutoSize;
+import flash.text.TextFormat;
+import flash.text.TextFormatAlign;
 
-import asx.fn.K;
 import asx.fn.args;
-import asx.fn.aritize;
 import asx.fn.distribute;
-import asx.fn.partial;
-import asx.fn.sequence;
+import asx.object.isA;
 
-import org.tinytlf.events.render;
-import org.tinytlf.lambdas.sideEffect;
+import org.tinytlf.events.renderEvent;
+import org.tinytlf.handlers.printComplete;
+import org.tinytlf.handlers.printError;
+import org.tinytlf.handlers.printNext;
 import org.tinytlf.lambdas.toStyleable;
-import org.tinytlf.subscriptions.listenForUIRendered;
+import org.tinytlf.lambdas.updateCacheAfterRender;
 import org.tinytlf.types.CSS;
+import org.tinytlf.types.DOMElement;
 import org.tinytlf.types.Region;
-import org.tinytlf.types.Renderable;
+import org.tinytlf.types.Rendered;
 import org.tinytlf.views.TextContainer;
 
 import raix.reactive.AbsObservable;
-import raix.reactive.CompositeCancelable;
 import raix.reactive.ICancelable;
 import raix.reactive.IGroupedObservable;
 import raix.reactive.IObservable;
 import raix.reactive.IObserver;
-import raix.reactive.Observable;
-import raix.reactive.scheduling.Scheduler;
+import raix.reactive.ISubject;
+
+import trxcllnt.ds.RTree;
 
 internal class GroupedObservable extends AbsObservable implements IGroupedObservable {
 	private var _underlyingObservable : IObservable;
@@ -244,11 +222,30 @@ internal class RedBox extends TextContainer
 	public function RedBox(region:Region)
 	{
 		super(region);
+		
+		text.defaultTextFormat = new TextFormat(null, 20);
+		text.defaultTextFormat.align = TextFormatAlign.CENTER;
+		text.autoSize = TextFieldAutoSize.NONE;
+		text.width = 90;
+		text.height = 90;
+		
+		index = ++times;
+		
+		addChild(text);
 	}
+	
+	private const text:TextField = new TextField();
+	
+	private var index:int = 0;
+	private static var times:int = -1;
+	
+	public var nodeIndex:int = -1;
 	
 	override protected function draw():void {
 		const w:Number = region.width;
 		const h:Number = region.height;
+		
+		text.text = index + ' - ' + nodeIndex;
 		
 		graphics.clear();
 		graphics.beginFill(0xFF0000);
@@ -259,20 +256,21 @@ internal class RedBox extends TextContainer
 	}
 }
 
-internal function mapRedBoxRenderable(parent:Region,
-									  uiFactory:Function/*(String):Function(Region):DisplayObjectContainer*/,
-									  childFactory:Function/*(String):Function(Region, Function, Function, IObservable<CSS>, IGroupedObservable<Renderable>):IObservable<Rendered>*/,
-									  styles:IObservable/*<CSS>*/,
-									  lifetime:IGroupedObservable/*<Renderable>*/):IObservable/*<Rendered>*/ {
+internal function renderRedBox(parent:Region,
+							 updates:DOMElement/*<XML>*/,
+							 uiFactory:Function/*<String>:<Function<Region>:<DisplayObjectContainer>>*/,
+							 childFactory:Function,
+							 styles:IObservable/*<CSS>*/):IObservable/*<Rendered>*/ {
+	
+	styles = styles.filter(isA(CSS));
 	
 	const region:Region = new Region(parent.vScroll, parent.hScroll);
-	const ui:DisplayObject = uiFactory(lifetime.key)(region);
-	const subscriptions:CompositeCancelable = new CompositeCancelable();
+	const ui:RedBox = uiFactory(updates.key)(region) as RedBox;
 	
-	return lifetime.combineLatest(styles, args).
-		peek(distribute(sideEffect(partial(listenForUIRendered, ui, region.cache), subscriptions))).
-		peek(distribute(function(renderable:Renderable, css:CSS):void {
-			const node:XML = renderable.node;
+	const rendered:ISubject = updates.rendered;
+	
+	return updates.combineLatest(styles, args).
+		map(distribute(function(node:XML, css:CSS):Rendered {
 			
 			region.mergeWith(toStyleable(node, css));
 			region.width = 90;
@@ -280,28 +278,22 @@ internal function mapRedBoxRenderable(parent:Region,
 			
 			region.y = node.childIndex() * 100;
 			
+			ui.nodeIndex = node.childIndex();
+			
+//			ui.alpha = Math.max(0.05, node.childIndex() / 130);
 			ui.alpha = Math.max(0.05, node.childIndex() / 10);
+			
+			ui.dispatchEvent(renderEvent());
+			
+			return new Rendered(updates, ui);
 		})).
-		delay(0, Scheduler.greenThread).
-		peek(sequence(K(render()), ui.dispatchEvent)).
-		mapMany(distribute(aritize(function(renderable:Renderable):IObservable {
-			return renderable.rendered.concat(Observable.never());
-		}, 1))).
-		
-		takeUntil(lifetime.count()).
-		// When this sequence terminates, clean up the child subscriptions.
-		finallyAction(subscriptions.cancel);
+		peek(updateCacheAfterRender(parent.cache)).
+		delay(1).
+		peek(function(rendered:Rendered):void {
+			updates.rendered.onNext(rendered);
+			updates.rendered.onCompleted();
+		}).
+		takeUntil(updates.count());
 }
-
-
-
-
-
-
-
-
-
-
-
 
 

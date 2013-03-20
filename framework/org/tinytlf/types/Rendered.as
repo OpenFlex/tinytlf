@@ -4,12 +4,12 @@ package org.tinytlf.types
 
 	public class Rendered
 	{
-		public function Rendered(node:XML, display:DisplayObject) {
-			this['node'] = node;
+		public function Rendered(element:DOMElement, display:DisplayObject) {
+			this['element'] = element;
 			this['display'] = display;
 		}
 		
-		public const node:XML;
+		public const element:DOMElement;
 		public const display:DisplayObject;
 	}
 }

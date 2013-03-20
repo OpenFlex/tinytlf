@@ -2,6 +2,7 @@ package org.tinytlf.views
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Rectangle;
 	
 	import mx.core.IUIComponent;
 	
@@ -17,8 +18,8 @@ package org.tinytlf.views
 	import asx.fn.sequence;
 	import asx.object.isA;
 	
-	import org.tinytlf.events.render;
-	import org.tinytlf.events.rendered;
+	import org.tinytlf.events.renderEvent;
+	import org.tinytlf.events.renderedEvent;
 	import org.tinytlf.types.Region;
 	
 	import raix.reactive.CompositeCancelable;
@@ -39,7 +40,7 @@ package org.tinytlf.views
 			const subscriptions:CompositeCancelable = new CompositeCancelable();
 			
 			// When "render" is dispatched, invalidate the size and display list.
-			subscriptions.add(Observable.fromEvent(this, render().type).
+			subscriptions.add(Observable.fromEvent(this, renderEvent().type).
 				subscribe(aritize(draw, 0)));
 			
 			// Clean up subscriptions when we get taken off the screen.
@@ -48,6 +49,10 @@ package org.tinytlf.views
 				take(1).
 				subscribe(I, subscriptions.cancel)
 			);
+			
+			subscriptions.add(region.viewport.subscribe(function(viewport:Rectangle):void {
+				scrollRect = viewport;
+			}));
 		}
 		
 		public const region:Region;
@@ -80,7 +85,7 @@ package org.tinytlf.views
 				fn(size);
 			}));
 			
-			dispatchEvent(rendered());
+			dispatchEvent(renderedEvent());
 		}
 		
 		// TODO: layouts, measure content width, etc.

@@ -17,6 +17,9 @@ package org.tinytlf.streams
 	import raix.reactive.IObservable;
 	import raix.reactive.Observable;
 	import raix.reactive.subjects.IConnectableObservable;
+	import org.tinytlf.actors.emitVisibleRenderables;
+	import org.tinytlf.actors.groupRenderableLifetimes;
+	import org.tinytlf.actors.elementsOfXML;
 
 	public class visibleXMLLifetimesTest extends StreamTest
 	{
@@ -40,7 +43,7 @@ package org.tinytlf.streams
 		[Test(async)]
 		public function visibleXMLNodesGetLifetimes():void {
 			
-			const xml:IObservable = iterateXMLElements(body).concat(Observable.never());
+			const xml:IObservable = elementsOfXML(body).concat(Observable.never());
 			const visibleNodes:IObservable = emitVisibleRenderables(xml, viewport, cache);
 			const nodeLifetimes:IObservable = groupRenderableLifetimes(visibleNodes, viewport, cache);
 			
@@ -61,7 +64,7 @@ package org.tinytlf.streams
 		[Test(async)]
 		public function visibleXMLNodeLifetimesUpdateOnViewportChange():void {
 			
-			const xml:IObservable = iterateXMLElements(body).concat(Observable.never());
+			const xml:IObservable = elementsOfXML(body).concat(Observable.never());
 			
 			const visibleNodes:IObservable = emitVisibleRenderables(xml, viewport, cache).peek(cacheNodeKeys(cache));
 			const nodeLifetimes:IObservable = groupRenderableLifetimes(visibleNodes, viewport, cache);

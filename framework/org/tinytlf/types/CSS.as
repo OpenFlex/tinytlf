@@ -265,8 +265,8 @@ internal class StyleLink extends Styleable
 	private static const defaults:Object = {
 			padding: 0, paddingLeft: 0, paddingRight: 0, paddingTop: 0,
 			paddingBottom: 0, margin: 0, marginLeft: 0, marginRight: 0,
-			marginTop: 0, marginBottom: 0, width: 0, height: 0, fontSize: 12,
-			leading: 0, paragraphSpacing: 0, fontMultiplier: 1
+			marginTop: 0, marginBottom: 0, //width: '100%', height: '100%',
+			fontSize: 12, leading: 0, paragraphSpacing: 0, fontMultiplier: 1
 		};
 }
 

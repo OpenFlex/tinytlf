@@ -1,4 +1,4 @@
-package org.tinytlf.streams
+package org.tinytlf.actors
 {
 	import asx.fn.getProperty;
 	import asx.fn.sequence;

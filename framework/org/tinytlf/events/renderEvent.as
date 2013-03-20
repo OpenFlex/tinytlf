@@ -5,7 +5,7 @@ package org.tinytlf.events
 	/**
 	 * @author ptaylor
 	 */
-	public function render():Event {
+	public function renderEvent(...args):Event {
 		return new Event('tinytlf_render');
 	}
 }

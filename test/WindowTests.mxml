@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600"
+			   creationComplete="cc()">
+	<fx:Script>
+		<![CDATA[
+			import asx.array.repeat;
+			import asx.fn.K;
+			import asx.fn.aritize;
+			import asx.fn.partial;
+			import asx.object.newInstance_;
+			
+			import org.tinytlf.handlers.printComplete;
+			import org.tinytlf.handlers.printError;
+			import org.tinytlf.handlers.printNext;
+			
+			import raix.reactive.IObservable;
+			import raix.reactive.Observable;
+			import raix.reactive.scheduling.Scheduler;
+			
+			private function cc():void {
+				
+				const obs:IObservable = Observable.timer(0, 100);
+				const closer:IObservable = Observable.timer(500, 500);
+				
+				var i:int = 0;
+				
+				obs.window(K(closer)).subscribe(
+					function(inner:IObservable):void {
+						++i;
+						inner.subscribe(
+							printNext('inner ' + i.toString()), 
+							printComplete('inner ' + i.toString())
+						);
+					},
+					printComplete('outer timer range'),
+					printError('rectangular window obs')
+				);
+			}
+		]]>
+	</fx:Script>
+</s:Application>
