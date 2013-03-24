@@ -2,27 +2,27 @@ package org.tinytlf.views
 {
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
+	import mx.events.PropertyChangeEvent;
 	
 	import spark.core.IViewport;
 	
-	import asx.fn.getProperty;
 	import asx.fn.partial;
 	import asx.object.newInstance_;
 	
 	import org.tinytlf.actors.mapContainerRenderable;
-	import org.tinytlf.actors.renderContainer;
-	import org.tinytlf.handlers.printNext;
+	import org.tinytlf.actors2.renderDOMContainer;
 	import org.tinytlf.lambdas.getNodeNameFromInheritance;
 	import org.tinytlf.lambdas.toXML;
 	import org.tinytlf.procedures.applyNodeInheritance;
 	import org.tinytlf.types.CSS;
 	import org.tinytlf.types.DOMElement;
 	import org.tinytlf.types.Region;
+	import org.tinytlf.types.Rendered;
 	
-	import raix.reactive.ISubject;
 	import raix.reactive.Observable;
-	import raix.reactive.Subject;
 	import raix.reactive.subjects.BehaviorSubject;
+	
+	import trxcllnt.ds.Envelope;
 	
 	public class WebView extends UIComponent implements IViewport
 	{
@@ -30,10 +30,10 @@ package org.tinytlf.views
 			
 			super();
 			
-			addParser('body', renderContainer);
-			addParser('div', renderContainer);
-			addParser('section', renderContainer);
-			addParser('article', renderContainer);
+			addParser('body', renderDOMContainer);
+			addParser('div', renderDOMContainer);
+			addParser('section', renderDOMContainer);
+			addParser('article', renderDOMContainer);
 			addParser('p', renderRedBox);
 			
 			addUI('body', partial(newInstance_, TextContainer));
@@ -90,35 +90,54 @@ package org.tinytlf.views
 		}
 		
 		private function onFirstUpdateDisplayList(...args):void {
-			const root:ISubject = new Subject();
 			const body:DOMElement = new DOMElement('body');
-			body.source = root;
 			
 			region.width = width;
 			region.height = height;
 			
-			renderContainer(region, body, getUI, getParser, cssSubj.asObservable()).
-				peek(printNext('root render')).
-				map(getProperty('display')).
-				peek(printNext('root render display')).
-				subscribe(addChild);
+			renderDOMContainer(region, body, getUI, getParser, cssSubj.asObservable()).
+				subscribe(function(rendered:Rendered):void {
+					
+					const container:TextContainer = rendered.display as TextContainer;
+					
+					if(!contains(container)) {
+						addChild(container);
+					}
+					
+					const env:Envelope = container.region.cache.envelope;
+					var event:PropertyChangeEvent;
+					
+					if(cWidth != env.width) {
+						event = PropertyChangeEvent.createUpdateEvent(this, 'contentWidth', cWidth, env.width);
+						cWidth = env.width;
+						dispatchEvent(event);
+					}
+					if(cHeight != env.height) {
+						event = PropertyChangeEvent.createUpdateEvent(this, 'contentHeight', cHeight, env.height);
+						cHeight = env.height;
+						dispatchEvent(event);
+					}
+					
+					invalidateParentSizeAndDisplayList();
+					invalidateDisplayList();
+				});
 			
 			htmlSubj.distinctUntilChanged().
 				map(toXML).
 				map(applyNodeInheritance).
-				multicast(root).
+				multicast(body).
 				connect();
 		}
 		
 		// TODO: layouts, measure content width, etc.
-		private var cWidth:Number = 1000;
+		private var cWidth:Number = 0;
 		public function get contentWidth():Number
 		{
 			return cWidth;
 		}
 		
 		// TODO: layouts, measure content height, etc.
-		private var cHeight:Number = 13000;
+		private var cHeight:Number = 0;
 		public function get contentHeight():Number
 		{
 			return cHeight;
@@ -165,7 +184,7 @@ package org.tinytlf.views
 	}
 }
 
-import flash.display.DisplayObjectContainer;
+import flash.geom.Rectangle;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
@@ -173,12 +192,10 @@ import flash.text.TextFormatAlign;
 
 import asx.fn.args;
 import asx.fn.distribute;
+import asx.number.snap;
 import asx.object.isA;
 
 import org.tinytlf.events.renderEvent;
-import org.tinytlf.handlers.printComplete;
-import org.tinytlf.handlers.printError;
-import org.tinytlf.handlers.printNext;
 import org.tinytlf.lambdas.toStyleable;
 import org.tinytlf.lambdas.updateCacheAfterRender;
 import org.tinytlf.types.CSS;
@@ -193,8 +210,6 @@ import raix.reactive.IGroupedObservable;
 import raix.reactive.IObservable;
 import raix.reactive.IObserver;
 import raix.reactive.ISubject;
-
-import trxcllnt.ds.RTree;
 
 internal class GroupedObservable extends AbsObservable implements IGroupedObservable {
 	private var _underlyingObservable : IObservable;
@@ -224,7 +239,7 @@ internal class RedBox extends TextContainer
 		super(region);
 		
 		text.defaultTextFormat = new TextFormat(null, 20);
-		text.defaultTextFormat.align = TextFormatAlign.CENTER;
+		text.defaultTextFormat.align = TextFormatAlign.LEFT;
 		text.autoSize = TextFieldAutoSize.NONE;
 		text.width = 90;
 		text.height = 90;
@@ -240,15 +255,18 @@ internal class RedBox extends TextContainer
 	private static var times:int = -1;
 	
 	public var nodeIndex:int = -1;
+	public var backgroundAlpha:Number = 0.05;
 	
 	override protected function draw():void {
 		const w:Number = region.width;
 		const h:Number = region.height;
 		
 		text.text = index + ' - ' + nodeIndex;
+		text.x = (90 - text.width) * 0.5
+		text.y = (90 - text.height) * 0.5
 		
 		graphics.clear();
-		graphics.beginFill(0xFF0000);
+		graphics.beginFill(0xFF0000, backgroundAlpha);
 		graphics.drawRect(0, 0, w, h);
 		graphics.endFill();
 		
@@ -276,23 +294,23 @@ internal function renderRedBox(parent:Region,
 			region.width = 90;
 			region.height = 90;
 			
-			region.y = node.childIndex() * 100;
+			const i:int = node.childIndex();
+			region.x = i % 10 * 100;
+			region.y = (Math.floor(i / 10) * 1) * 100;
+			ui.nodeIndex = i;
 			
-			ui.nodeIndex = node.childIndex();
-			
-//			ui.alpha = Math.max(0.05, node.childIndex() / 130);
-			ui.alpha = Math.max(0.05, node.childIndex() / 10);
+			ui.backgroundAlpha = Math.max(0.05, node.childIndex() / 1000);
+//			ui.alpha = Math.max(0.05, node.childIndex() / 10);
 			
 			ui.dispatchEvent(renderEvent());
 			
-			return new Rendered(updates, ui);
+			const rendered:Rendered = new Rendered(updates, ui);
+			
+			return rendered;
 		})).
 		peek(updateCacheAfterRender(parent.cache)).
-		delay(1).
-		peek(function(rendered:Rendered):void {
-			updates.rendered.onNext(rendered);
-			updates.rendered.onCompleted();
-		}).
+		delay(10).
+		peek(updates.rendered.onNext).
 		takeUntil(updates.count());
 }
 

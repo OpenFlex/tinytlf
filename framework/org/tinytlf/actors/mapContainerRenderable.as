@@ -47,7 +47,7 @@ package org.tinytlf.actors
 		// This allows us to genericize the virtualization logic to show/hide
 		// children inside this container even though the container may not be
 		// entirely out of view itself.
-		const visibleChildren:IObservable = emitVisibleRenderables(source, region.viewport, region.cache).
+		const visibleChildren:IObservable = emitVisibleRenderables(source, region.viewports, region.cache).
 			publish().refCount();
 		
 		// Initialize a persistent grouping Observable to capture the lifetimes
@@ -55,7 +55,7 @@ package org.tinytlf.actors
 		// Observable sequences that complete when they're deleted (in edit
 		// operations), or scrolled out of view.
 		const childLifetimes:IObservable =
-			groupRenderableLifetimes(visibleChildren, region.viewport, region.cache).
+			groupRenderableLifetimes(visibleChildren, region.viewports, region.cache).
 			publish().
 			refCount();
 		

@@ -7,8 +7,8 @@ package org.tinytlf.handlers
 	 * @author ptaylor
 	 */
 	public const printError:Function = function(name:String):Function {
-		return function(...args):void {
-			trace('error in the', _, ' stream:', name);
+		return function(e:Error):void {
+			trace('error in the', name, 'stream:', e.toString());
 		}
 	};
 }

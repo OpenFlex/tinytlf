@@ -46,8 +46,6 @@ import raix.reactive.Observable;
 
 import trxcllnt.ds.RTree;
 
-internal const lifetimes:Dictionary = new Dictionary();
-
 internal function filterNodeLifetime(viewports:IObservable,
 									 cache:RTree,
 									 group:IGroupedObservable):IObservable {

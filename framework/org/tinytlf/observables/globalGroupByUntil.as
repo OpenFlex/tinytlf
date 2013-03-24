@@ -20,6 +20,7 @@ package org.tinytlf.observables {
 									   durationSelector:Function,
 									   elementSelector:Function = null,
 									   keyComparer:Function = null):IObservable {
+		
 		var defaultComparer:Function = function(a:Object, b:Object):Boolean {
 			return a == b;
 		}

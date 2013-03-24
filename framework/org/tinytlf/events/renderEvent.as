@@ -6,6 +6,6 @@ package org.tinytlf.events
 	 * @author ptaylor
 	 */
 	public function renderEvent(...args):Event {
-		return new Event('tinytlf_render');
+		return new Event('tinytlf_render', false, false);
 	}
 }

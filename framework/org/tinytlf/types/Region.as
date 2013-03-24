@@ -121,9 +121,13 @@ package org.tinytlf.types
 			hScroll.onNext(value);
 		}
 		
+		public function get viewport():Rectangle {
+			return _viewport.value;
+		}
+		
 		public const cache:RTree = new RTree();
 		
 		private const _viewport:BehaviorSubject = new BehaviorSubject(new Rectangle());
-		public const viewport:IObservable = _viewport.asObservable();
+		public const viewports:IObservable = _viewport.asObservable();
 	}
 }

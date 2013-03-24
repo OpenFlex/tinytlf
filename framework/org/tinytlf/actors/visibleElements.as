@@ -39,7 +39,7 @@ package org.tinytlf.actors
 		// TODO: Compare based on block progression.
 		const cacheIsSmallerThanViewport:Function = function(...args):Boolean {
 			const envelope:Envelope = cache.envelope; // re-query for the Envelope value
-			return envelope.height <= viewport.height;
+			return envelope.bottom <= viewport.bottom;
 		};
 		
 		// Only take new elements that come after cached elements

@@ -23,11 +23,7 @@ package org.tinytlf.views
 	import org.tinytlf.types.Region;
 	
 	import raix.reactive.CompositeCancelable;
-	import raix.reactive.IObservable;
 	import raix.reactive.Observable;
-	import raix.reactive.scheduling.Scheduler;
-	
-	import trxcllnt.ds.RTree;
 	
 	public class TextContainer extends Sprite
 	{
@@ -45,12 +41,12 @@ package org.tinytlf.views
 			
 			// Clean up subscriptions when we get taken off the screen.
 			subscriptions.add(
-				Observable.fromEvent(this, Event.REMOVED_FROM_STAGE).
+				Observable.fromEvent(this, Event.REMOVED_FROM_STAGE, false, 0, true).
 				take(1).
 				subscribe(I, subscriptions.cancel)
 			);
 			
-			subscriptions.add(region.viewport.subscribe(function(viewport:Rectangle):void {
+			subscriptions.add(region.viewports.subscribe(function(viewport:Rectangle):void {
 				scrollRect = viewport;
 			}));
 		}
