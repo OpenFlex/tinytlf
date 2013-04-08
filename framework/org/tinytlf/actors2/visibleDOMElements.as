@@ -2,20 +2,15 @@ package org.tinytlf.actors2
 {
 	import flash.geom.Rectangle;
 	
-	import asx.fn._;
 	import asx.fn.ifElse;
 	import asx.fn.partial;
-	import asx.fn.sequence;
-	import asx.fn.tap;
 	
-	import org.tinytlf.handlers.printComplete;
 	import org.tinytlf.lambdas.toInheritanceChain;
 	import org.tinytlf.types.DOMElement;
 	
 	import raix.interactive.IEnumerable;
 	import raix.interactive.IEnumerator;
 	import raix.reactive.CompositeCancelable;
-	import raix.reactive.ICancelable;
 	import raix.reactive.IObservable;
 	import raix.reactive.IObserver;
 	import raix.reactive.Observable;
@@ -59,10 +54,10 @@ package org.tinytlf.actors2
 				// If this element hasn't been rendered/cached yet but is within
 				// the acceptable limits of overflow so we can show a lot of
 				// scrollbar, render it also.
-				if(eCache.height >= viewport.bottom)
+				if(eCache.height >= viewport.bottom + 13000)
 					return false;
 				
-				if(eCache.width >= viewport.right)
+				if(eCache.width >= viewport.right + 13000)
 					return false;
 				
 				return true;
@@ -131,6 +126,7 @@ import asx.fn.getProperty;
 import asx.fn.partial;
 import asx.fn.sequence;
 
+import org.tinytlf.actors2.cachedDOMElements;
 import org.tinytlf.types.DOMElement;
 
 import raix.reactive.IObservable;
@@ -161,7 +157,8 @@ internal function nodeScrolledOffScreen(viewport:Rectangle, key:String, cache:RT
 	
 	if(keyIsCached == false) return false;
 	
-	const keys:Array = pluck(cache.intersections(viewport), 'element.key');
+	const cached:Array = cachedDOMElements(viewport, cache);
+	const keys:Array = pluck(cached, 'key');
 	const keyInKeys:Boolean = detect(keys, partial(areEqual, key));
 	
 	return keyInKeys == false;

@@ -8,24 +8,24 @@ Please click on the "Refresh" icon in "FlexUnit Results" view to regenerate this
 			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
 	<fx:Script>
 		<![CDATA[
-			import org.tinytlf.lambdas.deriveNodeInheritanceTests;
 			import org.tinytlf.streams.visibleXMLLifetimesTest;
-			import org.tinytlf.streams.selectVisibleXMLNodesTest;
-			import org.tinytlf.streams.groupRenderableLifetimesTest;
+			import org.tinytlf.lambdas.deriveNodeInheritanceTests;
 			import org.tinytlf.TextEngineTests;
 			import org.tinytlf.streams.iterateXMLTest;
+			import org.tinytlf.streams.groupRenderableLifetimesTest;
+			import org.tinytlf.streams.selectVisibleXMLNodesTest;
+			
+			private var org_tinytlf_streams_selectVisibleXMLNodesTest_obj:org.tinytlf.streams.selectVisibleXMLNodesTest;
+			
+			private var org_tinytlf_streams_groupRenderableLifetimesTest_obj:org.tinytlf.streams.groupRenderableLifetimesTest;
 			
 			private var org_tinytlf_streams_iterateXMLTest_obj:org.tinytlf.streams.iterateXMLTest;
 			
 			private var org_tinytlf_TextEngineTests_obj:org.tinytlf.TextEngineTests;
 			
-			private var org_tinytlf_streams_groupXMLLifetimesTest_obj:org.tinytlf.streams.groupRenderableLifetimesTest;
-			
-			private var org_tinytlf_streams_selectVisibleXMLNodesTest_obj:org.tinytlf.streams.selectVisibleXMLNodesTest;
+			private var org_tinytlf_lambdas_deriveNodeInheritanceTests_obj:org.tinytlf.lambdas.deriveNodeInheritanceTests;
 			
 			private var org_tinytlf_streams_visibleXMLLifetimesTest_obj:org.tinytlf.streams.visibleXMLLifetimesTest;
-			
-			private var org_tinytlf_deriveNodeInheritanceTests_obj:org.tinytlf.lambdas.deriveNodeInheritanceTests;
 		]]>
 	</fx:Script>
 	<fx:Declarations>

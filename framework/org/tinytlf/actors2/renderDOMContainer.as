@@ -250,5 +250,5 @@ internal function createChildObserver(container:DisplayObjectContainer, index:in
 		container.addChildAt(child, childIndex);
 	};
 	
-	return Observer.create(next, complete, printError('child rendering'));
+	return Observer.create(next, complete, printError('child rendering', true));
 }

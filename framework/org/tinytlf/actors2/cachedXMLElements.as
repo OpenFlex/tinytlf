@@ -17,13 +17,8 @@ package org.tinytlf.actors2
 	 * 
 	 * @author ptaylor
 	 */
-	public function cachedXMLElements(viewport:Rectangle, cache:RTree):Array/*<DOMElement>*/ {
-		return sequence(
-			cache.intersections,
-			partial(pluck, _, 'element'),
-			tap(callProperty('sortOn', 'index', Array.NUMERIC), _),
-			partial(pluck, _, 'node')
-		)(viewport);
+	public function cachedXMLElements(viewport:Rectangle, cache:RTree):Array/*<XML>*/ {
+		return pluck(cachedDOMElements(viewport, cache), 'node');
 	}
 }
 

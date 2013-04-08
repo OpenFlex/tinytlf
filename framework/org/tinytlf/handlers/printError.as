@@ -6,9 +6,9 @@ package org.tinytlf.handlers
 	/**
 	 * @author ptaylor
 	 */
-	public const printError:Function = function(name:String):Function {
+	public const printError:Function = function(name:String, stack:Boolean = false):Function {
 		return function(e:Error):void {
-			trace('error in the', name, 'stream:', e.toString());
+			trace('error in the', name, 'stream:', e.toString(), (stack ? e.getStackTrace() : ''));
 		}
 	};
 }

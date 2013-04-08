@@ -187,6 +187,7 @@ package org.tinytlf.views
 import flash.geom.Rectangle;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
+import flash.text.TextFieldType;
 import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
 
@@ -239,10 +240,8 @@ internal class RedBox extends TextContainer
 		super(region);
 		
 		text.defaultTextFormat = new TextFormat(null, 20);
-		text.defaultTextFormat.align = TextFormatAlign.LEFT;
 		text.autoSize = TextFieldAutoSize.NONE;
-		text.width = 90;
-		text.height = 90;
+		text.selectable = false;
 		
 		index = ++times;
 		
@@ -261,9 +260,9 @@ internal class RedBox extends TextContainer
 		const w:Number = region.width;
 		const h:Number = region.height;
 		
-		text.text = index + ' - ' + nodeIndex;
-		text.x = (90 - text.width) * 0.5
-		text.y = (90 - text.height) * 0.5
+		text.text = nodeIndex + ' - ' + index;
+		text.x = (90 - text.textWidth) * 0.5;
+		text.y = (90 - text.textHeight) * 0.5;
 		
 		graphics.clear();
 		graphics.beginFill(0xFF0000, backgroundAlpha);
@@ -295,9 +294,11 @@ internal function renderRedBox(parent:Region,
 			region.height = 90;
 			
 			const i:int = node.childIndex();
-			region.x = i % 10 * 100;
-			region.y = (Math.floor(i / 10) * 1) * 100;
 			ui.nodeIndex = i;
+//			region.x = i % 10 * 100;
+//			region.y = Math.floor(i / 10) * 100;
+			region.x = 0;
+			region.y = i * 100;
 			
 			ui.backgroundAlpha = Math.max(0.05, node.childIndex() / 1000);
 //			ui.alpha = Math.max(0.05, node.childIndex() / 10);
@@ -308,8 +309,8 @@ internal function renderRedBox(parent:Region,
 			
 			return rendered;
 		})).
-		peek(updateCacheAfterRender(parent.cache)).
 		delay(10).
+		peek(updateCacheAfterRender(parent.cache)).
 		peek(updates.rendered.onNext).
 		takeUntil(updates.count());
 }
