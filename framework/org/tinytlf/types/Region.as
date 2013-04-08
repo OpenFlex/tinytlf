@@ -1,15 +1,13 @@
 package org.tinytlf.types
 {
-	import flash.geom.Rectangle;
-	
 	import asx.fn.args;
 	import asx.fn.distribute;
+	
+	import flash.geom.Rectangle;
 	
 	import raix.reactive.IObservable;
 	import raix.reactive.ISubject;
 	import raix.reactive.subjects.BehaviorSubject;
-	
-	import trxcllnt.ds.RTree;
 	
 	public class Region extends Styleable
 	{
@@ -125,7 +123,7 @@ package org.tinytlf.types
 			return _viewport.value;
 		}
 		
-		public const cache:RTree = new RTree();
+		public const cache:Virtualizer = new Virtualizer();
 		
 		private const _viewport:BehaviorSubject = new BehaviorSubject(new Rectangle());
 		public const viewports:IObservable = _viewport.asObservable();

@@ -1,18 +1,17 @@
 package org.tinytlf.actors2
 {
-	import flash.display.DisplayObjectContainer;
-	
 	import asx.fn.I;
 	import asx.fn._;
 	import asx.fn.args;
 	import asx.fn.callProperty;
 	import asx.fn.distribute;
-	import asx.fn.getProperty;
 	import asx.fn.noop;
 	import asx.fn.not;
 	import asx.fn.partial;
 	import asx.fn.sequence;
 	import asx.number.eq;
+	
+	import flash.display.DisplayObjectContainer;
 	
 	import org.tinytlf.events.renderEvent;
 	import org.tinytlf.handlers.printAndCancel;
@@ -24,16 +23,13 @@ package org.tinytlf.actors2
 	import org.tinytlf.types.DOMElement;
 	import org.tinytlf.types.Region;
 	import org.tinytlf.types.Rendered;
+	import org.tinytlf.types.Virtualizer;
 	
 	import raix.interactive.IEnumerable;
 	import raix.reactive.CompositeCancelable;
 	import raix.reactive.IObservable;
 	import raix.reactive.IObserver;
 	import raix.reactive.Observable;
-	import raix.reactive.scheduling.Scheduler;
-	import raix.reactive.subjects.IConnectableObservable;
-	
-	import trxcllnt.ds.RTree;
 
 	/**
 	 * @author ptaylor
@@ -49,7 +45,7 @@ package org.tinytlf.actors2
 		region.width = parent.width;
 		region.height = parent.height;
 		
-		const cache:RTree = region.cache;
+		const cache:Virtualizer = region.cache;
 		const key:String = updates.key;
 		const viewports:IObservable = region.viewports;
 		
@@ -140,10 +136,6 @@ package org.tinytlf.actors2
 			takeUntil(updates.count());
 	}
 }
-import flash.display.DisplayObject;
-import flash.display.DisplayObjectContainer;
-import flash.utils.Dictionary;
-
 import asx.fn.K;
 import asx.fn._;
 import asx.fn.aritize;
@@ -152,6 +144,10 @@ import asx.fn.noop;
 import asx.fn.partial;
 import asx.fn.sequence;
 import asx.object.newInstance_;
+
+import flash.display.DisplayObject;
+import flash.display.DisplayObjectContainer;
+import flash.utils.Dictionary;
 
 import org.tinytlf.events.renderedEvent;
 import org.tinytlf.handlers.printError;

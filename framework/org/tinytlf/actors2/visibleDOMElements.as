@@ -1,12 +1,13 @@
 package org.tinytlf.actors2
 {
-	import flash.geom.Rectangle;
-	
 	import asx.fn.ifElse;
 	import asx.fn.partial;
 	
+	import flash.geom.Rectangle;
+	
 	import org.tinytlf.lambdas.toInheritanceChain;
 	import org.tinytlf.types.DOMElement;
+	import org.tinytlf.types.Virtualizer;
 	
 	import raix.interactive.IEnumerable;
 	import raix.interactive.IEnumerator;
@@ -14,20 +15,16 @@ package org.tinytlf.actors2
 	import raix.reactive.IObservable;
 	import raix.reactive.IObserver;
 	import raix.reactive.Observable;
-	
-	import trxcllnt.ds.Envelope;
-	import trxcllnt.ds.Node;
-	import trxcllnt.ds.RTree;
 
 	/**
 	 * @author ptaylor
 	 */
 	public function visibleDOMElements(elementsCache:Object,
 									   viewports:IObservable,
-									   cache:RTree):Function {
+									   cache:Virtualizer):Function {
 		
 		const keySelector:Function = toInheritanceChain;
-		const durationSelector:Function = partial(filterNodeLifetime, viewports, cache);
+		const durationSelector:Function = partial(filterNodeLifetime, viewports, cache, {});
 		const activeElements:Object = {};
 		
 		return function(visibleXMLElements:IEnumerable	/*[visible] <XML>*/,
@@ -37,27 +34,26 @@ package org.tinytlf.actors2
 			// TODO: Compare based on block progression.
 			const processingWithinViewport:Function = function(element:DOMElement):Boolean {
 				
-				const eCache:Envelope = cache.envelope; // re-query for the Envelope value
-				
 				// If there's still room in the viewport, render the next element.
-				if(eCache.bottom <= viewport.bottom) return true;
+				if(cache.size <= viewport.bottom) return true;
 				
-				const n0:Node = cache.find(element);
-				
-				if(n0) {
-					const e0:Envelope = n0.envelope;
-					
-					// If this element is in the viewport, render it.
-					return viewport.intersects(e0);
+				if(cache.getIndex(element) != -1) {
+					// If the element is cached and it intersects with the
+					// viewport, render it.
+					return viewport.intersects(new Rectangle(
+						viewport.x,
+						cache.getStart(element),
+						viewport.width,
+						cache.getSize(element)
+					));
 				}
 				
-				// If this element hasn't been rendered/cached yet but is within
-				// the acceptable limits of overflow so we can show a lot of
-				// scrollbar, render it also.
-				if(eCache.height >= viewport.bottom + 13000)
-					return false;
+				// TODO: tweak this shit.
 				
-				if(eCache.width >= viewport.right + 13000)
+				// If this element hasn't been rendered or cached yet but is
+				// within the acceptable limits of overflow so we can show a lot
+				// of scrollbar, render it also.
+				if(cache.size >= viewport.bottom + 13000)
 					return false;
 				
 				return true;
@@ -116,27 +112,30 @@ package org.tinytlf.actors2
 	}
 }
 
-import flash.geom.Rectangle;
-
 import asx.array.detect;
 import asx.array.pluck;
 import asx.fn._;
 import asx.fn.areEqual;
-import asx.fn.getProperty;
+import asx.fn.not;
 import asx.fn.partial;
-import asx.fn.sequence;
+
+import flash.geom.Rectangle;
 
 import org.tinytlf.actors2.cachedDOMElements;
 import org.tinytlf.types.DOMElement;
+import org.tinytlf.types.Virtualizer;
 
 import raix.reactive.IObservable;
 import raix.reactive.Observable;
 
-import trxcllnt.ds.RTree;
-
 internal function filterNodeLifetime(viewports:IObservable,
-									 cache:RTree,
+									 cache:Virtualizer,
+									 keyCache:Object,
 									 element:DOMElement):IObservable {
+	
+	const key:String = element.key;
+	const firstSighting:Boolean = (key in keyCache) == false;
+	
 	return Observable.amb([
 		element.filter(nodeIsEmpty),
 		viewports.filter(partial(nodeScrolledOffScreen, _, element.key, cache))
@@ -147,19 +146,12 @@ internal function nodeIsEmpty(node:XML):Boolean {
 	return node.toString() == '' && node.text().toString() == '';
 }
 
-internal function nodeScrolledOffScreen(viewport:Rectangle, key:String, cache:RTree):Boolean {
+internal function nodeScrolledOffScreen(viewport:Rectangle, firstSighting:Boolean, key:String, cache:Virtualizer):Boolean {
 	
-	const keyIsCached:Boolean = detect(cache.values(), sequence(
-		getProperty('element'),
-		getProperty('key'),
-		partial(areEqual, key)
-	));
-	
-	if(keyIsCached == false) return false;
+	if(firstSighting == true) return false;
 	
 	const cached:Array = cachedDOMElements(viewport, cache);
 	const keys:Array = pluck(cached, 'key');
-	const keyInKeys:Boolean = detect(keys, partial(areEqual, key));
 	
-	return keyInKeys == false;
+	return detect(keys, partial(areEqual, key)) == false;
 }

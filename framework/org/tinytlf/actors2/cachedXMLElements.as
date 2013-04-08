@@ -1,15 +1,10 @@
 package org.tinytlf.actors2
 {
+	import asx.array.pluck;
+	
 	import flash.geom.Rectangle;
 	
-	import asx.array.pluck;
-	import asx.fn._;
-	import asx.fn.callProperty;
-	import asx.fn.partial;
-	import asx.fn.sequence;
-	import asx.fn.tap;
-	
-	import trxcllnt.ds.RTree;
+	import org.tinytlf.types.Virtualizer;
 	
 	/**
 	 * Mutates a (Rectangle, RTree) into an Array<XML> where each element in
@@ -17,7 +12,7 @@ package org.tinytlf.actors2
 	 * 
 	 * @author ptaylor
 	 */
-	public function cachedXMLElements(viewport:Rectangle, cache:RTree):Array/*<XML>*/ {
+	public function cachedXMLElements(viewport:Rectangle, cache:Virtualizer):Array/*<XML>*/ {
 		return pluck(cachedDOMElements(viewport, cache), 'node');
 	}
 }
