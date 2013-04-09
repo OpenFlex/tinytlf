@@ -1,4 +1,4 @@
-package org.tinytlf.actors
+package org.tinytlf.enumerables
 {
 	import flash.geom.Rectangle;
 	
@@ -23,6 +23,6 @@ package org.tinytlf.actors
 			elementsOfXML(node, 0) :
 			elementsOfXML(node, last.childIndex());
 		
-		return cached.concat(rest);
+		return cached.skipLast(1).concat(rest);
 	}
 }

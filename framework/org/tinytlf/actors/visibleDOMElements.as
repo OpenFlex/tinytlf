@@ -123,7 +123,7 @@ import asx.fn.partial;
 
 import flash.geom.Rectangle;
 
-import org.tinytlf.actors.cachedDOMElements;
+import org.tinytlf.enumerables.cachedDOMElements;
 import org.tinytlf.handlers.printComplete;
 import org.tinytlf.types.DOMElement;
 import org.tinytlf.types.Virtualizer;
@@ -157,14 +157,6 @@ internal function nodeScrolledOffScreen(viewport:Rectangle, keyCache:Object, key
 	const cached:Array = cachedDOMElements(viewport, cache);
 	const keys:Array = pluck(cached, 'key');
 	const keyIsVisible:Boolean = Boolean(detect(keys, partial(areEqual, key)));
-	
-	if(keyIsVisible == false) {
-		trace(key, 'scrolled out of view:')
-		trace(viewport.toString());
-		trace('[' + keys.join('], [') + ']');
-		trace('');
-		cachedDOMElements(viewport, cache);
-	}
 	
 	return keyIsVisible == false;
 }

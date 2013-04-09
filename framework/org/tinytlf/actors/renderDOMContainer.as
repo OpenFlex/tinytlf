@@ -3,6 +3,7 @@ package org.tinytlf.actors
 	import asx.fn.I;
 	import asx.fn._;
 	import asx.fn.args;
+	import asx.fn.aritize;
 	import asx.fn.callProperty;
 	import asx.fn.distribute;
 	import asx.fn.noop;
@@ -13,6 +14,7 @@ package org.tinytlf.actors
 	
 	import flash.display.DisplayObjectContainer;
 	
+	import org.tinytlf.enumerables.visibleXMLElements;
 	import org.tinytlf.events.renderedEvent;
 	import org.tinytlf.handlers.printAndCancel;
 	import org.tinytlf.handlers.printComplete;
@@ -69,6 +71,18 @@ package org.tinytlf.actors
 		
 		const groupDOMElementLifetimes:Function = visibleDOMElements(DOMElement.cache, viewports, cache);
 		const domElementWindows:IObservable = visibleXMLWindows.
+//			distinctUntilChanged(function(a:IEnumerable, b:IEnumerable):Boolean {
+//				
+//				if(!a || !b) return false;
+//				
+//				a = a.map(toInheritanceChain);
+//				b = b.map(toInheritanceChain);
+//				
+//				const aStr:String = a.toArray().join(', ');
+//				const bStr:String = b.toArray().join(', ');
+//				
+//				return (a.count() == b.count() && aStr === bStr);
+//			}).
 			map(function(window:IEnumerable):Array {
 				return [window, region.viewport];
 			}).
@@ -82,11 +96,11 @@ package org.tinytlf.actors
 			refCount();
 		
 		const renderedDOMElementWindows:IObservable = domElementWindows.
-			map(function(window:IObservable):IObservable {
-				return window.map(function(element:DOMElement):IObservable /*<Rendered>*/ {
-					return childFactory(element.key)(region, element, uiFactory, childFactory, styles);
-				});
-			});
+			// Map new DOMElements from the inner sequence to child rendering
+			// Observable sequence updates.
+			map(callProperty('map', function(element:DOMElement):IObservable /*<Rendered>*/ {
+				return childFactory(element.key)(region, element, uiFactory, childFactory, styles);
+			}));
 		
 		const childObserver:IObserver = createChildrenObserver(ui);
 		const childUpdates:IObservable = renderedDOMElementWindows.
@@ -105,11 +119,9 @@ package org.tinytlf.actors
 			// Bind the children lifetimes to the UI container's display list
 			childUpdates.subscribe(noop, cancelChildSubscriptions, printError('child updates')),
 			
-			// If the new node doesn't have any children, dispatch a render
-			// event immediately.
-			// 
-			// When all the render Observables in a given window have completed
-			// dispatch a "render" event on the UI.
+			// If the new node doesn't have any children, dispatch a "render"
+			// event immediately, or dispatch a "render" event when all the
+			// render Observables in the latest update window have completed.
 			readyToRender.subscribe(sequence(renderedEvent, ui.dispatchEvent)),
 		]);
 		
@@ -119,38 +131,39 @@ package org.tinytlf.actors
 			printAndCancel(subscriptions, printError, 'render_container')
 		);
 		
-//		subscriptions.add(domElementWindows.connect());
-		
 		// Listen for the "rendered" event from the UI. Pass the Rendered
 		// instance to the rendered Subject's onNext()
-		return renderedEventsToValues(updates, ui).
-			delay(10).
-			// When the 'rendered' Subject emits a value, create a new Envelope
-			// for the UI container and insert/update the RTree's cache
+		return renderedEventsToValues(updates, viewports, ui).
+			// Update the parent's cache when the 'rendered' Subject emits a value.
 			peek(updateCacheAfterRender(parent.cache)).
+			delay(10).
 			// Notify the current rendered subject of completion.
-			peek(function(rendered:Rendered):void {
-				updates.rendered.onNext(rendered);
-				updates.rendered.onCompleted();
-			}).
+			peek(sequence(
+				updates.rendered.onNext,
+				aritize(updates.rendered.onCompleted, 0)
+			)).
 			takeUntil(updates.count());
 	}
 }
+import asx.fn.I;
 import asx.fn.K;
 import asx.fn._;
-import asx.fn.getProperty;
+import asx.fn.aritize;
 import asx.fn.ifElse;
 import asx.fn.noop;
 import asx.fn.partial;
 import asx.fn.sequence;
-import asx.fn.tap;
+import asx.object.newInstance_;
 
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
+import flash.geom.Rectangle;
 import flash.utils.Dictionary;
 
 import org.tinytlf.events.renderedEvent;
+import org.tinytlf.handlers.printComplete;
 import org.tinytlf.handlers.printError;
+import org.tinytlf.handlers.printNext;
 import org.tinytlf.types.DOMElement;
 import org.tinytlf.types.Rendered;
 
@@ -159,23 +172,25 @@ import raix.reactive.IObserver;
 import raix.reactive.Observable;
 import raix.reactive.Observer;
 
-internal function renderedEventsToValues(updates:DOMElement, ui:DisplayObjectContainer):IObservable {
+internal function renderedEventsToValues(updates:DOMElement, viewports:IObservable, ui:DisplayObjectContainer):IObservable {
 	
 	// Listen for the "rendered" event from the UI
 	const uiRendered:IObservable = Observable.fromEvent(ui, renderedEvent().type);
 	
 	// Build a function that accepts an XML node and instantiates a new 'Rendered' instance.
-//	const mapRendered:Function = partial(aritize(newInstance_, 3), Rendered, _, ui);
-	const mapRendered:Function = function(element:DOMElement):Rendered {
-		return new Rendered(element, ui);
-	};
+	const mapRendered:Function = partial(aritize(newInstance_, 3), Rendered, _, ui);
+//	const mapRendered:Function = function(element:DOMElement):Rendered {
+//		return new Rendered(element, ui);
+//	};
 	
 	// Subscribe to the result of uiRendered.map(node), but only while the node
 	// is the latest value. When the UI dispatches the 'rendered' Event, the
 	// latest node is returned and passed to mapRendered, creating the most
 	// recent Rendered instance.
 	
-	return updates.switchMany(sequence(K(updates), K, uiRendered.map)).map(mapRendered);
+	return updates.combineLatest(viewports, I).
+		switchMany(sequence(K(updates), K, uiRendered.map)).
+		map(mapRendered);
 }
 
 internal const childSubscriptions:Dictionary = new Dictionary(false);
@@ -204,10 +219,14 @@ internal function createChildrenObserver(ui:DisplayObjectContainer):IObserver {
 		}
 		
 		indexCache[child] = ordering;
+		
+		const childObserver:IObserver = createChildObserver(ui, ordering);
+		
 		childSubscriptions[child] = child.finallyAction(function():void {
 			delete activeChildSubscriptions[child];
 		}).
-		subscribeWith(createChildObserver(ui, ordering));
+		finallyAction(childObserver.onCompleted).
+		subscribeWith(childObserver);
 	};
 	
 	const complete:Function = function():void {
@@ -236,13 +255,6 @@ internal function createChildObserver(container:DisplayObjectContainer, index:in
 		removeChild = ifElse(
 			partial(container.contains, rendered.display),
 			partial(container.removeChild, rendered.display),
-//			sequence(
-//				partial(container.removeChild, rendered.display),
-//				sequence(
-//					getProperty('name'),
-//					partial(trace, 'removing')
-//				)
-//			),
 			noop
 		);
 		
@@ -252,8 +264,6 @@ internal function createChildObserver(container:DisplayObjectContainer, index:in
 		if(container.contains(child)) {
 			return;
 		}
-		
-//		trace('adding', child.name);
 		
 		container.addChildAt(child, childIndex);
 	};

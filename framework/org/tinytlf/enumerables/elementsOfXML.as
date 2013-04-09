@@ -1,4 +1,4 @@
-package org.tinytlf.actors
+package org.tinytlf.enumerables
 {
 	import raix.interactive.Enumerable;
 	import raix.interactive.IEnumerable;

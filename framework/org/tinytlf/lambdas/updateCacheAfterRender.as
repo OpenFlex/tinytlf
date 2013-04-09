@@ -8,7 +8,7 @@ package org.tinytlf.lambdas
 	 * @author ptaylor
 	 */
 	public function updateCacheAfterRender(cache:Virtualizer):Function {
-		return function(rendered:Rendered):void {
+		return function(rendered:Rendered):Rendered {
 			
 			const size:Number = rendered.display.height;
 			const element:DOMElement = rendered.element;
@@ -17,13 +17,18 @@ package org.tinytlf.lambdas
 			
 			if(index == -1) {
 				cache.add(element, size);
-			}
-			else if(index != childIndex) {
-				cache.removeAt(index);
-				cache.addAt(element, childIndex, size);
+			} else if(index != childIndex) {
+				if(childIndex == -1) {
+					cache.setSizeAt(index, size);
+				} else {
+					cache.removeAt(index);
+					cache.addAt(element, childIndex, size);
+				}
 			} else {
 				cache.setSizeAt(index, size);
 			}
+			
+			return rendered;
 		};
 	}
 }

@@ -1,11 +1,5 @@
 package org.tinytlf.views
 {
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.geom.Rectangle;
-	
-	import mx.core.IUIComponent;
-	
 	import asx.array.filter;
 	import asx.array.forEach;
 	import asx.array.map;
@@ -17,6 +11,12 @@ package org.tinytlf.views
 	import asx.fn.getProperty;
 	import asx.fn.sequence;
 	import asx.object.isA;
+	
+	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.geom.Rectangle;
+	
+	import mx.core.IUIComponent;
 	
 	import org.tinytlf.events.renderEvent;
 	import org.tinytlf.events.renderedEvent;
@@ -47,8 +47,13 @@ package org.tinytlf.views
 			);
 			
 			subscriptions.add(region.viewports.subscribe(function(viewport:Rectangle):void {
-				scrollRect = viewport;
+				setSuperY(-viewport.y);
+//				scrollRect = viewport;
 			}));
+		}
+		
+		private function setSuperY(v:Number):void {
+			super.y = v;
 		}
 		
 		public const region:Region;

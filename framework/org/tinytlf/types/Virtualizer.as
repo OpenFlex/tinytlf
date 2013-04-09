@@ -152,8 +152,6 @@ package org.tinytlf.types
 			const start:int = Math.max(Math.min(getIndexAt(startPosition), length), 0);
 			const end:int = Math.max(Math.min(getIndexAt(endPosition), length), 0);
 			
-			if(start == end) return [];
-			
 			return (start > end) ? 
 				indexCache.slice(end, start + 1) :
 				indexCache.slice(start, end + 1);

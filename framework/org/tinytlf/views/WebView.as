@@ -6,6 +6,7 @@ package org.tinytlf.views
 	import asx.object.newInstance_;
 	
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	
 	import mx.core.UIComponent;
@@ -13,6 +14,9 @@ package org.tinytlf.views
 	import mx.events.PropertyChangeEvent;
 	
 	import org.tinytlf.actors.renderDOMContainer;
+	import org.tinytlf.events.mouse.down;
+	import org.tinytlf.events.mouse.move;
+	import org.tinytlf.events.mouse.up;
 	import org.tinytlf.lambdas.getNodeNameFromInheritance;
 	import org.tinytlf.lambdas.toXML;
 	import org.tinytlf.procedures.applyNodeInheritance;
@@ -50,11 +54,33 @@ package org.tinytlf.views
 				first().
 				subscribe(onFirstUpdateDisplayList);
 			
+			const self:WebView = this;
+			const downObs:IObservable = down(this);
+			const upObs:IObservable = up(this);
+			const dragObs:IObservable = downObs.mapMany(function(d:MouseEvent):IObservable {
+				const moveObs:IObservable = org.tinytlf.events.mouse.move(self);
+				
+				return moveObs.startWith(d).
+					scan(function(o:Object, m:MouseEvent):Object {
+						return {
+							x: m.stageX,
+							y: m.stageY,
+							dx: m.stageX - o.x,
+							dy: m.stageY - o.y
+						};
+					}, {x: d.stageX, y: d.stageY}, true).
+					map(function(o:Object):Point {
+						return new Point(o.dx, o.dy);
+					}).
+					takeUntil(upObs);
+			});
+			
+			dragObs.subscribe(function(delta:Point):void {
+				region.verticalScrollPosition -= delta.y;
+			});
+			
 			Observable.fromEvent(this, MouseEvent.MOUSE_WHEEL).
 				subscribe(function(e:MouseEvent):void {
-					e.stopPropagation();
-					e.preventDefault();
-					
 					region.verticalScrollPosition -= e.delta;
 				});
 		}
@@ -135,6 +161,14 @@ package org.tinytlf.views
 						dispatchEvent(event);
 					}
 					
+					region.contentHeight = cHeight;
+					
+					graphics.clear();
+					graphics.lineStyle(1, 0x00, 0.25);
+					graphics.beginFill(0x00, 0);
+					graphics.drawRect(0, 0, width, height);
+					graphics.endFill();
+					
 					invalidateParentSizeAndDisplayList();
 					invalidateDisplayList();
 				});
@@ -203,7 +237,9 @@ package org.tinytlf.views
 import asx.array.map;
 import asx.array.range;
 import asx.fn.args;
+import asx.fn.aritize;
 import asx.fn.distribute;
+import asx.fn.sequence;
 import asx.number.sum;
 import asx.object.isA;
 
@@ -310,24 +346,27 @@ internal function renderRedBox(parent:Region,
 			ui.nodeIndex = i;
 			
 			region.width = 700 * ((i + 1) / 10);
-			region.height = 400 * ((i + 1) / 10);
+			region.height = 250 * ((i + 1) / 10);
 			
 			region.x = 0;
 			region.y = sum(map(range(0, i), function(i:int):Number {
-				return 400 * ((i + 1) / 10);
-			})) as Number;
+				return 250 * ((i + 1) / 10);
+			}));
 			
-			ui.backgroundAlpha = Math.max(0.05, i / 10);
+//			ui.backgroundAlpha = Math.max(0.05, i / 10);
+			ui.backgroundAlpha = 0.25;
 			
 			ui.dispatchEvent(renderEvent());
 			
 			const rendered:Rendered = new Rendered(updates, ui);
 			
-			return rendered;
+			return updateCacheAfterRender(parent.cache)(rendered);
 		})).
 		delay(10).
-		peek(updateCacheAfterRender(parent.cache)).
-		peek(updates.rendered.onNext).
+		peek(sequence(
+			updates.rendered.onNext,
+			aritize(updates.rendered.onCompleted, 0)
+		)).
 		takeUntil(updates.count());
 }
 

@@ -1,4 +1,4 @@
-package org.tinytlf.actors
+package org.tinytlf.enumerables
 {
 	import asx.array.pluck;
 	import asx.fn._;

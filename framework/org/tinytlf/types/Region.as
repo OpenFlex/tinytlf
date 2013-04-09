@@ -101,13 +101,31 @@ package org.tinytlf.types
 			heightSubj.onNext(h);
 		}
 		
+		public const contentWidthSubj:BehaviorSubject = new BehaviorSubject(0);
+		public function get contentWidth():Number {
+			return contentWidthSubj.value;
+		}
+		
+		public function set contentWidth(w:Number):void {
+			contentWidthSubj.onNext(w);
+		}
+		
+		public const contentHeightSubj:BehaviorSubject = new BehaviorSubject(0);
+		public function get contentHeight():Number {
+			return contentHeightSubj.value;
+		}
+		
+		public function set contentHeight(h:Number):void {
+			contentHeightSubj.onNext(h);
+		}
+		
 		public const vScroll:BehaviorSubject = new BehaviorSubject(0);
 		public function get verticalScrollPosition():Number {
 			return vScroll.value;
 		}
 		
 		public function set verticalScrollPosition(value:Number):void {
-			vScroll.onNext(value);
+			vScroll.onNext(Math.min(Math.max(value, 0), contentHeight - height));
 		}
 		
 		public const hScroll:BehaviorSubject = new BehaviorSubject(0);
@@ -116,7 +134,7 @@ package org.tinytlf.types
 		}
 		
 		public function set horizontalScrollPosition(value:Number):void {
-			hScroll.onNext(value);
+			hScroll.onNext(Math.max(value, 0));
 		}
 		
 		public function get viewport():Rectangle {

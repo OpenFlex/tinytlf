@@ -21,8 +21,8 @@
 	<views:WebView
 		left="0"
 		right="0"
-		top="0"
-		bottom="0"
+		y="200"
+		height="300"
 		css="{new CSSSource.Default().toString()}"
 		html="{new HTMLSource.Small().toString()}"/>
 </s:Application>
