@@ -1,4 +1,4 @@
-package org.tinytlf.actors2
+package org.tinytlf.actors
 {
 	import asx.fn.ifElse;
 	import asx.fn.partial;
@@ -53,10 +53,13 @@ package org.tinytlf.actors2
 				// If this element hasn't been rendered or cached yet but is
 				// within the acceptable limits of overflow so we can show a lot
 				// of scrollbar, render it also.
-				if(cache.size >= viewport.bottom + 13000)
-					return false;
+//				if(cache.size >= viewport.bottom + 13000)
+//					return false;
 				
-				return true;
+//				if(cache.size >= viewport.bottom + 100)
+//					return false;
+				
+				return false;
 			};
 			
 			const elements:IEnumerable /*[visible] <DOMElement>*/ = visibleXMLElements.
@@ -116,12 +119,12 @@ import asx.array.detect;
 import asx.array.pluck;
 import asx.fn._;
 import asx.fn.areEqual;
-import asx.fn.not;
 import asx.fn.partial;
 
 import flash.geom.Rectangle;
 
-import org.tinytlf.actors2.cachedDOMElements;
+import org.tinytlf.actors.cachedDOMElements;
+import org.tinytlf.handlers.printComplete;
 import org.tinytlf.types.DOMElement;
 import org.tinytlf.types.Virtualizer;
 
@@ -132,13 +135,11 @@ internal function filterNodeLifetime(viewports:IObservable,
 									 cache:Virtualizer,
 									 keyCache:Object,
 									 element:DOMElement):IObservable {
-	
 	const key:String = element.key;
-	const firstSighting:Boolean = (key in keyCache) == false;
 	
 	return Observable.amb([
 		element.filter(nodeIsEmpty),
-		viewports.filter(partial(nodeScrolledOffScreen, _, element.key, cache))
+		viewports.filter(partial(nodeScrolledOffScreen, _, keyCache, element.key, cache))
 	]);
 }
 
@@ -146,12 +147,24 @@ internal function nodeIsEmpty(node:XML):Boolean {
 	return node.toString() == '' && node.text().toString() == '';
 }
 
-internal function nodeScrolledOffScreen(viewport:Rectangle, firstSighting:Boolean, key:String, cache:Virtualizer):Boolean {
+internal function nodeScrolledOffScreen(viewport:Rectangle, keyCache:Object, key:String, cache:Virtualizer):Boolean {
+	
+	const firstSighting:Boolean = (key in keyCache) == false;
+	keyCache[key] = true;
 	
 	if(firstSighting == true) return false;
 	
 	const cached:Array = cachedDOMElements(viewport, cache);
 	const keys:Array = pluck(cached, 'key');
+	const keyIsVisible:Boolean = Boolean(detect(keys, partial(areEqual, key)));
 	
-	return detect(keys, partial(areEqual, key)) == false;
+	if(keyIsVisible == false) {
+		trace(key, 'scrolled out of view:')
+		trace(viewport.toString());
+		trace('[' + keys.join('], [') + ']');
+		trace('');
+		cachedDOMElements(viewport, cache);
+	}
+	
+	return keyIsVisible == false;
 }

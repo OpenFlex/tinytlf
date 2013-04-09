@@ -1,25 +1,21 @@
 package org.tinytlf.actors
 {
-	import org.tinytlf.procedures.applyNodeInheritance;
-	
-	import raix.reactive.IObservable;
+	import raix.interactive.Enumerable;
+	import raix.interactive.IEnumerable;
+	import raix.interactive.toEnumerable;
 	import raix.reactive.Observable;
-	import raix.reactive.scheduling.IScheduler;
 
 	/**
 	 * @author ptaylor
 	 */
-	public function elementsOfXML(node:XML, scheduler:IScheduler = null):IObservable {
+	public function elementsOfXML(node:XML, startIndex:int = 0):IEnumerable {
 		const children:XMLList = node.elements();
 		
-		return Observable.generate(
-			0,
+		return Enumerable.generate(
+			startIndex,
 			function(i:int):Boolean { return i < children.length();},
 			function(i:int):int { return i + 1; },
-			function(i:int):XML {
-				return children[i];
-			},
-			scheduler
+			function(i:int):XML { return children[i]; }
 		);
 	}
 }

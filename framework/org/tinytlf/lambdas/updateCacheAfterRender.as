@@ -7,7 +7,6 @@ package org.tinytlf.lambdas
 	/**
 	 * @author ptaylor
 	 */
-//	public function updateCacheAfterRender(cache:RTree):Function {
 	public function updateCacheAfterRender(cache:Virtualizer):Function {
 		return function(rendered:Rendered):void {
 			
@@ -17,7 +16,7 @@ package org.tinytlf.lambdas
 			const index:int = cache.getIndex(rendered.element);
 			
 			if(index == -1) {
-				cache.addAt(element, childIndex, size);
+				cache.add(element, size);
 			}
 			else if(index != childIndex) {
 				cache.removeAt(index);

@@ -1,4 +1,4 @@
-package org.tinytlf.actors2
+package org.tinytlf.actors
 {
 	import asx.array.pluck;
 	

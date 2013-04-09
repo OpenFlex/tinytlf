@@ -1,16 +1,18 @@
 package org.tinytlf.views
 {
+	import asx.array.map;
+	import asx.array.max;
+	import asx.fn.partial;
+	import asx.object.newInstance_;
+	
+	import flash.events.MouseEvent;
+	import flash.geom.Rectangle;
+	
 	import mx.core.UIComponent;
 	import mx.events.FlexEvent;
 	import mx.events.PropertyChangeEvent;
 	
-	import spark.core.IViewport;
-	
-	import asx.fn.partial;
-	import asx.object.newInstance_;
-	
-	import org.tinytlf.actors.mapContainerRenderable;
-	import org.tinytlf.actors2.renderDOMContainer;
+	import org.tinytlf.actors.renderDOMContainer;
 	import org.tinytlf.lambdas.getNodeNameFromInheritance;
 	import org.tinytlf.lambdas.toXML;
 	import org.tinytlf.procedures.applyNodeInheritance;
@@ -18,11 +20,13 @@ package org.tinytlf.views
 	import org.tinytlf.types.DOMElement;
 	import org.tinytlf.types.Region;
 	import org.tinytlf.types.Rendered;
+	import org.tinytlf.types.Virtualizer;
 	
+	import raix.reactive.IObservable;
 	import raix.reactive.Observable;
 	import raix.reactive.subjects.BehaviorSubject;
 	
-	import trxcllnt.ds.Envelope;
+	import spark.core.IViewport;
 	
 	public class WebView extends UIComponent implements IViewport
 	{
@@ -45,6 +49,14 @@ package org.tinytlf.views
 			Observable.fromEvent(this, FlexEvent.UPDATE_COMPLETE).
 				first().
 				subscribe(onFirstUpdateDisplayList);
+			
+			Observable.fromEvent(this, MouseEvent.MOUSE_WHEEL).
+				subscribe(function(e:MouseEvent):void {
+					e.stopPropagation();
+					e.preventDefault();
+					
+					region.verticalScrollPosition -= e.delta;
+				});
 		}
 		
 		private const region:Region = new Region(Observable.value(0), Observable.value(0));
@@ -79,7 +91,7 @@ package org.tinytlf.views
 		}
 		
 		private function getParser(key:String):Function/*<IObservable<Rendered>>*/ {
-			return parsers[getNodeNameFromInheritance(key)] || mapContainerRenderable;
+			return parsers[getNodeNameFromInheritance(key)] || renderDOMContainer;
 		}
 		
 		internal const parsers:Object = {};
@@ -104,17 +116,22 @@ package org.tinytlf.views
 						addChild(container);
 					}
 					
-					const env:Envelope = container.region.cache.envelope;
+					const cache:Virtualizer = container.region.cache;
+					const viewport:Rectangle = container.region.viewport;
+					const visible:Array = cache.slice(viewport.y, viewport.bottom);
+					
 					var event:PropertyChangeEvent;
 					
-					if(cWidth != env.width) {
-						event = PropertyChangeEvent.createUpdateEvent(this, 'contentWidth', cWidth, env.width);
-						cWidth = env.width;
+					const maxW:Number = max(container.children, 'width') as Number;
+					
+					if(cWidth != maxW) {
+						event = PropertyChangeEvent.createUpdateEvent(this, 'contentWidth', cWidth, maxW);
+						cWidth = maxW;
 						dispatchEvent(event);
 					}
-					if(cHeight != env.height) {
-						event = PropertyChangeEvent.createUpdateEvent(this, 'contentHeight', cHeight, env.height);
-						cHeight = env.height;
+					if(cHeight != cache.size) {
+						event = PropertyChangeEvent.createUpdateEvent(this, 'contentHeight', cHeight, cache.size);
+						cHeight = cache.size;
 						dispatchEvent(event);
 					}
 					
@@ -125,8 +142,7 @@ package org.tinytlf.views
 			htmlSubj.distinctUntilChanged().
 				map(toXML).
 				map(applyNodeInheritance).
-				multicast(body).
-				connect();
+				subscribe(body.update);
 		}
 		
 		// TODO: layouts, measure content width, etc.
@@ -184,17 +200,16 @@ package org.tinytlf.views
 	}
 }
 
-import flash.geom.Rectangle;
-import flash.text.TextField;
-import flash.text.TextFieldAutoSize;
-import flash.text.TextFieldType;
-import flash.text.TextFormat;
-import flash.text.TextFormatAlign;
-
+import asx.array.map;
+import asx.array.range;
 import asx.fn.args;
 import asx.fn.distribute;
-import asx.number.snap;
+import asx.number.sum;
 import asx.object.isA;
+
+import flash.text.TextField;
+import flash.text.TextFieldAutoSize;
+import flash.text.TextFormat;
 
 import org.tinytlf.events.renderEvent;
 import org.tinytlf.lambdas.toStyleable;
@@ -260,9 +275,9 @@ internal class RedBox extends TextContainer
 		const w:Number = region.width;
 		const h:Number = region.height;
 		
-		text.text = nodeIndex + ' - ' + index;
-		text.x = (90 - text.textWidth) * 0.5;
-		text.y = (90 - text.textHeight) * 0.5;
+		this.name = text.text = nodeIndex.toString();// + ' - ' + index;
+		text.x = (w - text.textWidth) * 0.5;
+		text.y = (h - text.textHeight) * 0.5;
 		
 		graphics.clear();
 		graphics.beginFill(0xFF0000, backgroundAlpha);
@@ -274,10 +289,10 @@ internal class RedBox extends TextContainer
 }
 
 internal function renderRedBox(parent:Region,
-							 updates:DOMElement/*<XML>*/,
-							 uiFactory:Function/*<String>:<Function<Region>:<DisplayObjectContainer>>*/,
-							 childFactory:Function,
-							 styles:IObservable/*<CSS>*/):IObservable/*<Rendered>*/ {
+							   updates:DOMElement/*<XML>*/,
+							   uiFactory:Function/*<String>:<Function<Region>:<DisplayObjectContainer>>*/,
+							   childFactory:Function,
+							   styles:IObservable/*<CSS>*/):IObservable/*<Rendered>*/ {
 	
 	styles = styles.filter(isA(CSS));
 	
@@ -290,18 +305,19 @@ internal function renderRedBox(parent:Region,
 		map(distribute(function(node:XML, css:CSS):Rendered {
 			
 			region.mergeWith(toStyleable(node, css));
-			region.width = 90;
-			region.height = 90;
 			
 			const i:int = node.childIndex();
 			ui.nodeIndex = i;
-//			region.x = i % 10 * 100;
-//			region.y = Math.floor(i / 10) * 100;
-			region.x = 0;
-			region.y = i * 100;
 			
-			ui.backgroundAlpha = Math.max(0.05, node.childIndex() / 1000);
-//			ui.alpha = Math.max(0.05, node.childIndex() / 10);
+			region.width = 700 * ((i + 1) / 10);
+			region.height = 400 * ((i + 1) / 10);
+			
+			region.x = 0;
+			region.y = sum(map(range(0, i), function(i:int):Number {
+				return 400 * ((i + 1) / 10);
+			})) as Number;
+			
+			ui.backgroundAlpha = Math.max(0.05, i / 10);
 			
 			ui.dispatchEvent(renderEvent());
 			

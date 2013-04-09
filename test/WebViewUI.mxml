@@ -18,12 +18,11 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:Scroller left="0"
-				right="0"
-				top="0"
-				bottom="0">
-		<views:WebView
-			css="{new CSSSource.Default().toString()}"
-			html="{new HTMLSource.Long().toString()}"/>
-	</s:Scroller>
+	<views:WebView
+		left="0"
+		right="0"
+		top="0"
+		bottom="0"
+		css="{new CSSSource.Default().toString()}"
+		html="{new HTMLSource.Small().toString()}"/>
 </s:Application>

@@ -1,4 +1,4 @@
-package org.tinytlf.actors2
+package org.tinytlf.actors
 {
 	import asx.fn.I;
 	import asx.fn._;
@@ -13,7 +13,7 @@ package org.tinytlf.actors2
 	
 	import flash.display.DisplayObjectContainer;
 	
-	import org.tinytlf.events.renderEvent;
+	import org.tinytlf.events.renderedEvent;
 	import org.tinytlf.handlers.printAndCancel;
 	import org.tinytlf.handlers.printComplete;
 	import org.tinytlf.handlers.printError;
@@ -110,7 +110,7 @@ package org.tinytlf.actors2
 			// 
 			// When all the render Observables in a given window have completed
 			// dispatch a "render" event on the UI.
-			readyToRender.subscribe(sequence(renderEvent, ui.dispatchEvent)),
+			readyToRender.subscribe(sequence(renderedEvent, ui.dispatchEvent)),
 		]);
 		
 		updates.subscribe(
@@ -138,12 +138,12 @@ package org.tinytlf.actors2
 }
 import asx.fn.K;
 import asx.fn._;
-import asx.fn.aritize;
+import asx.fn.getProperty;
 import asx.fn.ifElse;
 import asx.fn.noop;
 import asx.fn.partial;
 import asx.fn.sequence;
-import asx.object.newInstance_;
+import asx.fn.tap;
 
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
@@ -165,7 +165,10 @@ internal function renderedEventsToValues(updates:DOMElement, ui:DisplayObjectCon
 	const uiRendered:IObservable = Observable.fromEvent(ui, renderedEvent().type);
 	
 	// Build a function that accepts an XML node and instantiates a new 'Rendered' instance.
-	const mapRendered:Function = partial(aritize(newInstance_, 3), Rendered, _, ui);
+//	const mapRendered:Function = partial(aritize(newInstance_, 3), Rendered, _, ui);
+	const mapRendered:Function = function(element:DOMElement):Rendered {
+		return new Rendered(element, ui);
+	};
 	
 	// Subscribe to the result of uiRendered.map(node), but only while the node
 	// is the latest value. When the UI dispatches the 'rendered' Event, the
@@ -233,6 +236,13 @@ internal function createChildObserver(container:DisplayObjectContainer, index:in
 		removeChild = ifElse(
 			partial(container.contains, rendered.display),
 			partial(container.removeChild, rendered.display),
+//			sequence(
+//				partial(container.removeChild, rendered.display),
+//				sequence(
+//					getProperty('name'),
+//					partial(trace, 'removing')
+//				)
+//			),
 			noop
 		);
 		
@@ -242,6 +252,8 @@ internal function createChildObserver(container:DisplayObjectContainer, index:in
 		if(container.contains(child)) {
 			return;
 		}
+		
+//		trace('adding', child.name);
 		
 		container.addChildAt(child, childIndex);
 	};

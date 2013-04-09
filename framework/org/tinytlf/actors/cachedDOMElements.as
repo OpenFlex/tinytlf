@@ -1,4 +1,4 @@
-package org.tinytlf.actors2
+package org.tinytlf.actors
 {
 	import asx.array.pluck;
 	import asx.fn._;
@@ -21,7 +21,7 @@ package org.tinytlf.actors2
 	public function cachedDOMElements(viewport:Rectangle, cache:Virtualizer):Array/*<DOMElement>*/ {
 		return sequence(
 			distribute(cache.slice),
-			partial(pluck, _, 'element'),
+//			partial(pluck, _, 'element'),
 			tap(callProperty('sortOn', 'index', Array.NUMERIC), _)
 		)([viewport.y, viewport.bottom]);
 	}

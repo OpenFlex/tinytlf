@@ -145,6 +145,10 @@ package org.tinytlf.types
 		}
 		
 		public function slice(startPosition:int, endPosition:int):Array {
+			
+			startPosition = Math.min(Math.max(0, startPosition), size - 1);
+			endPosition = Math.min(Math.max(0, endPosition), size - 1);
+			
 			const start:int = Math.max(Math.min(getIndexAt(startPosition), length), 0);
 			const end:int = Math.max(Math.min(getIndexAt(endPosition), length), 0);
 			
