@@ -13,8 +13,10 @@ package org.tinytlf.actors
 	import asx.number.eq;
 	
 	import flash.display.DisplayObjectContainer;
+	import flash.geom.Rectangle;
 	
 	import org.tinytlf.enumerables.visibleXMLElements;
+	import org.tinytlf.events.renderEvent;
 	import org.tinytlf.events.renderedEvent;
 	import org.tinytlf.handlers.printAndCancel;
 	import org.tinytlf.handlers.printComplete;
@@ -46,6 +48,8 @@ package org.tinytlf.actors
 		
 		region.width = parent.width;
 		region.height = parent.height;
+		region.element = updates;
+		region.viewport = new Rectangle(0, 0, parent.width, parent.height);
 		
 		const cache:Virtualizer = region.cache;
 		const key:String = updates.key;
@@ -71,18 +75,6 @@ package org.tinytlf.actors
 		
 		const groupDOMElementLifetimes:Function = visibleDOMElements(DOMElement.cache, viewports, cache);
 		const domElementWindows:IObservable = visibleXMLWindows.
-//			distinctUntilChanged(function(a:IEnumerable, b:IEnumerable):Boolean {
-//				
-//				if(!a || !b) return false;
-//				
-//				a = a.map(toInheritanceChain);
-//				b = b.map(toInheritanceChain);
-//				
-//				const aStr:String = a.toArray().join(', ');
-//				const bStr:String = b.toArray().join(', ');
-//				
-//				return (a.count() == b.count() && aStr === bStr);
-//			}).
 			map(function(window:IEnumerable):Array {
 				return [window, region.viewport];
 			}).
@@ -122,7 +114,7 @@ package org.tinytlf.actors
 			// If the new node doesn't have any children, dispatch a "render"
 			// event immediately, or dispatch a "render" event when all the
 			// render Observables in the latest update window have completed.
-			readyToRender.subscribe(sequence(renderedEvent, ui.dispatchEvent)),
+			readyToRender.subscribe(sequence(renderEvent, ui.dispatchEvent)),
 		]);
 		
 		updates.subscribe(
@@ -163,7 +155,6 @@ import flash.utils.Dictionary;
 import org.tinytlf.events.renderedEvent;
 import org.tinytlf.handlers.printComplete;
 import org.tinytlf.handlers.printError;
-import org.tinytlf.handlers.printNext;
 import org.tinytlf.types.DOMElement;
 import org.tinytlf.types.Rendered;
 

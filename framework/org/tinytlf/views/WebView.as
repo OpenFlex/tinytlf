@@ -1,42 +1,33 @@
 package org.tinytlf.views
 {
-	import asx.array.map;
-	import asx.array.max;
-	import asx.fn.partial;
-	import asx.object.newInstance_;
+	import asx.array.*;
+	import asx.fn.*;
+	import asx.object.*;
 	
-	import flash.events.MouseEvent;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
+	import flash.events.*;
+	import flash.geom.*;
 	
-	import mx.core.UIComponent;
-	import mx.events.FlexEvent;
-	import mx.events.PropertyChangeEvent;
+	import mx.core.*;
+	import mx.events.*;
 	
-	import org.tinytlf.actors.renderDOMContainer;
-	import org.tinytlf.events.mouse.down;
-	import org.tinytlf.events.mouse.move;
-	import org.tinytlf.events.mouse.up;
-	import org.tinytlf.lambdas.getNodeNameFromInheritance;
-	import org.tinytlf.lambdas.toXML;
-	import org.tinytlf.procedures.applyNodeInheritance;
-	import org.tinytlf.types.CSS;
-	import org.tinytlf.types.DOMElement;
-	import org.tinytlf.types.Region;
-	import org.tinytlf.types.Rendered;
-	import org.tinytlf.types.Virtualizer;
+	import org.tinytlf.actors.*;
+	import org.tinytlf.events.mouse.*;
+	import org.tinytlf.lambdas.*;
+	import org.tinytlf.procedures.*;
+	import org.tinytlf.types.*;
 	
-	import raix.reactive.IObservable;
-	import raix.reactive.Observable;
-	import raix.reactive.subjects.BehaviorSubject;
+	import raix.reactive.*;
+	import raix.reactive.subjects.*;
 	
-	import spark.core.IViewport;
+	import spark.core.*;
 	
-	public class WebView extends UIComponent implements IViewport
+	public class WebView extends UIComponent implements IViewport, IDOMView
 	{
 		public function WebView() {
 			
 			super();
+			
+			region.element = element;
 			
 			addParser('body', renderDOMContainer);
 			addParser('div', renderDOMContainer);
@@ -96,6 +87,11 @@ package org.tinytlf.views
 			cssSubj.onNext(value is CSS ? value : new CSS(value));
 		}
 		
+		private const _element:DOMElement = new DOMElement('body');
+		public function get element():DOMElement {
+			return _element;
+		}
+		
 		private const htmlSubj:BehaviorSubject = new BehaviorSubject();
 		public function get html():XML {
 			return htmlSubj.value;
@@ -128,12 +124,11 @@ package org.tinytlf.views
 		}
 		
 		private function onFirstUpdateDisplayList(...args):void {
-			const body:DOMElement = new DOMElement('body');
-			
 			region.width = width;
 			region.height = height;
+			region.viewport = new Rectangle(0, 0, width, height);
 			
-			renderDOMContainer(region, body, getUI, getParser, cssSubj.asObservable()).
+			renderDOMContainer(region, element, getUI, getParser, cssSubj.asObservable()).
 				subscribe(function(rendered:Rendered):void {
 					
 					const container:TextContainer = rendered.display as TextContainer;
@@ -161,7 +156,8 @@ package org.tinytlf.views
 						dispatchEvent(event);
 					}
 					
-					region.contentHeight = cHeight;
+					region.height = cHeight;
+					region.width = cWidth;
 					
 					graphics.clear();
 					graphics.lineStyle(1, 0x00, 0.25);
@@ -176,7 +172,7 @@ package org.tinytlf.views
 			htmlSubj.distinctUntilChanged().
 				map(toXML).
 				map(applyNodeInheritance).
-				subscribe(body.update);
+				subscribe(element.update);
 		}
 		
 		// TODO: layouts, measure content width, etc.
@@ -243,6 +239,7 @@ import asx.fn.sequence;
 import asx.number.sum;
 import asx.object.isA;
 
+import flash.geom.Rectangle;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
@@ -333,6 +330,8 @@ internal function renderRedBox(parent:Region,
 	styles = styles.filter(isA(CSS));
 	
 	const region:Region = new Region(parent.vScroll, parent.hScroll);
+	region.element = updates;
+	
 	const ui:RedBox = uiFactory(updates.key)(region) as RedBox;
 	
 	const rendered:ISubject = updates.rendered;
@@ -347,6 +346,7 @@ internal function renderRedBox(parent:Region,
 			
 			region.width = 700 * ((i + 1) / 10);
 			region.height = 250 * ((i + 1) / 10);
+			region.viewport = new Rectangle(0, 0, region.width, region.height);
 			
 			region.x = 0;
 			region.y = sum(map(range(0, i), function(i:int):Number {
@@ -364,8 +364,8 @@ internal function renderRedBox(parent:Region,
 		})).
 		delay(10).
 		peek(sequence(
-			updates.rendered.onNext,
-			aritize(updates.rendered.onCompleted, 0)
+			rendered.onNext,
+			aritize(rendered.onCompleted, 0)
 		)).
 		takeUntil(updates.count());
 }

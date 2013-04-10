@@ -10,7 +10,7 @@ package org.tinytlf.views
 	import asx.fn.distribute;
 	import asx.fn.getProperty;
 	import asx.fn.sequence;
-	import asx.object.isA;
+	import asx.object.isAn;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -20,12 +20,14 @@ package org.tinytlf.views
 	
 	import org.tinytlf.events.renderEvent;
 	import org.tinytlf.events.renderedEvent;
+	import org.tinytlf.types.DOMElement;
 	import org.tinytlf.types.Region;
+	import org.tinytlf.types.Virtualizer;
 	
 	import raix.reactive.CompositeCancelable;
 	import raix.reactive.Observable;
 	
-	public class TextContainer extends Sprite
+	public class TextContainer extends Sprite implements IDOMView
 	{
 		public function TextContainer(region:Region)
 		{
@@ -47,13 +49,8 @@ package org.tinytlf.views
 			);
 			
 			subscriptions.add(region.viewports.subscribe(function(viewport:Rectangle):void {
-				setSuperY(-viewport.y);
-//				scrollRect = viewport;
+				scrollRect = viewport;
 			}));
-		}
-		
-		private function setSuperY(v:Number):void {
-			super.y = v;
 		}
 		
 		public const region:Region;
@@ -62,6 +59,10 @@ package org.tinytlf.views
 			const kids:Array = [];
 			for(var i:int = 0, n:int = numChildren; i < n; ++i) kids.push(getChildAt(i))
 			return kids;
+		}
+		
+		public function get element():DOMElement {
+			return region.element;
 		}
 		
 		protected function draw():void {
@@ -74,7 +75,7 @@ package org.tinytlf.views
 			// TODO: Abstract layouts.
 			// 
 			// Size/layout any UIComponent children
-			const components:Array = filter(children, isA(IUIComponent));
+			const components:Array = filter(children, isAn(IUIComponent));
 			const sizes:Array = zip(
 				pluck(components, 'getExplicitOrMeasuredWidth()'),
 				pluck(components, 'getExplicitOrMeasuredHeight()')
@@ -85,6 +86,14 @@ package org.tinytlf.views
 			forEach(zip(setSizeFns, sizes), distribute(function(fn:Function, size:Array):void {
 				fn(size);
 			}));
+			
+			const domViews:Array = filter(children, isAn(IDOMView));
+			const cache:Virtualizer = region.cache;
+			
+			// layout the y dimension
+			forEach(domViews, function(view:IDOMView):void {
+				view.y = cache.getStart(view.element);
+			});
 			
 			dispatchEvent(renderedEvent());
 		}
