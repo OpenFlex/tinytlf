@@ -1,9 +1,9 @@
 package org.tinytlf.enumerables
 {
+	import org.tinytlf.procedures.applyNodeInheritance;
+	
 	import raix.interactive.Enumerable;
 	import raix.interactive.IEnumerable;
-	import raix.interactive.toEnumerable;
-	import raix.reactive.Observable;
 
 	/**
 	 * @author ptaylor
@@ -15,7 +15,7 @@ package org.tinytlf.enumerables
 			startIndex,
 			function(i:int):Boolean { return i < children.length();},
 			function(i:int):int { return i + 1; },
-			function(i:int):XML { return children[i]; }
+			function(i:int):XML { return applyNodeInheritance(children[i]); }
 		);
 	}
 }
