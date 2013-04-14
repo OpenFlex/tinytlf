@@ -28,7 +28,7 @@ package org.tinytlf.types {
 			super();
 			
 			_key = key;
-			onNext(node || <_/>);
+			update(node || <_/>);
 		}
 		
 		public static const cache:Dictionary = new Dictionary(false);

@@ -19,10 +19,10 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<views:WebView
-		left="0"
-		right="0"
-		y="200"
-		height="300"
+		left="300"
+		right="300"
+		top="100"
+		bottom="100"
 		css="{new CSSSource.Default().toString()}"
 		html="{new HTMLSource.Small().toString()}"/>
 </s:Application>

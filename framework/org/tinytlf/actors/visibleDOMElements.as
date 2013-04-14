@@ -15,6 +15,7 @@ package org.tinytlf.actors
 	import raix.reactive.IObservable;
 	import raix.reactive.IObserver;
 	import raix.reactive.Observable;
+	import raix.reactive.scheduling.Scheduler;
 
 	/**
 	 * @author ptaylor
@@ -65,8 +66,7 @@ package org.tinytlf.actors
 			const elements:IEnumerable /*[visible] <DOMElement>*/ = visibleXMLElements.
 				map(function(node:XML):DOMElement {
 					const key:String = keySelector(node);
-					const element:DOMElement = elementsCache[key] || new DOMElement(key, node);
-					return (elementsCache[key] = element.update(node));
+					return elementsCache[key] ||= new DOMElement(key, node);
 				}).
 				takeWhile(processingWithinViewport);
 			
@@ -83,19 +83,18 @@ package org.tinytlf.actors
 					const element:DOMElement = itr.current;
 					const key:String = element.key;
 					
-					if(!(key in activeElements)) {
-						
+					subscriptions.add(element.rendered.take(1).subscribe(null, recurse));
+					
+					if(key in activeElements) {
+						Scheduler.immediate.schedule(partial(element.update, element.node), 1)
+					} else {
 						IObservable(durationSelector(element)).take(1).subscribe(null, function():void {
 							element.onCompleted();
 							delete activeElements[key];
 						});
 						
-						activeElements[key] = element;
-						
-						observer.onNext(element);
+						observer.onNext(activeElements[key] = element);
 					}
-					
-					subscriptions.add(element.rendered.take(1).subscribe(null, recurse));
 				};
 				
 				const recurse:Function = ifElse(

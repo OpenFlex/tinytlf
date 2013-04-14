@@ -7,7 +7,7 @@ package org.tinytlf.views
 	import flash.events.*;
 	import flash.geom.*;
 	
-	import mx.core.*;
+	import mx.core.UIComponent;
 	import mx.events.*;
 	
 	import org.tinytlf.actors.*;
@@ -33,7 +33,7 @@ package org.tinytlf.views
 			addParser('div', renderDOMContainer);
 			addParser('section', renderDOMContainer);
 			addParser('article', renderDOMContainer);
-			addParser('p', renderRedBox);
+			addParser('p', renderDOMParagraph);
 			
 			addUI('body', partial(newInstance_, Container));
 			addUI('div', partial(newInstance_, Container));
@@ -102,7 +102,7 @@ package org.tinytlf.views
 		}
 		
 		private function getUI(key:String):Function {
-			return uis[getNodeNameFromInheritance(key)];
+			return key ? uis[getNodeNameFromInheritance(key)] || K(null) : K(null);
 		}
 		
 		internal const uis:Object = {};
@@ -126,20 +126,29 @@ package org.tinytlf.views
 		private function onFirstUpdateDisplayList(...args):void {
 			region.width = width;
 			region.height = height;
-			region.viewport = new Rectangle(0, 0, width, height);
 			
-			renderDOMContainer(region, element, getUI, getParser, cssSubj.asObservable()).
+			const childRegion:Region = new Region(region.vScroll, region.hScroll);
+			childRegion.width = width;
+			childRegion.height = height;
+			childRegion.viewport = region.viewport = new Rectangle(0, 0, width, height);
+			
+			renderDOMContainer(childRegion, element, getUI, getParser, cssSubj.asObservable()).
+				peek(updateCacheAfterRender(region.cache)).
+				// Notify the current rendered subject of completion.
+				peek(sequence(
+					element.rendered.onNext,
+					aritize(element.rendered.onCompleted, 0)
+				)).
 				subscribe(function(rendered:Rendered):void {
 					
-					const container:TextContainer = rendered.display as TextContainer;
+					const container:Container = rendered.display as Container;
 					
 					if(!contains(container)) {
 						addChild(container);
 					}
 					
-					const cache:Virtualizer = container.region.cache;
-					const viewport:Rectangle = container.region.viewport;
-					const visible:Array = cache.slice(viewport.y, viewport.bottom);
+					const cache:Virtualizer = childRegion.cache;
+					const viewport:Rectangle = childRegion.viewport;
 					
 					var event:PropertyChangeEvent;
 					
@@ -229,145 +238,3 @@ package org.tinytlf.views
 		}
 	}
 }
-
-import asx.array.map;
-import asx.array.range;
-import asx.fn.args;
-import asx.fn.aritize;
-import asx.fn.distribute;
-import asx.fn.sequence;
-import asx.number.sum;
-import asx.object.isA;
-
-import flash.geom.Rectangle;
-import flash.text.TextField;
-import flash.text.TextFieldAutoSize;
-import flash.text.TextFormat;
-
-import org.tinytlf.events.renderEvent;
-import org.tinytlf.lambdas.toStyleable;
-import org.tinytlf.lambdas.updateCacheAfterRender;
-import org.tinytlf.types.CSS;
-import org.tinytlf.types.DOMElement;
-import org.tinytlf.types.Region;
-import org.tinytlf.types.Rendered;
-import org.tinytlf.views.TextContainer;
-
-import raix.reactive.AbsObservable;
-import raix.reactive.ICancelable;
-import raix.reactive.IGroupedObservable;
-import raix.reactive.IObservable;
-import raix.reactive.IObserver;
-import raix.reactive.ISubject;
-
-internal class GroupedObservable extends AbsObservable implements IGroupedObservable {
-	private var _underlyingObservable : IObservable;
-	private var _key : Object;
-	
-	public function GroupedObservable(key : Object, underlyingObservable : IObservable)
-	{
-		_underlyingObservable = underlyingObservable;
-		_key = key;			
-	}
-	
-	public function get key() : Object
-	{
-		return _key;
-	}
-	
-	public override function subscribeWith(observer:IObserver):ICancelable
-	{
-		return _underlyingObservable.subscribeWith(observer);
-	}
-}
-
-internal class RedBox extends TextContainer
-{
-	public function RedBox(region:Region)
-	{
-		super(region);
-		
-		text.defaultTextFormat = new TextFormat(null, 20);
-		text.autoSize = TextFieldAutoSize.NONE;
-		text.selectable = false;
-		
-		index = ++times;
-		
-		addChild(text);
-	}
-	
-	private const text:TextField = new TextField();
-	
-	private var index:int = 0;
-	private static var times:int = -1;
-	
-	public var nodeIndex:int = -1;
-	public var backgroundAlpha:Number = 0.05;
-	
-	override protected function draw():void {
-		const w:Number = region.width;
-		const h:Number = region.height;
-		
-		this.name = text.text = nodeIndex.toString();// + ' - ' + index;
-		text.x = (w - text.textWidth) * 0.5;
-		text.y = (h - text.textHeight) * 0.5;
-		
-		graphics.clear();
-		graphics.beginFill(0xFF0000, backgroundAlpha);
-		graphics.drawRect(0, 0, w, h);
-		graphics.endFill();
-		
-		super.draw();
-	}
-}
-
-internal function renderRedBox(parent:Region,
-							   updates:DOMElement/*<XML>*/,
-							   uiFactory:Function/*<String>:<Function<Region>:<DisplayObjectContainer>>*/,
-							   childFactory:Function,
-							   styles:IObservable/*<CSS>*/):IObservable/*<Rendered>*/ {
-	
-	styles = styles.filter(isA(CSS));
-	
-	const region:Region = new Region(parent.vScroll, parent.hScroll);
-	region.element = updates;
-	
-	const ui:RedBox = uiFactory(updates.key)(region) as RedBox;
-	
-	const rendered:ISubject = updates.rendered;
-	
-	return updates.combineLatest(styles, args).
-		map(distribute(function(node:XML, css:CSS):Rendered {
-			
-			region.mergeWith(toStyleable(node, css));
-			
-			const i:int = node.childIndex();
-			ui.nodeIndex = i;
-			
-			region.width = 700 * ((i + 1) / 10);
-			region.height = 250 * ((i + 1) / 10);
-			region.viewport = new Rectangle(0, 0, region.width, region.height);
-			
-			region.x = 0;
-			region.y = sum(map(range(0, i), function(i:int):Number {
-				return 250 * ((i + 1) / 10);
-			}));
-			
-//			ui.backgroundAlpha = Math.max(0.05, i / 10);
-			ui.backgroundAlpha = 0.25;
-			
-			ui.dispatchEvent(renderEvent());
-			
-			const rendered:Rendered = new Rendered(updates, ui);
-			
-			return updateCacheAfterRender(parent.cache)(rendered);
-		})).
-		delay(10).
-		peek(sequence(
-			rendered.onNext,
-			aritize(rendered.onCompleted, 0)
-		)).
-		takeUntil(updates.count());
-}
-
-
