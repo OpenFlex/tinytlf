@@ -35,11 +35,11 @@ package org.tinytlf.views
 			addParser('article', renderDOMContainer);
 			addParser('p', renderRedBox);
 			
-			addUI('body', partial(newInstance_, TextContainer));
-			addUI('div', partial(newInstance_, TextContainer));
-			addUI('section', partial(newInstance_, TextContainer));
-			addUI('article', partial(newInstance_, TextContainer));
-			addUI('p', partial(newInstance_, RedBox));
+			addUI('body', partial(newInstance_, Container));
+			addUI('div', partial(newInstance_, Container));
+			addUI('section', partial(newInstance_, Container));
+			addUI('article', partial(newInstance_, Container));
+			addUI('p', partial(newInstance_, Paragraph));
 			
 			Observable.fromEvent(this, FlexEvent.UPDATE_COMPLETE).
 				first().
