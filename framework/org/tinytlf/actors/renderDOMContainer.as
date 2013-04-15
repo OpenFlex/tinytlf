@@ -18,7 +18,6 @@ package org.tinytlf.actors
 	import org.tinytlf.enumerables.visibleXMLElements;
 	import org.tinytlf.events.renderEvent;
 	import org.tinytlf.handlers.executeThenCancel;
-	import org.tinytlf.handlers.printComplete;
 	import org.tinytlf.handlers.printError;
 	import org.tinytlf.lambdas.getElementsLength;
 	import org.tinytlf.lambdas.toStyleable;
@@ -26,12 +25,13 @@ package org.tinytlf.actors
 	import org.tinytlf.types.DOMElement;
 	import org.tinytlf.types.Region;
 	import org.tinytlf.types.Rendered;
-	import org.tinytlf.types.Virtualizer;
 	
 	import raix.interactive.IEnumerable;
 	import raix.reactive.CompositeCancelable;
 	import raix.reactive.IObservable;
 	import raix.reactive.IObserver;
+	
+	import trxcllnt.vr.Virtualizer;
 
 	/**
 	 * @author ptaylor
@@ -160,7 +160,6 @@ import flash.display.DisplayObjectContainer;
 import flash.geom.Rectangle;
 import flash.utils.Dictionary;
 
-import org.tinytlf.handlers.printComplete;
 import org.tinytlf.handlers.printError;
 import org.tinytlf.types.DOMElement;
 import org.tinytlf.types.Rendered;

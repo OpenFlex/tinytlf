@@ -2,7 +2,8 @@ package org.tinytlf.lambdas
 {
 	import org.tinytlf.types.DOMElement;
 	import org.tinytlf.types.Rendered;
-	import org.tinytlf.types.Virtualizer;
+	
+	import trxcllnt.vr.Virtualizer;
 
 	/**
 	 * @author ptaylor

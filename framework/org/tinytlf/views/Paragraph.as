@@ -28,11 +28,6 @@ package org.tinytlf.views
 			
 			height = lineHeight;
 			
-			graphics.clear();
-			graphics.lineStyle(2, 0xFF0000, 0.25);
-			graphics.drawRect(0, 0, width, height);
-			graphics.endFill();
-			
 			super.draw();
 		}
 	}

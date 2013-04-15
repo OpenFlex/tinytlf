@@ -1,16 +1,14 @@
 package org.tinytlf.enumerables
 {
-	import asx.array.pluck;
 	import asx.fn._;
 	import asx.fn.callProperty;
 	import asx.fn.distribute;
-	import asx.fn.partial;
 	import asx.fn.sequence;
 	import asx.fn.tap;
 	
 	import flash.geom.Rectangle;
 	
-	import org.tinytlf.types.Virtualizer;
+	import trxcllnt.vr.Virtualizer;
 	
 	/**
 	 * Mutates a (Rectangle, RTree) into an Array<DOMELement> where each element in

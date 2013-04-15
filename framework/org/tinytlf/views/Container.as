@@ -1,35 +1,22 @@
 package org.tinytlf.views
 {
-	import asx.array.allOf;
 	import asx.array.filter;
 	import asx.array.forEach;
 	import asx.array.map;
 	import asx.array.pluck;
-	import asx.array.reduce;
 	import asx.array.zip;
-	import asx.fn.I;
-	import asx.fn.aritize;
 	import asx.fn.distribute;
 	import asx.fn.getProperty;
 	import asx.fn.sequence;
-	import asx.object.isA;
 	import asx.object.isAn;
 	
-	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.geom.Rectangle;
-	import flash.text.engine.TextLine;
 	
 	import mx.core.IUIComponent;
 	
-	import org.tinytlf.events.renderEvent;
-	import org.tinytlf.events.renderedEvent;
-	import org.tinytlf.types.DOMElement;
 	import org.tinytlf.types.Region;
-	import org.tinytlf.types.Virtualizer;
 	
-	import raix.reactive.CompositeCancelable;
-	import raix.reactive.Observable;
+	import trxcllnt.vr.Virtualizer;
 	
 	public class Container extends Box implements IDOMView
 	{

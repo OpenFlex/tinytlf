@@ -7,7 +7,6 @@ package org.tinytlf.actors
 	
 	import org.tinytlf.lambdas.toInheritanceChain;
 	import org.tinytlf.types.DOMElement;
-	import org.tinytlf.types.Virtualizer;
 	
 	import raix.interactive.IEnumerable;
 	import raix.interactive.IEnumerator;
@@ -16,6 +15,8 @@ package org.tinytlf.actors
 	import raix.reactive.IObserver;
 	import raix.reactive.Observable;
 	import raix.reactive.scheduling.Scheduler;
+	
+	import trxcllnt.vr.Virtualizer;
 
 	/**
 	 * @author ptaylor
@@ -123,12 +124,12 @@ import asx.fn.partial;
 import flash.geom.Rectangle;
 
 import org.tinytlf.enumerables.cachedDOMElements;
-import org.tinytlf.handlers.printComplete;
 import org.tinytlf.types.DOMElement;
-import org.tinytlf.types.Virtualizer;
 
 import raix.reactive.IObservable;
 import raix.reactive.Observable;
+
+import trxcllnt.vr.Virtualizer;
 
 internal function filterNodeLifetime(viewports:IObservable,
 									 cache:Virtualizer,

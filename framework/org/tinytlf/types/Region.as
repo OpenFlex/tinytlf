@@ -9,6 +9,8 @@ package org.tinytlf.types
 	import raix.reactive.ISubject;
 	import raix.reactive.subjects.BehaviorSubject;
 	
+	import trxcllnt.vr.Virtualizer;
+	
 	public class Region extends Styleable
 	{
 		public function Region(pvScroll:IObservable, phScroll:IObservable) {

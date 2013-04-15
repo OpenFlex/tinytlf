@@ -2,10 +2,10 @@ package org.tinytlf.enumerables
 {
 	import flash.geom.Rectangle;
 	
-	import org.tinytlf.types.Virtualizer;
-	
 	import raix.interactive.IEnumerable;
 	import raix.interactive.toEnumerable;
+	
+	import trxcllnt.vr.Virtualizer;
 
 	/**
 	 * @author ptaylor

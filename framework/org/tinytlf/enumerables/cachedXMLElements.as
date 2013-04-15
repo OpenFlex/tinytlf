@@ -4,7 +4,7 @@ package org.tinytlf.enumerables
 	
 	import flash.geom.Rectangle;
 	
-	import org.tinytlf.types.Virtualizer;
+	import trxcllnt.vr.Virtualizer;
 	
 	/**
 	 * Mutates a (Rectangle, RTree) into an Array<XML> where each element in

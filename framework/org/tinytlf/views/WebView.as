@@ -21,6 +21,8 @@ package org.tinytlf.views
 	
 	import spark.core.*;
 	
+	import trxcllnt.vr.Virtualizer;
+	
 	public class WebView extends UIComponent implements IViewport, IDOMView
 	{
 		public function WebView() {
