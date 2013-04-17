@@ -1,19 +1,18 @@
 package org.tinytlf.types {
 	import flash.utils.Dictionary;
 	
+	import org.tinytlf.lambdas.toInheritanceChain;
+	
 	import raix.reactive.AbsObservable;
 	import raix.reactive.Cancelable;
 	import raix.reactive.ICancelable;
 	import raix.reactive.IObserver;
 	import raix.reactive.ISubject;
 	import raix.reactive.Notification;
-	import raix.reactive.OnCompleted;
-	import raix.reactive.OnError;
 	import raix.reactive.OnNext;
 	import raix.reactive.TimeStamped;
 	import raix.reactive.scheduling.IScheduler;
 	import raix.reactive.scheduling.Scheduler;
-	import raix.reactive.subjects.BehaviorSubject;
 	
 	/**
 	 * DOMNode is a public API that allows manipulation of the underlying XML
@@ -24,11 +23,13 @@ package org.tinytlf.types {
 	 */
 	public class DOMElement extends AbsObservable implements ISubject {
 		
-		public function DOMElement(key:String, node:XML = null) {
+		public function DOMElement(region:Region, key:String, node:XML = null) {
 			super();
 			
+			_region = region;
 			_key = key;
-			update(node || <_/>);
+			
+			if(node != null) update(node);
 		}
 		
 		public static const cache:Dictionary = new Dictionary(false);
@@ -37,6 +38,12 @@ package org.tinytlf.types {
 		
 		public function get key():String {
 			return _key;
+		}
+		
+		private var _region:Region;
+		
+		public function get region():Region {
+			return _region;
 		}
 		
 		private var _node:XML = <_/>;
@@ -59,11 +66,7 @@ package org.tinytlf.types {
 		 * occurs, the renderer should dispatch a new Rendered instance with
 		 * the DOMElement and the newly rendered DisplayObject.</p>
 		 */
-		private var _rendered:ISubject = new UnderlyingDOMElementSubject();
-		
-		public function get rendered():ISubject {
-			return _rendered;
-		}
+		public const rendered:ISubject = new UnderlyingDOMElementSubject();
 		
 		public function update(node:XML):DOMElement {
 			onNext(_node = node);
@@ -190,6 +193,7 @@ package org.tinytlf.types {
 		}
 	}
 }
+
 import raix.reactive.AbsObservable;
 import raix.reactive.Cancelable;
 import raix.reactive.ICancelable;
@@ -272,3 +276,4 @@ internal class UnderlyingDOMElementSubject extends AbsObservable implements ISub
 		return _subscriptionCount;
 	}
 }
+

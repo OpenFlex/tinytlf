@@ -1,12 +1,8 @@
 package org.tinytlf.types
 {
-	import asx.fn.args;
-	import asx.fn.distribute;
-	
 	import flash.geom.Rectangle;
 	
 	import raix.reactive.IObservable;
-	import raix.reactive.ISubject;
 	import raix.reactive.subjects.BehaviorSubject;
 	
 	import trxcllnt.vr.Virtualizer;
@@ -92,22 +88,13 @@ package org.tinytlf.types
 			heightSubj.onNext(h);
 		}
 		
-		public const elementSubj:BehaviorSubject = new BehaviorSubject(0);
-		public function get element():DOMElement {
-			return elementSubj.value;
-		}
-		
-		public function set element(e:DOMElement):void {
-			elementSubj.onNext(e);
-		}
-		
 		public const vScroll:BehaviorSubject = new BehaviorSubject(0);
 		public function get verticalScrollPosition():Number {
 			return vScroll.value;
 		}
 		
 		public function set verticalScrollPosition(value:Number):void {
-			vScroll.onNext(Math.min(Math.max(value, 0), height - viewport.height));
+			vScroll.onNext(Math.min(Math.max(value, 0), height - viewport.height + 1));
 		}
 		
 		public const hScroll:BehaviorSubject = new BehaviorSubject(0);

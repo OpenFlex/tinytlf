@@ -6,20 +6,20 @@ package org.tinytlf.views
 	
 	import flash.text.engine.TextLine;
 	
-	import org.tinytlf.types.Region;
+	import org.tinytlf.types.DOMElement;
 
 	public class Paragraph extends Box
 	{
-		public function Paragraph(region:Region)
+		public function Paragraph(element:DOMElement)
 		{
-			super(region);
+			super(element);
 		}
 		
 		public function get lines():Array {
 			return filter(children, isA(TextLine));
 		}
 		
-		override protected function draw():void {
+		override protected function layout():void {
 			
 			const lineHeight:Number = reduce(0, lines, function(y:Number, line:TextLine):Number {
 				line.y = y + line.ascent;
@@ -28,7 +28,7 @@ package org.tinytlf.views
 			
 			height = lineHeight;
 			
-			super.draw();
+			super.layout();
 		}
 	}
 }

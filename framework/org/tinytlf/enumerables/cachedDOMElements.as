@@ -19,7 +19,6 @@ package org.tinytlf.enumerables
 	public function cachedDOMElements(viewport:Rectangle, cache:Virtualizer):Array/*<DOMElement>*/ {
 		return sequence(
 			distribute(cache.slice),
-//			partial(pluck, _, 'element'),
 			tap(callProperty('sortOn', 'index', Array.NUMERIC), _)
 		)([viewport.y, viewport.bottom]);
 	}

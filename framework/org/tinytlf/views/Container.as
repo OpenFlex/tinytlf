@@ -14,25 +14,41 @@ package org.tinytlf.views
 	
 	import mx.core.IUIComponent;
 	
-	import org.tinytlf.types.Region;
+	import org.tinytlf.types.DOMElement;
 	
 	import trxcllnt.vr.Virtualizer;
 	
 	public class Container extends Box implements IDOMView
 	{
-		public function Container(region:Region)
+		public function Container(element:DOMElement)
 		{
-			super(region);
+			super(element);
 			
 			subscriptions.add(region.viewports.subscribe(function(viewport:Rectangle):void {
 				scrollRect = viewport;
 			}));
 		}
 		
+		public function get layoutChildren():Array {
+			return filter(children, isAn(IDOMView));
+		}
+		
 		// TODO: Abstract layouts
-		override protected function draw():void {
-			 
+		override protected function layout():void {
+			
+			const cache:Virtualizer = region.cache;
+			
+			// layout the y dimension
+			forEach(layoutChildren, function(view:IDOMView):void {
+				view.y = cache.getStart(view.element);
+			});
+			
+			super.layout();
+		}
+		
+		override protected function render():void {
 			// Size/layout any UIComponent children
+			
 			const components:Array = filter(children, isAn(IUIComponent));
 			const sizes:Array = zip(
 				pluck(components, 'getExplicitOrMeasuredWidth()'),
@@ -45,15 +61,7 @@ package org.tinytlf.views
 				fn(size);
 			}));
 			
-			const domViews:Array = filter(children, isAn(IDOMView));
-			const cache:Virtualizer = region.cache;
-			
-			// layout the y dimension
-			forEach(domViews, function(view:IDOMView):void {
-				view.y = cache.getStart(view.element);
-			});
-			
-			super.draw();
+			super.render();
 		}
 		
 //		// TODO: layouts, measure content width, etc.

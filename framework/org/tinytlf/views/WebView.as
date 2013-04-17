@@ -4,6 +4,7 @@ package org.tinytlf.views
 	import asx.fn.*;
 	import asx.object.*;
 	
+	import flash.display.DisplayObject;
 	import flash.events.*;
 	import flash.geom.*;
 	
@@ -29,13 +30,11 @@ package org.tinytlf.views
 			
 			super();
 			
-			region.element = element;
-			
-			addParser('body', renderDOMContainer);
-			addParser('div', renderDOMContainer);
-			addParser('section', renderDOMContainer);
-			addParser('article', renderDOMContainer);
-			addParser('p', renderDOMParagraph);
+			addParser('body', container);
+			addParser('div', container);
+			addParser('section', container);
+			addParser('article', container);
+			addParser('p', paragraph);
 			
 			addUI('body', partial(newInstance_, Container));
 			addUI('div', partial(newInstance_, Container));
@@ -66,10 +65,13 @@ package org.tinytlf.views
 						return new Point(o.dx, o.dy);
 					}).
 					takeUntil(upObs);
-			});
+			}).
+			map(getProperty('y'));
 			
-			dragObs.subscribe(function(delta:Point):void {
-				region.verticalScrollPosition -= delta.y;
+			const wheelY:IObservable = Observable.fromEvent(this, MouseEvent.MOUSE_WHEEL).map(getProperty('delta'));
+			
+			dragObs.merge(wheelY).subscribe(function(delta:Number):void {
+				region.verticalScrollPosition -= delta;
 			});
 			
 			Observable.fromEvent(this, MouseEvent.MOUSE_WHEEL).
@@ -77,8 +79,6 @@ package org.tinytlf.views
 					region.verticalScrollPosition -= e.delta;
 				});
 		}
-		
-		private const region:Region = new Region(Observable.value(0), Observable.value(0));
 		
 		internal const cssSubj:BehaviorSubject = new BehaviorSubject(new CSS());
 		public function get css():CSS {
@@ -89,7 +89,9 @@ package org.tinytlf.views
 			cssSubj.onNext(value is CSS ? value : new CSS(value));
 		}
 		
-		private const _element:DOMElement = new DOMElement('body');
+		private const region:Region = new Region(Observable.value(0), Observable.value(0));
+		private const _element:DOMElement = new DOMElement(region, 'body');
+		
 		public function get element():DOMElement {
 			return _element;
 		}
@@ -114,8 +116,8 @@ package org.tinytlf.views
 			return this;
 		}
 		
-		private function getParser(key:String):Function/*<IObservable<Rendered>>*/ {
-			return parsers[getNodeNameFromInheritance(key)] || renderDOMContainer;
+		private function getParser(key:String):Function/*:IObservable<Array<Unit, DisplayObject>>*/ {
+			return parsers[getNodeNameFromInheritance(key)] || container;
 		}
 		
 		internal const parsers:Object = {};
@@ -128,33 +130,18 @@ package org.tinytlf.views
 		private function onFirstUpdateDisplayList(...args):void {
 			region.width = width;
 			region.height = height;
+			region.viewport = new Rectangle(0, 0, width, height);
 			
-			const childRegion:Region = new Region(region.vScroll, region.hScroll);
-			childRegion.width = width;
-			childRegion.height = height;
-			childRegion.viewport = region.viewport = new Rectangle(0, 0, width, height);
-			
-			renderDOMContainer(childRegion, element, getUI, getParser, cssSubj.asObservable()).
-				peek(updateCacheAfterRender(region.cache)).
-				// Notify the current rendered subject of completion.
-				peek(sequence(
-					element.rendered.onNext,
-					aritize(element.rendered.onCompleted, 0)
-				)).
-				subscribe(function(rendered:Rendered):void {
+			container(element, getUI, getParser).
+				subscribe(distribute(function(e:DOMElement, container:DisplayObject):void {
+					if(!contains(container)) addChild(container);
 					
-					const container:Container = rendered.display as Container;
-					
-					if(!contains(container)) {
-						addChild(container);
-					}
-					
-					const cache:Virtualizer = childRegion.cache;
-					const viewport:Rectangle = childRegion.viewport;
+					const region:Region = e.region;
+					const cache:Virtualizer = region.cache;
 					
 					var event:PropertyChangeEvent;
 					
-					const maxW:Number = max(container.children, 'width') as Number;
+					const maxW:Number = max(container['children'], 'width') as Number;
 					
 					if(cWidth != maxW) {
 						event = PropertyChangeEvent.createUpdateEvent(this, 'contentWidth', cWidth, maxW);
@@ -178,7 +165,7 @@ package org.tinytlf.views
 					
 					invalidateParentSizeAndDisplayList();
 					invalidateDisplayList();
-				});
+				}));
 			
 			htmlSubj.distinctUntilChanged().
 				map(toXML).

@@ -9,6 +9,8 @@ package org.tinytlf.views
 	import org.tinytlf.events.renderEventType;
 	import org.tinytlf.events.renderedEvent;
 	import org.tinytlf.events.renderedEventType;
+	import org.tinytlf.events.updateEventType;
+	import org.tinytlf.events.updatedEvent;
 	import org.tinytlf.types.DOMElement;
 	import org.tinytlf.types.Region;
 	
@@ -17,15 +19,20 @@ package org.tinytlf.views
 	
 	internal class Box extends Sprite implements IDOMView
 	{
-		public function Box(region:Region)
+		public function Box(element:DOMElement)
 		{
 			super();
 			
-			this['region'] = region;
+			_element = element;
+			this['region'] = element.region;
 			
-			// When "render" is dispatched, invalidate the size and display list.
+			// layout when the "tinytlf_update" event is dispatched
+			subscriptions.add(Observable.fromEvent(this, updateEventType).
+				subscribe(aritize(layout, 0)));
+			
+			// render when the "tinytlf_render" event is dispatched
 			subscriptions.add(Observable.fromEvent(this, renderEventType).
-				subscribe(aritize(draw, 0)));
+				subscribe(aritize(render, 0)));
 			
 			// Clean up subscriptions when we get taken off the screen.
 			subscriptions.add(
@@ -34,11 +41,11 @@ package org.tinytlf.views
 				subscribe(I, subscriptions.cancel)
 			);
 			
-			visible = false;
-			subscriptions.add(Observable.fromEvent(this, renderedEventType).
-				first().subscribe(function(...args):void {
-					visible = true;
-				}));
+//			visible = false;
+//			subscriptions.add(Observable.fromEvent(this, renderedEventType).
+//				first().subscribe(function(...args):void {
+//					visible = true;
+//				}));
 		}
 		
 		protected const subscriptions:CompositeCancelable = new CompositeCancelable();
@@ -49,15 +56,23 @@ package org.tinytlf.views
 			return kids;
 		}
 		
+		private var _element:DOMElement;
 		public const region:Region;
 		
 		public function get element():DOMElement {
-			return region.element;
+			return _element;
 		}
 		
-		protected function draw():void {
+		protected function layout():void {
 			x = region.x;
 			y = region.y;
+			
+			dispatchEvent(updatedEvent());
+		}
+		
+		protected function render():void {
+			// Layout one last time before "rendered" is dispatched.
+			layout();
 			
 			dispatchEvent(renderedEvent());
 		}
