@@ -1,145 +1,133 @@
 package org.tinytlf.views
 {
+	import asx.array.forEach;
 	import asx.fn.K;
-	import asx.fn._;
 	import asx.fn.apply;
 	import asx.fn.getProperty;
 	import asx.fn.partial;
-	import asx.fn.sequence;
 	import asx.object.newInstance_;
 	
-	import flash.events.*;
-	import flash.geom.*;
-	import flash.text.engine.TextElement;
+	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
+	import flash.events.IEventDispatcher;
+	import flash.events.MouseEvent;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	
 	import mx.core.UIComponent;
-	import mx.events.*;
 	
-	import org.tinytlf.events.mouse.*;
-	import org.tinytlf.lambdas.*;
-	import org.tinytlf.parsers.container;
-	import org.tinytlf.parsers.head;
-	import org.tinytlf.parsers.paragraph;
-	import org.tinytlf.parsers.style;
-	import org.tinytlf.procedures.*;
-	import org.tinytlf.renderers.content;
-	import org.tinytlf.types.*;
+	import org.tinytlf.fn.addInheritanceChain;
+	import org.tinytlf.fn.toNameFromKey;
+	import org.tinytlf.fn.toXML;
+	import org.tinytlf.observables.Values;
+	import org.tinytlf.observables.cacheObservable;
+	import org.tinytlf.parsers.block.container;
+	import org.tinytlf.parsers.block.br_block;
+	import org.tinytlf.parsers.block.nope;
+	import org.tinytlf.parsers.block.paragraph;
+	import org.tinytlf.parsers.inline.br_inline;
+	import org.tinytlf.parsers.inline.span;
+	import org.tinytlf.parsers.inline.text;
 	
-	import raix.reactive.*;
-	import raix.reactive.subjects.*;
+	import raix.reactive.ICancelable;
+	import raix.reactive.IObservable;
+	import raix.reactive.Observable;
 	
-	import spark.core.*;
+	import spark.core.IViewport;
 	
-	public class WebView extends UIComponent implements IViewport, IDOMView
+	import trxcllnt.gr.mouse.down;
+	import trxcllnt.gr.mouse.move;
+	import trxcllnt.gr.mouse.up;
+	import trxcllnt.gr.terminators.stop;
+	import trxcllnt.vr.Virtualizer;
+	
+	public class WebView extends UIComponent implements IViewport, TTLFView
 	{
-		public function WebView() {
-			
+		public function WebView()
+		{
 			super();
 			
-			addParser('head', head);
-			addParser('style', style);
-			addParser('body', container);
-			addParser('div', container);
-			addParser('section', container);
-			addParser('article', container);
-			addParser('p', paragraph);
+			const invokeUI:Function = function(values:Values):DisplayObject {
+				return getUIParser(values.key)(values);
+			};
 			
-			addUI('style', K(css));
-			addUI('css', K(css));
+			const parsed:Object = {};
 			
-			addUI('head', partial(newInstance_, Container));
-			addUI('body', partial(newInstance_, Container));
-			addUI('div', partial(newInstance_, Container));
-			addUI('section', partial(newInstance_, Container));
-			addUI('article', partial(newInstance_, Container));
-			addUI('p', partial(newInstance_, Paragraph));
-			addUI('span', partial(content, getUI, _));
-			addUI('br', sequence(
-				toElementFormat,
-				partial(newInstance_, TextElement, '\n')
-			));
+			const invokeBlockParser:Function = function(values:Values):IObservable {
+				return getBlockParser(values.key)(values);
+			};
 			
-			const self:WebView = this;
-			const downObs:IObservable = down(this);
-			const upObs:IObservable = up(this);
-			const dragObs:IObservable = downObs.mapMany(function(d:MouseEvent):IObservable {
-				const moveObs:IObservable = org.tinytlf.events.mouse.move(self);
-				
-				return moveObs.startWith(d).
-					scan(function(o:Object, m:MouseEvent):Object {
-						return {
-							x: m.stageX,
-							y: m.stageY,
-							dx: m.stageX - o.x,
-							dy: m.stageY - o.y
-						};
-					}, {x: d.stageX, y: d.stageY}, true).
-					map(function(o:Object):Point {
-						return new Point(o.dx, o.dy);
-					}).
-					takeUntil(upObs);
-			}).
-			map(getProperty('y'));
+			const invokeInlineParser:Function = function(values:Values):IObservable {
+				return getInlineParser(values.key)(values);
+			};
 			
-			const wheelY:IObservable = Observable.fromEvent(this, MouseEvent.MOUSE_WHEEL).
-				map(getProperty('delta'));
+			const c:Function = function(parser:Function, ...args):Function {
+				return partial(cacheObservable, parsed, partial.apply(null, [parser].concat(args)));
+			}
 			
-			dragObs.merge(wheelY).subscribe(function(delta:Number):void {
-				region.verticalScrollPosition -= delta;
-			});
+			const containerParser:Function = c(container, invokeUI, invokeBlockParser);
+			const paragraphParser:Function = c(paragraph, invokeUI, invokeBlockParser, invokeInlineParser);
+			const spanParser:Function = c(span, invokeInlineParser);
+			const textParser:Function = c(text);
+			const blockLineBreakParser:Function = c(br_block);
+			const inlineLineBreakParser:Function = c(br_inline);
+			const nullParser:Function = c(nope);
 			
-			Observable.fromEvent(this, MouseEvent.MOUSE_WHEEL).
-				subscribe(function(e:MouseEvent):void {
-					region.verticalScrollPosition -= e.delta;
-				});
+			const containerUIFactory:Function = partial(newInstance_, Container);
+			const paragraphUIFactory:Function = partial(newInstance_, Paragraph);
+			
+			// TODO: Add <style/>, <object/>, <a/>, <img/>, and <image/> parsers
+			addBlockParser(nullParser, 'style', 'object', 'a', 'img', 'image').
+			addInlineParser(nullParser, 'style', 'object', 'a', 'img', 'image').
+			
+			addBlockParser(containerParser, 'html', 'body', 'article', 'div', 'footer', 'header', 'section').
+			addUIParser(containerUIFactory, 'html', 'body', 'article', 'footer', 'div', 'header', 'section').
+			
+			addBlockParser(containerParser, 'table', 'colgroup', 'col', 'tbody', 'tr', 'td').
+			addUIParser(containerUIFactory, 'table', 'colgroup', 'col', 'tbody', 'tr', 'td').
+			
+			addBlockParser(paragraphParser, 'p', 'span', 'text').
+			addUIParser(paragraphUIFactory, 'p', 'span', 'text').
+			
+			addInlineParser(spanParser, 'span').
+			addInlineParser(textParser, 'text').
+			
+			addBlockParser(blockLineBreakParser, 'br').
+			addInlineParser(inlineLineBreakParser, 'br');
+			
+			subscribeScroll();
+			subscribeValues();
 		}
 		
-		private const styles:CSS = new CSS();
-		
-		public function get css():CSS {
-			return styles;
+		public function get children():Array {
+			const kids:Array = [];
+			for(var i:int = 0, n:int = numChildren; i < n; ++i) kids.push(getChildAt(i))
+			return kids;
 		}
 		
-		public function set css(value:*):void {
-			styles.inject(value);
-		}
+		private var _element:Values = new Values({
+			cache: new Virtualizer(),
+			index: 0,
+			key: 'html'
+		}, 'cache', 'html', 'viewport', 'width', 'height', 'x', 'y');
 		
-		private const region:Region = new Region(Observable.value(0), Observable.value(0));
-		private const _element:DOMElement = new DOMElement(region, 'head');
-		
-		public function get element():DOMElement {
+		public function get element():Values {
 			return _element;
 		}
 		
-		private const htmlSubj:BehaviorSubject = new BehaviorSubject();
+		public function get css():* {
+			return null;
+		}
+		
+		public function set css(value:*):void {
+		}
+		
 		public function get html():XML {
-			return htmlSubj.value;
+			return element.html;
 		}
 		
 		public function set html(value:*):void {
-			htmlSubj.onNext(value);
-		}
-		
-		private function getUI(key:String):Function {
-			return key ? uis[getNodeNameFromInheritance(key)] || K(null) : K(null);
-		}
-		
-		internal const uis:Object = {};
-		
-		public function addUI(type:String, fn:Function):WebView {
-			uis[type] = fn;
-			return this;
-		}
-		
-		private function getParser(key:String):Function/*:IObservable<Array<Unit, DisplayObject>>*/ {
-			return parsers[getNodeNameFromInheritance(key)] || container;
-		}
-		
-		internal const parsers:Object = {};
-		
-		public function addParser(type:String, fn:Function):WebView {
-			parsers[type] = fn;
-			return this;
+			element.html = addInheritanceChain(toXML(value));
 		}
 		
 		override protected function updateDisplayList(w:Number, h:Number):void {
@@ -147,98 +135,146 @@ package org.tinytlf.views
 			
 			if(initialized) return;
 			
-			region.width = w;
-			region.height = h;
-			region.viewport = new Rectangle(0, 0, w, h);
+			element.width = w;
+			element.height = h;
+			element.viewport = new Rectangle(0, 0, w, h);
 			
-			head(element, getUI, getParser).
-				subscribe(apply(function(e:DOMElement, container:Container):void {
-					if(!contains(container)) addChild(container);
-					
-					var event:PropertyChangeEvent;
-					
-					const maxW:Number = container.region.width;
-					const maxH:Number = container.region.height;
-					
-					if(cWidth != maxW) {
-						event = PropertyChangeEvent.createUpdateEvent(this, 'contentWidth', cWidth, maxW);
-						cWidth = maxW;
-						dispatchEvent(event);
-					}
-					if(cHeight != maxH) {
-						event = PropertyChangeEvent.createUpdateEvent(this, 'contentHeight', cHeight, maxH);
-						cHeight = maxH;
-						dispatchEvent(event);
-					}
-					
-					graphics.clear();
-					graphics.lineStyle(1, 0x00, 0.25);
-					graphics.beginFill(0x00, 0);
-					graphics.drawRect(0, 0, width, height);
-					graphics.endFill();
-					
-					invalidateParentSizeAndDisplayList();
-					invalidateDisplayList();
-				}));
-			
-			htmlSubj.distinctUntilChanged().
-				map(toXML).
-				map(applyNodeInheritance).
-				map(partial(newInstance_, DOMNode, _, css)).
-				subscribe(element.update);
+			// TODO: Parse/Observe
 		}
 		
-		// TODO: layouts, measure content width, etc.
-		private var cWidth:Number = 0;
-		public function get contentWidth():Number
-		{
+		private var cWidth:Number = 1000;
+		public function get contentWidth():Number {
 			return cWidth;
 		}
 		
-		// TODO: layouts, measure content height, etc.
-		private var cHeight:Number = 0;
-		public function get contentHeight():Number
-		{
+		private var cHeight:Number = 1000;
+		public function get contentHeight():Number {
 			return cHeight;
 		}
 		
-		public function get horizontalScrollPosition():Number
-		{
-			return region.horizontalScrollPosition;
+		public function get horizontalScrollPosition():Number {
+			return element.viewport.x;
 		}
 		
-		public function set horizontalScrollPosition(value:Number):void
-		{
-			region.horizontalScrollPosition = value;
+		public function set horizontalScrollPosition(value:Number):void {
+			const viewport:Rectangle = element.viewport;
+			viewport.x = value;
+			element.viewport = viewport.clone();
 		}
 		
-		public function get verticalScrollPosition():Number
-		{
-			return region.verticalScrollPosition;
+		public function get verticalScrollPosition():Number {
+			return element.viewport.y;
 		}
 		
-		public function set verticalScrollPosition(value:Number):void
-		{
-			region.verticalScrollPosition = value;
+		public function set verticalScrollPosition(value:Number):void {
+			const viewport:Rectangle = element.viewport;
+			viewport.y = value;
+			element.viewport = viewport.clone();
 		}
 		
-		public function getHorizontalScrollPositionDelta(navigationUnit:uint):Number
-		{
+		public function getHorizontalScrollPositionDelta(navigationUnit:uint):Number {
 			return 10;
 		}
 		
-		public function getVerticalScrollPositionDelta(navigationUnit:uint):Number
-		{
+		public function getVerticalScrollPositionDelta(navigationUnit:uint):Number {
 			return 10;
 		}
 		
-		public function get clipAndEnableScrolling():Boolean
-		{
+		public function get clipAndEnableScrolling():Boolean {
 			return true;
 		}
 		
-		public function set clipAndEnableScrolling(value:Boolean):void
-		{
+		public function set clipAndEnableScrolling(value:Boolean):void {}
+		
+		// TODO: Clean this up
+		private function subscribeScroll():ICancelable {
+			
+			const takeEvents:Function = function(...args):Boolean {
+				return true;
+//				return viewport.height < height
+			};
+			
+			const self:IEventDispatcher = this;
+			const downObs:IObservable = down(this);
+			const upObs:IObservable = up(this);
+			const dragObs:IObservable = downObs.mapMany(function(d:MouseEvent):IObservable {
+				const moveObs:IObservable = trxcllnt.gr.mouse.move(stage);
+				
+				return moveObs.filter(takeEvents).
+				peek(stop).
+				scan(function(o:Object, m:MouseEvent):Object {
+					return {
+						x: m.stageX,
+						y: m.stageY,
+						dx: m.stageX - o.x,
+						dy: m.stageY - o.y
+					};
+				}, {x: d.stageX, y: d.stageY}, true).
+				map(function(o:Object):Point {
+					return new Point(o.dx, o.dy);
+				}).
+				takeUntil(upObs);
+			}).
+			map(getProperty('y'));
+			
+			const wheelY:IObservable = Observable.fromEvent(this, MouseEvent.MOUSE_WHEEL).
+				filter(takeEvents).
+				peek(stop).
+				map(getProperty('delta'));
+			
+			return dragObs.merge(wheelY).
+				subscribe(function(delta:Number):void {
+					const rect:Rectangle = element.viewport.clone();
+					rect.y -= delta;
+					element.viewport = scrollRect = rect;
+				});
+		}
+		
+		private function subscribeValues():void {
+			const parse:Function = getBlockParser('html');
+			parse(element).subscribe(apply(function(values:Values, child:DisplayObjectContainer):void {
+				if(contains(child)) return;
+				
+				addChild(child);
+			}));
+		}
+		
+		private const blockParsers:Object = {};
+		private const inlineParsers:Object = {};
+		private const uiParsers:Object = {};
+		
+		public function addBlockParser(value:Function, ...names):WebView {
+			return addValue.apply(null, [blockParsers, value].concat(names));
+		}
+		
+		public function addInlineParser(value:Function, ...names):WebView {
+			return addValue.apply(null, [inlineParsers, value].concat(names));
+		}
+		
+		public function addUIParser(value:Function, ...names):WebView {
+			return addValue.apply(null, [uiParsers, value].concat(names));
+		}
+		
+		public function getBlockParser(key:String):Function {
+			return getValue(blockParsers, key);
+		}
+		
+		public function getInlineParser(key:String):Function {
+			return getValue(inlineParsers, key);
+		}
+		
+		public function getUIParser(key:String):Function {
+			return getValue(uiParsers, key);
+		}
+		
+		private function addValue(dictionary:Object, value:*, ...names):WebView {
+			forEach(names, function(name:String):void { dictionary[name] = value; });
+			return this;
+		}
+		
+		private function getValue(dictionary:Object, key:String):Function {
+			const name:String = toNameFromKey(key);
+			return dictionary.hasOwnProperty(name) ? dictionary[name] : K(null);
 		}
 	}
 }

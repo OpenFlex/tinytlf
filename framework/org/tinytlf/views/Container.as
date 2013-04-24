@@ -10,38 +10,37 @@ package org.tinytlf.views
 	import asx.fn.sequence;
 	import asx.object.isAn;
 	
-	import flash.geom.Rectangle;
+	import flash.display.Graphics;
 	
 	import mx.core.IUIComponent;
 	
-	import org.tinytlf.types.DOMElement;
+	import org.tinytlf.observables.Values;
 	
 	import trxcllnt.vr.Virtualizer;
 	
-	public class Container extends Box implements IDOMView
+	public class Container extends Box implements TTLFView
 	{
-		public function Container(element:DOMElement)
+		public function Container(element:Values)
 		{
 			super(element);
-			
-			subscriptions.add(region.viewports.subscribe(function(viewport:Rectangle):void {
-				scrollRect = viewport;
-			}));
 		}
 		
 		public function get layoutChildren():Array {
-			return filter(children, isAn(IDOMView));
+			return filter(children, isAn(TTLFView));
 		}
 		
 		// TODO: Abstract layouts
 		override protected function layout():void {
 			
-			const cache:Virtualizer = region.cache;
+			const cache:Virtualizer = element.cache;
 			
 			// layout the y dimension
-			forEach(layoutChildren, function(view:IDOMView):void {
+			forEach(layoutChildren, function(view:TTLFView):void {
+				view.x = 0;
 				view.y = cache.getStart(view.element);
 			});
+			
+			height = cache.size;
 			
 			super.layout();
 		}
@@ -62,6 +61,12 @@ package org.tinytlf.views
 			}));
 			
 			super.render();
+			
+			const g:Graphics = graphics;
+			g.clear();
+			g.beginFill(0x00, 0.05);
+			g.drawRect(0, 0, width, height);
+			g.endFill();
 		}
 		
 //		// TODO: layouts, measure content width, etc.

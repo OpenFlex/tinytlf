@@ -2,44 +2,36 @@ package org.tinytlf.views
 {
 	import asx.fn.I;
 	import asx.fn.aritize;
+	import asx.fn.noop;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Rectangle;
 	
 	import org.tinytlf.events.renderEventType;
 	import org.tinytlf.events.renderedEvent;
-	import org.tinytlf.events.renderedEventType;
 	import org.tinytlf.events.updateEventType;
 	import org.tinytlf.events.updatedEvent;
-	import org.tinytlf.types.DOMElement;
-	import org.tinytlf.types.Region;
+	import org.tinytlf.observables.Values;
 	
 	import raix.reactive.CompositeCancelable;
 	import raix.reactive.Observable;
 	
-	internal class Box extends Sprite implements IDOMView
+	internal class Box extends Sprite implements TTLFView
 	{
-		public function Box(element:DOMElement)
+		public function Box(element:Values)
 		{
 			super();
 			
 			_element = element;
-			this['region'] = element.region;
 			
 			// layout when the "tinytlf_update" event is dispatched
-			subscriptions.add(Observable.fromEvent(this, updateEventType).
-				subscribe(aritize(layout, 0)));
+			Observable.fromEvent(this, updateEventType).subscribe(aritize(layout, 0));
 			
 			// render when the "tinytlf_render" event is dispatched
-			subscriptions.add(Observable.fromEvent(this, renderEventType).
-				subscribe(aritize(render, 0)));
+			Observable.fromEvent(this, renderEventType).subscribe(aritize(render, 0));
 			
-			// Clean up subscriptions when we get taken off the screen.
-			subscriptions.add(
-				Observable.fromEvent(this, Event.REMOVED_FROM_STAGE, false, 0, true).
-				take(1).
-				subscribe(I, subscriptions.cancel)
-			);
+			element.subscribe(noop, subscriptions.cancel);
 		}
 		
 		protected const subscriptions:CompositeCancelable = new CompositeCancelable();
@@ -50,10 +42,9 @@ package org.tinytlf.views
 			return kids;
 		}
 		
-		private var _element:DOMElement;
-		public const region:Region;
+		private var _element:Values;
 		
-		public function get element():DOMElement {
+		public function get element():Values {
 			return _element;
 		}
 		
@@ -63,9 +54,6 @@ package org.tinytlf.views
 		 * multiple times in a rendering pass.
 		 */
 		protected function layout():void {
-			x = region.x;
-			y = region.y;
-			
 			dispatchEvent(updatedEvent());
 		}
 		
@@ -80,36 +68,40 @@ package org.tinytlf.views
 			dispatchEvent(renderedEvent());
 		}
 		
+		public function get viewport():Rectangle {
+			return element.viewport;
+		}
+		
 		override public function get x():Number {
-			return region.x;
+			return element.x;
 		}
 		
 		override public function set x(value:Number):void {
-			super.x = region.x = value;
+			super.x = element.x = value;
 		}
 		
 		override public function get y():Number {
-			return region.y;
+			return element.y;
 		}
 		
 		override public function set y(value:Number):void {
-			super.y = region.y = value;
+			super.y = element.y = value;
 		}
 		
 		override public function get width():Number {
-			return region.width;
+			return element.width;
 		}
 		
 		override public function set width(value:Number):void {
-			region.width = value;
+			element.width = value;
 		}
 		
 		override public function get height():Number {
-			return region.height;
+			return element.height;
 		}
 		
 		override public function set height(value:Number):void {
-			region.height = value;
+			element.height = value;
 		}
 	}
 }

@@ -6,11 +6,11 @@ package org.tinytlf.views
 	
 	import flash.text.engine.TextLine;
 	
-	import org.tinytlf.types.DOMElement;
+	import org.tinytlf.observables.Values;
 
 	public class Paragraph extends Box
 	{
-		public function Paragraph(element:DOMElement)
+		public function Paragraph(element:Values)
 		{
 			super(element);
 		}
@@ -26,7 +26,7 @@ package org.tinytlf.views
 				return line.y + line.descent;
 			}) as Number;
 			
-			height = lineHeight;
+			height = Math.ceil(lineHeight);
 			
 			super.layout();
 		}

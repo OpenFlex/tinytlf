@@ -5,10 +5,10 @@ package org.tinytlf.renderers
 	import flash.text.engine.TextBlock;
 	import flash.text.engine.TextLine;
 	
-	import org.tinytlf.lambdas.createTextLine;
-	import org.tinytlf.lambdas.getLineBeforeFirstInvalidLine;
-	import org.tinytlf.lambdas.getValidLines;
-	import org.tinytlf.lambdas.isBlockInvalid;
+	import org.tinytlf.fn.createTextLine;
+	import org.tinytlf.fn.getLineBeforeFirstInvalidLine;
+	import org.tinytlf.fn.getValidLines;
+	import org.tinytlf.fn.isBlockInvalid;
 	
 	import raix.reactive.IObservable;
 	import raix.reactive.Observable;
