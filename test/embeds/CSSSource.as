@@ -1,6 +1,6 @@
 package embeds
 {
-	import org.tinytlf.types.CSS;
+	import org.tinytlf.observables.CSS;
 
 	public class CSSSource
 	{

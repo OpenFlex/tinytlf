@@ -1,18 +1,8 @@
 package org.tinytlf.types {
 	import flash.utils.Dictionary;
 	
-	import org.tinytlf.lambdas.toInheritanceChain;
-	
-	import raix.reactive.AbsObservable;
-	import raix.reactive.Cancelable;
-	import raix.reactive.ICancelable;
-	import raix.reactive.IObserver;
-	import raix.reactive.ISubject;
-	import raix.reactive.Notification;
-	import raix.reactive.OnNext;
-	import raix.reactive.TimeStamped;
-	import raix.reactive.scheduling.IScheduler;
-	import raix.reactive.scheduling.Scheduler;
+	import raix.reactive.*;
+	import raix.reactive.scheduling.*;
 	
 	/**
 	 * DOMNode is a public API that allows manipulation of the underlying XML
@@ -23,7 +13,7 @@ package org.tinytlf.types {
 	 */
 	public class DOMElement extends AbsObservable implements ISubject {
 		
-		public function DOMElement(region:Region, key:String, node:XML = null) {
+		public function DOMElement(region:Region, key:String, node:DOMNode = null) {
 			super();
 			
 			_region = region;
@@ -46,15 +36,15 @@ package org.tinytlf.types {
 			return _region;
 		}
 		
-		private var _node:XML = <_/>;
+		private var _node:DOMNode = new DOMNode(<_/>);
 		
-		public function get node():XML {
+		public function get node():DOMNode {
 			return _node;
 		}
 		
 		// Used for sorting intersections.
 		public function get index():int {
-			return node.childIndex();
+			return node.index;
 		}
 		
 		/**
@@ -68,7 +58,7 @@ package org.tinytlf.types {
 		 */
 		public const rendered:ISubject = new UnderlyingDOMElementSubject();
 		
-		public function update(node:XML):DOMElement {
+		public function update(node:DOMNode):DOMElement {
 			onNext(_node = node);
 			return this;
 		}

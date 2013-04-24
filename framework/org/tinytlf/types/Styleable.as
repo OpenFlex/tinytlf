@@ -39,12 +39,19 @@ package org.tinytlf.types
 			mergeWith(styleObject);
 		}
 		
-		protected const properties:Object = {};
-		protected const propNames:Array = [];
+		protected var properties:Object = {};
+		protected var propNames:Array = [];
 		
 		public function clearStyle(styleProp:String):Boolean
 		{
 			return delete this[styleProp];
+		}
+		
+		public function clearStyles():Styleable
+		{
+			properties = {};
+			propNames.length = 0;
+			return this;
 		}
 		
 		public function getStyle(styleProp:String):*

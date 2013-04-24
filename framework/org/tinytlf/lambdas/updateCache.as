@@ -15,8 +15,8 @@ package org.tinytlf.lambdas
 								element:DOMElement,
 								display:DisplayObject):void {
 		
-		const size:Number = display.height;
-		const childIndex:int = element.node.childIndex();
+		const size:Number = Math.max(display.height, 1);
+		const childIndex:int = element.index;
 		const index:int = cache.getIndex(element);
 		
 		if(index == -1) {

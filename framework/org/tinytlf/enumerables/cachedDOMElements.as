@@ -2,7 +2,7 @@ package org.tinytlf.enumerables
 {
 	import asx.fn._;
 	import asx.fn.callProperty;
-	import asx.fn.distribute;
+	import asx.fn.apply;
 	import asx.fn.sequence;
 	import asx.fn.tap;
 	
@@ -18,7 +18,7 @@ package org.tinytlf.enumerables
 	 */
 	public function cachedDOMElements(viewport:Rectangle, cache:Virtualizer):Array/*<DOMElement>*/ {
 		return sequence(
-			distribute(cache.slice),
+			apply(cache.slice),
 			tap(callProperty('sortOn', 'index', Array.NUMERIC), _)
 		)([viewport.y, viewport.bottom]);
 	}

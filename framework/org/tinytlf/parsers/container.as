@@ -1,14 +1,12 @@
-package org.tinytlf.actors
+package org.tinytlf.parsers
 {
-	import asx.array.last;
 	import asx.array.pluck;
 	import asx.fn.K;
 	import asx.fn._;
 	import asx.fn.args;
 	import asx.fn.aritize;
 	import asx.fn.callProperty;
-	import asx.fn.defer;
-	import asx.fn.distribute;
+	import asx.fn.apply;
 	import asx.fn.getProperty;
 	import asx.fn.ifElse;
 	import asx.fn.noop;
@@ -23,11 +21,11 @@ package org.tinytlf.actors
 	import org.tinytlf.enumerables.cachedDOMElements;
 	import org.tinytlf.enumerables.visibleXMLElements;
 	import org.tinytlf.events.renderEvent;
-	import org.tinytlf.events.renderedEventType;
 	import org.tinytlf.events.updateEvent;
 	import org.tinytlf.handlers.printComplete;
 	import org.tinytlf.handlers.printError;
 	import org.tinytlf.lambdas.updateCache;
+	import org.tinytlf.types.CSS;
 	import org.tinytlf.types.DOMElement;
 	import org.tinytlf.types.Region;
 	
@@ -44,12 +42,14 @@ package org.tinytlf.actors
 	/**
 	 * @author ptaylor
 	 */
-	public function container(element:DOMElement/*<XML>*/,
-							  containerFactory:Function,
-							  childFactory:Function):IObservable/*Array<DOMElement, DisplayObject>*/ {
+	public function container(element:DOMElement/*<DOMNode>*/,
+							  uiFactory:Function,
+							  parserFactory:Function):IObservable/*Array<DOMElement, DisplayObject>*/ {
+		
+		const root:CSS = uiFactory('css')();
 		
 		const rendered:ISubject = element.rendered;
-		const container:DisplayObjectContainer = containerFactory(element.key)(element);
+		const container:DisplayObjectContainer = uiFactory(element.key)(element);
 		const region:Region = element.region;
 		const viewports:IObservable = region.viewports.takeUntil(element.count());
 		const cache:Virtualizer = region.cache;
@@ -58,11 +58,11 @@ package org.tinytlf.actors
 		const visibleCache:Object = {};
 		const elementCache:Object = DOMElement.cache;
 		
-		const nodeToDOMElement:Function = mapNodesToDOMElements(region, elementCache);
+		const nodeToDOMElement:Function = mapNodesToDOMElements(region, elementCache, root);
 		const updateDOMElement:Function = mapDOMElementUpdates(
 			visibleCache,
 			durationSelector(viewports, cache),
-			childSelector(container, containerFactory, childFactory),
+			childSelector(container, uiFactory, parserFactory),
 			subscriptions
 		);
 		
@@ -81,21 +81,21 @@ package org.tinytlf.actors
 			callProperty('takeWhile', setupHaltIteration(element)),
 			callProperty('map', updateDOMElement),
 			callProperty('map', getProperty('rendered')),
-			callProperty('concatObservables')
+			callProperty('concatMany')
 		);
 		
 		const reportUpdate:Function = sequence(
 			tap(updateCache, _),
-			sequence(args, last, ifElse(
-					not(container.contains),
-					container.addChild,
-					noop
-			)),
 			updateEvent,
 			container.dispatchEvent
 		);
 		
 		const expandUpdate:Function = function(...args):IObservable {
+			
+			// NOTE: I could/should be returning an Observable that dispatches
+			// when the UI dispatches the "rendered" event, but my layout
+			// algorithms are synchronous and returning a value Observable
+			// avoids lag in getting the container on the screen.
 			
 			container.dispatchEvent(renderEvent());
 			
@@ -103,6 +103,8 @@ package org.tinytlf.actors
 		};
 		
 		const virtualizationObs:IObservable = virtualize(element, distinct, selectVisible, reportUpdate, expandUpdate);
+		// If there haven't been any node updates or there aren't any new nodes
+		// scrolled into view, 
 		const similar:IObservable = updates.distinctUntilChanged(not(haveNewNodesScrolledIntoView)).
 			skip(1).
 			switchMany(expandUpdate);
@@ -115,15 +117,16 @@ package org.tinytlf.actors
 				Scheduler.defaultScheduler.schedule(rendered.onCompleted);
 			},
 			noop,
-			printError('contain2')
+			printError('container', true)
 		);
 	}
 }
+
 import asx.array.detect;
 import asx.array.pluck;
 import asx.fn._;
 import asx.fn.areEqual;
-import asx.fn.distribute;
+import asx.fn.apply;
 import asx.fn.ifElse;
 import asx.fn.noop;
 import asx.fn.partial;
@@ -135,7 +138,9 @@ import flash.geom.Rectangle;
 import org.tinytlf.enumerables.cachedDOMElements;
 import org.tinytlf.handlers.printError;
 import org.tinytlf.lambdas.toInheritanceChain;
+import org.tinytlf.types.CSS;
 import org.tinytlf.types.DOMElement;
+import org.tinytlf.types.DOMNode;
 import org.tinytlf.types.Region;
 
 import raix.reactive.CompositeCancelable;
@@ -148,12 +153,21 @@ import raix.reactive.Observer;
 import trxcllnt.vr.Virtualizer;
 
 internal function haveNewNodesScrolledIntoView(a:Array, b:Array):Boolean {
+	
+	// Obvs if either is null, do an update.
 	if(!a || !b) return false;
+	
+	const oldnode:DOMNode = a[0];
+	const newnode:DOMNode = b[0];
+	
+	// If the node children differ, do an update.
+	if(oldnode.children.length != newnode.children.length) return false;
 	
 	const oldport:Rectangle = a[1];
 	const newport:Rectangle = b[1];
 	const cache:Virtualizer = b[2];
 	
+	// If the cache is smaller than the viewport, do an update.
 	if(cache.size < newport.bottom) return false;
 	
 	const oldKeys:Array = pluck(cachedDOMElements(oldport, cache), 'key');
@@ -162,7 +176,11 @@ internal function haveNewNodesScrolledIntoView(a:Array, b:Array):Boolean {
 	const oldStr:String = '[' + oldKeys.join('], [') + ']';
 	const newStr:String = '[' + newKeys.join('], [') + ']';
 	
-	return oldStr === newStr;
+	// If there are different children in view, do an update.
+	if(oldStr !== newStr) return false;
+	
+	// If their styles changed, do an update.
+	return oldnode.toString() === newnode.toString();
 };
 
 internal function setupHaltIteration(element:DOMElement):Function {
@@ -192,7 +210,7 @@ internal function setupHaltIteration(element:DOMElement):Function {
 	};
 };
 
-internal function mapNodesToDOMElements(region:Region, elements:Object):Function {
+internal function mapNodesToDOMElements(region:Region, elements:Object, css:CSS):Function {
 	return function(node:XML):DOMElement {
 		
 		const key:String = toInheritanceChain(node);
@@ -204,7 +222,7 @@ internal function mapNodesToDOMElements(region:Region, elements:Object):Function
 		childRegion.height = region.height;
 		childRegion.viewport = new Rectangle(0, 0, childRegion.width, childRegion.height);
 		
-		return elements[key] = new DOMElement(childRegion, key, node);
+		return elements[key] = new DOMElement(childRegion, key, new DOMNode(node, css));
 	};
 };
 
@@ -254,11 +272,11 @@ internal function durationSelector(viewports:IObservable,
 			element.filter(nodeIsEmpty),
 			viewports.filter(partial(nodeScrolledOffScreen, _, element, cache))
 		]);
-	}
+	};
 };
 
-internal function nodeIsEmpty(node:XML):Boolean {
-	return node.toString() == '' && node.text().toString() == '';
+internal function nodeIsEmpty(node:DOMNode):Boolean {
+	return node.value == '';
 };
 
 internal function nodeScrolledOffScreen(viewport:Rectangle, element:DOMElement, cache:Virtualizer):Boolean {
@@ -272,12 +290,12 @@ internal function nodeScrolledOffScreen(viewport:Rectangle, element:DOMElement, 
 };
 
 internal function childSelector(container:DisplayObjectContainer,
-								containerFactory:Function,
-								childFactory:Function):Function {
+								uiFactory:Function,
+								parserFactory:Function):Function {
 	
 	return function(child:DOMElement):ICancelable {
-		const createChild:Function = childFactory(child.key);
-		const childObservable:IObservable = createChild(child, containerFactory, childFactory);
+		const createChild:Function = parserFactory(child.key);
+		const childObservable:IObservable = createChild(child, uiFactory, parserFactory);
 		return childObservable.subscribeWith(createChildObserver(container));
 	};
 	
@@ -290,7 +308,11 @@ internal function createChildObserver(container:DisplayObjectContainer):IObserve
 		removeChild();
 	};
 	
-	const next:Function = distribute(function(element:DOMElement, child:DisplayObject):void {
+	const next:Function = apply(function(element:DOMElement, child:DisplayObject):void {
+		
+		if(child == null) {
+			return;
+		}
 		
 		removeChild = ifElse(
 			partial(container.contains, child),
@@ -298,14 +320,14 @@ internal function createChildObserver(container:DisplayObjectContainer):IObserve
 			noop
 		);
 		
-//		const nodeIndex:int = element.node.childIndex();
-//		const childIndex:int = Math.max(Math.min(nodeIndex, container.numChildren), 0);
-//		
-//		if(container.contains(child) && container.getChildIndex(child) == childIndex) {
-//			return;
-//		}
-//		
-//		container.addChildAt(child, childIndex);
+		const nodeIndex:int = element.index;
+		const childIndex:int = Math.max(Math.min(nodeIndex, container.numChildren), 0);
+		
+		if(container.contains(child) && container.getChildIndex(child) == childIndex) {
+			return;
+		}
+		
+		container.addChildAt(child, childIndex);
 	});
 	
 	return Observer.create(next, complete, printError('child rendering', true));

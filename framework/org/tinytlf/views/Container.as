@@ -5,7 +5,7 @@ package org.tinytlf.views
 	import asx.array.map;
 	import asx.array.pluck;
 	import asx.array.zip;
-	import asx.fn.distribute;
+	import asx.fn.apply;
 	import asx.fn.getProperty;
 	import asx.fn.sequence;
 	import asx.object.isAn;
@@ -55,9 +55,9 @@ package org.tinytlf.views
 				pluck(components, 'getExplicitOrMeasuredHeight()')
 			);
 			
-			const setSizeFns:Array = map(components, sequence(getProperty('setActualSize'), distribute));
+			const setSizeFns:Array = map(components, sequence(getProperty('setActualSize'), apply));
 			
-			forEach(zip(setSizeFns, sizes), distribute(function(fn:Function, size:Array):void {
+			forEach(zip(setSizeFns, sizes), apply(function(fn:Function, size:Array):void {
 				fn(size);
 			}));
 			
@@ -71,11 +71,21 @@ package org.tinytlf.views
 //			return cWidth;
 //		}
 //		
+//		public function setContentWidth(val:Number):Container {
+//			cWidth = val;
+//			return this;
+//		}
+//		
 //		// TODO: layouts, measure content height, etc.
 //		private var cHeight:Number = 2000;
 //		public function get contentHeight():Number
 //		{
 //			return cHeight;
+//		}
+//		
+//		public function setContentHeight(val:Number):Container {
+//			cHeight = val;
+//			return this;
 //		}
 //		
 //		private var hScroll:Number = 0;

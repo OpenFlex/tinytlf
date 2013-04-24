@@ -1,20 +1,28 @@
 package org.tinytlf.views
 {
-	import asx.array.*;
-	import asx.fn.*;
-	import asx.object.*;
+	import asx.fn.K;
+	import asx.fn._;
+	import asx.fn.apply;
+	import asx.fn.getProperty;
+	import asx.fn.partial;
+	import asx.fn.sequence;
+	import asx.object.newInstance_;
 	
-	import flash.display.DisplayObject;
 	import flash.events.*;
 	import flash.geom.*;
+	import flash.text.engine.TextElement;
 	
 	import mx.core.UIComponent;
 	import mx.events.*;
 	
-	import org.tinytlf.actors.*;
 	import org.tinytlf.events.mouse.*;
 	import org.tinytlf.lambdas.*;
+	import org.tinytlf.parsers.container;
+	import org.tinytlf.parsers.head;
+	import org.tinytlf.parsers.paragraph;
+	import org.tinytlf.parsers.style;
 	import org.tinytlf.procedures.*;
+	import org.tinytlf.renderers.content;
 	import org.tinytlf.types.*;
 	
 	import raix.reactive.*;
@@ -22,29 +30,34 @@ package org.tinytlf.views
 	
 	import spark.core.*;
 	
-	import trxcllnt.vr.Virtualizer;
-	
 	public class WebView extends UIComponent implements IViewport, IDOMView
 	{
 		public function WebView() {
 			
 			super();
 			
+			addParser('head', head);
+			addParser('style', style);
 			addParser('body', container);
 			addParser('div', container);
 			addParser('section', container);
 			addParser('article', container);
 			addParser('p', paragraph);
 			
+			addUI('style', K(css));
+			addUI('css', K(css));
+			
+			addUI('head', partial(newInstance_, Container));
 			addUI('body', partial(newInstance_, Container));
 			addUI('div', partial(newInstance_, Container));
 			addUI('section', partial(newInstance_, Container));
 			addUI('article', partial(newInstance_, Container));
 			addUI('p', partial(newInstance_, Paragraph));
-			
-			Observable.fromEvent(this, FlexEvent.UPDATE_COMPLETE).
-				first().
-				subscribe(onFirstUpdateDisplayList);
+			addUI('span', partial(content, getUI, _));
+			addUI('br', sequence(
+				toElementFormat,
+				partial(newInstance_, TextElement, '\n')
+			));
 			
 			const self:WebView = this;
 			const downObs:IObservable = down(this);
@@ -68,7 +81,8 @@ package org.tinytlf.views
 			}).
 			map(getProperty('y'));
 			
-			const wheelY:IObservable = Observable.fromEvent(this, MouseEvent.MOUSE_WHEEL).map(getProperty('delta'));
+			const wheelY:IObservable = Observable.fromEvent(this, MouseEvent.MOUSE_WHEEL).
+				map(getProperty('delta'));
 			
 			dragObs.merge(wheelY).subscribe(function(delta:Number):void {
 				region.verticalScrollPosition -= delta;
@@ -80,17 +94,18 @@ package org.tinytlf.views
 				});
 		}
 		
-		internal const cssSubj:BehaviorSubject = new BehaviorSubject(new CSS());
+		private const styles:CSS = new CSS();
+		
 		public function get css():CSS {
-			return cssSubj.value;
+			return styles;
 		}
 		
 		public function set css(value:*):void {
-			cssSubj.onNext(value is CSS ? value : new CSS(value));
+			styles.inject(value);
 		}
 		
 		private const region:Region = new Region(Observable.value(0), Observable.value(0));
-		private const _element:DOMElement = new DOMElement(region, 'body');
+		private const _element:DOMElement = new DOMElement(region, 'head');
 		
 		public function get element():DOMElement {
 			return _element;
@@ -127,35 +142,34 @@ package org.tinytlf.views
 			return this;
 		}
 		
-		private function onFirstUpdateDisplayList(...args):void {
-			region.width = width;
-			region.height = height;
-			region.viewport = new Rectangle(0, 0, width, height);
+		override protected function updateDisplayList(w:Number, h:Number):void {
+			super.updateDisplayList(w, h);
 			
-			container(element, getUI, getParser).
-				subscribe(distribute(function(e:DOMElement, container:DisplayObject):void {
+			if(initialized) return;
+			
+			region.width = w;
+			region.height = h;
+			region.viewport = new Rectangle(0, 0, w, h);
+			
+			head(element, getUI, getParser).
+				subscribe(apply(function(e:DOMElement, container:Container):void {
 					if(!contains(container)) addChild(container);
-					
-					const region:Region = e.region;
-					const cache:Virtualizer = region.cache;
 					
 					var event:PropertyChangeEvent;
 					
-					const maxW:Number = max(container['children'], 'width') as Number;
+					const maxW:Number = container.region.width;
+					const maxH:Number = container.region.height;
 					
 					if(cWidth != maxW) {
 						event = PropertyChangeEvent.createUpdateEvent(this, 'contentWidth', cWidth, maxW);
 						cWidth = maxW;
 						dispatchEvent(event);
 					}
-					if(cHeight != cache.size) {
-						event = PropertyChangeEvent.createUpdateEvent(this, 'contentHeight', cHeight, cache.size);
-						cHeight = cache.size;
+					if(cHeight != maxH) {
+						event = PropertyChangeEvent.createUpdateEvent(this, 'contentHeight', cHeight, maxH);
+						cHeight = maxH;
 						dispatchEvent(event);
 					}
-					
-					region.height = cHeight;
-					region.width = cWidth;
 					
 					graphics.clear();
 					graphics.lineStyle(1, 0x00, 0.25);
@@ -170,6 +184,7 @@ package org.tinytlf.views
 			htmlSubj.distinctUntilChanged().
 				map(toXML).
 				map(applyNodeInheritance).
+				map(partial(newInstance_, DOMNode, _, css)).
 				subscribe(element.update);
 		}
 		

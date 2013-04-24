@@ -13,7 +13,7 @@ package org.tinytlf.enumerables
 	 * @author ptaylor
 	 */
 	public function cachedXMLElements(viewport:Rectangle, cache:Virtualizer):Array/*<XML>*/ {
-		return pluck(cachedDOMElements(viewport, cache), 'node');
+		return pluck(cachedDOMElements(viewport, cache), 'node.node');
 	}
 }
 

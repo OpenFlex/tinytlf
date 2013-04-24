@@ -168,12 +168,13 @@ package org.tinytlf.types
 			return this;
 		}
 		
-		public function clearStyles():void
+		override public function clearStyles():Styleable
 		{
 			Cache.clearStyles();
 			styles = new StyleLink();
 			styles['html'] = styles;
 			inject(new defaultCSS().toString());
+			return this;
 		}
 		
 		override public function getStyle(styleProp:String):*

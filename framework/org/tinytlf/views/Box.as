@@ -40,12 +40,6 @@ package org.tinytlf.views
 				take(1).
 				subscribe(I, subscriptions.cancel)
 			);
-			
-//			visible = false;
-//			subscriptions.add(Observable.fromEvent(this, renderedEventType).
-//				first().subscribe(function(...args):void {
-//					visible = true;
-//				}));
 		}
 		
 		protected const subscriptions:CompositeCancelable = new CompositeCancelable();
@@ -63,6 +57,11 @@ package org.tinytlf.views
 			return _element;
 		}
 		
+		/**
+		 * The layout event is called each time the rendering algorithm adds or
+		 * removes a child from this Sprite's DisplayList. It can be called
+		 * multiple times in a rendering pass.
+		 */
 		protected function layout():void {
 			x = region.x;
 			y = region.y;
@@ -70,6 +69,10 @@ package org.tinytlf.views
 			dispatchEvent(updatedEvent());
 		}
 		
+		/**
+		 * Called at the end of a render cycle, after all children have been
+		 * created, rendered, and added.
+		 */
 		protected function render():void {
 			// Layout one last time before "rendered" is dispatched.
 			layout();

@@ -8,7 +8,7 @@ package org.tinytlf.handlers
 	 */
 	public const printError:Function = function(name:String, stack:Boolean = false):Function {
 		return function(e:Error):void {
-			trace('error in the', name, 'stream:', e.toString(), (stack ? e.getStackTrace() : ''));
+			trace('error in the', name, 'stream:', stack ? e.getStackTrace() : e.toString());
 		}
 	};
 }
