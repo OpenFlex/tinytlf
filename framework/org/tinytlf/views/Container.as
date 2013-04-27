@@ -7,16 +7,23 @@ package org.tinytlf.views
 	import asx.array.zip;
 	import asx.fn.apply;
 	import asx.fn.getProperty;
+	import asx.fn.partial;
 	import asx.fn.sequence;
 	import asx.object.isAn;
 	
 	import flash.display.Graphics;
+	import flash.geom.Rectangle;
 	
 	import mx.core.IUIComponent;
 	
 	import org.tinytlf.observables.Values;
+	import org.tinytlf.views.layout.layoutBlockChild;
 	
-	import trxcllnt.vr.Virtualizer;
+	import raix.reactive.ISubject;
+	import raix.reactive.Subject;
+	
+	import trxcllnt.ds.HRDatum;
+	import trxcllnt.ds.HRTree;
 	
 	public class Container extends Box implements TTLFView
 	{
@@ -29,18 +36,13 @@ package org.tinytlf.views
 			return filter(children, isAn(TTLFView));
 		}
 		
+		protected var layoutSubject:ISubject = new Subject();
+		
 		// TODO: Abstract layouts
 		override protected function layout():void {
 			
-			const cache:Virtualizer = element.cache;
-			
-			// layout the y dimension
-			forEach(layoutChildren, function(view:TTLFView):void {
-				view.x = 0;
-				view.y = cache.getStart(view.element);
-			});
-			
-			height = cache.size;
+			// Layout the latest child.
+			layoutSubject.onNext(getChildAt(numChildren - 1));
 			
 			super.layout();
 		}
@@ -67,6 +69,12 @@ package org.tinytlf.views
 			g.beginFill(0x00, 0.05);
 			g.drawRect(0, 0, width, height);
 			g.endFill();
+			
+			subscriptions.add(
+				(layoutSubject = new Subject()).
+					scan(partial(layoutBlockChild, this)).
+					publish().connect()
+			);
 		}
 		
 //		// TODO: layouts, measure content width, etc.

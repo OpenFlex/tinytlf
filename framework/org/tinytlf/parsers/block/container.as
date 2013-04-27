@@ -23,7 +23,7 @@ package org.tinytlf.parsers.block
 	import raix.reactive.Observable;
 	import raix.reactive.subjects.BehaviorSubject;
 	
-	import trxcllnt.vr.Virtualizer;
+	import trxcllnt.ds.HRTree;
 
 	/**
 	 * @author ptaylor
@@ -32,10 +32,8 @@ package org.tinytlf.parsers.block
 							  render:Function,
 							  values:Values):IObservable {
 		
-		trace(values.key);
-		
 		const view:DisplayObjectContainer = create(values);
-		const cache:Virtualizer = values.cache;
+		const cache:HRTree = values.cache;
 		
 		const updates:IObservable = values.
 			combine('html', 'viewport').
@@ -56,8 +54,10 @@ package org.tinytlf.parsers.block
 		
 		const virt:Function = virtualizeChildren(visibleSelector, render, monitor);
 		
-//		const peekUpdate:Function = noop;//sequence(updateEvent, view.dispatchEvent);
-		const peekUpdate:Function = sequence(args, last, ifElse(view.contains, noop, view.addChild));
+		const peekUpdate:Function = sequence(
+			args, last, ifElse(view.contains, noop, view.addChild),
+			updateEvent, view.dispatchEvent
+		);
 		const expandUpdate:Function = function(...args):IObservable {
 			// NOTE: I could/should be returning an Observable that dispatches
 			// when the UI dispatches the "rendered" event, but my layout
@@ -100,18 +100,18 @@ import raix.reactive.IObserver;
 import raix.reactive.ISubject;
 import raix.reactive.Subject;
 
-import trxcllnt.vr.Virtualizer;
+import trxcllnt.ds.HRTree;
 
-internal function childObserverSelector(ui:DisplayObjectContainer, cache:Virtualizer, parent:Values, child:Values):IObserver {
+internal function childObserverSelector(ui:DisplayObjectContainer, cache:HRTree, parent:Values, child:Values):IObserver {
 	
 	const displayObserver:IObserver = displayListObserver(ui);
-	const cacheObserver:IObserver = updateCacheObserver(cache, 'height');
+//	const cacheObserver:IObserver = updateCacheObserver(cache, 'height');
 	
 	const update:ISubject = new Subject();
 	const notNull:IObservable = update.filter(sequence(last, not(partial(areEqual, null))));
 	
 	notNull.subscribeWith(displayObserver);
-	notNull.subscribeWith(cacheObserver);
+//	notNull.subscribeWith(cacheObserver);
 	
 	parent.combine('viewport').
 		map(last).
@@ -127,10 +127,10 @@ internal function childDurationSelector(parent:Values, child:Values):IObservable
 		filter(apply(partial(childScrolledOffScreen, child)));
 };
 
-internal function childScrolledOffScreen(child:Values, viewport:Rectangle, cache:Virtualizer):Boolean {
-	if(cache.getIndex(child) == -1) return false;
+internal function childScrolledOffScreen(child:Values, viewport:Rectangle, cache:HRTree):Boolean {
+	if(cache.hasItem(child) == false) return false;
 	
-	const cached:Array = cachedValues(viewport.y, viewport.bottom, cache);
+	const cached:Array = cachedValues(cache, viewport);
 	const elementIsVisible:Boolean = Boolean(detect(cached, partial(areEqual, child)));
 	
 	return elementIsVisible == false;

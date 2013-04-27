@@ -8,14 +8,14 @@ package org.tinytlf.observers
 	import raix.reactive.IObserver;
 	import raix.reactive.Observer;
 	
-	import trxcllnt.vr.Virtualizer;
+	import trxcllnt.ds.HRTree;
 
 	/**
 	 * @author ptaylor
 	 */
-	public function updateCacheObserver(cache:Virtualizer, field:String):IObserver {
+	public function updateCacheObserver(cache:HRTree, field:String):IObserver {
 		return Observer.create(apply(function(element:Values, value:*):void {
-			updateCache(cache, element, value[field]);
+			updateCache(cache, element, value.getBounds());
 		}));
 	}
 }

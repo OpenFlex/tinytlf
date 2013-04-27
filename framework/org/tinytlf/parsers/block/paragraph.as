@@ -16,7 +16,6 @@ package org.tinytlf.parsers.block
 	import flash.text.engine.TextBlock;
 	
 	import org.tinytlf.events.renderEvent;
-	import org.tinytlf.events.updateEvent;
 	import org.tinytlf.observables.Values;
 	import org.tinytlf.parsers.inline.span;
 	import org.tinytlf.pools.TextLines;
@@ -26,8 +25,6 @@ package org.tinytlf.parsers.block
 	import raix.reactive.ISubject;
 	import raix.reactive.Observable;
 	import raix.reactive.subjects.BehaviorSubject;
-	
-	import trxcllnt.vr.Virtualizer;
 
 	/**
 	 * @author ptaylor
@@ -62,7 +59,7 @@ package org.tinytlf.parsers.block
 			map(mapUpdates).
 			distinctUntilChanged(nodeIsTheSame).
 			map(tail).
-			switchMany(apply(function(node:XML, width:Number, cache:Virtualizer):IObservable {
+			switchMany(apply(function(node:XML, width:Number, ...args):IObservable {
 				// TODO: some paragraphs have block-level child elements?
 				return span(renderInline, values).take(1).mappend(K(width));
 			})).

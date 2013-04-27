@@ -7,17 +7,16 @@ package org.tinytlf.enumerables
 	import raix.interactive.IEnumerable;
 	import raix.interactive.toEnumerable;
 	
-	import trxcllnt.vr.Virtualizer;
+	import trxcllnt.ds.HRTree;
 
 	/**
 	 * @author ptaylor
 	 */
 	public function visibleValues(list:XMLList,
-								  start:int,
-								  end:int,
-								  cache:Virtualizer):IEnumerable/*[visible] <Values>*/ {
+								  area:Rectangle,
+								  cache:HRTree):IEnumerable/*[visible] <Values>*/ {
 		
-		const cached:IEnumerable = toEnumerable(cachedValues(start, end, cache));
+		const cached:IEnumerable = toEnumerable(cachedValues(cache, area));
 		
 		// TODO: What if an element was inserted between two cached elements?
 		
@@ -37,11 +36,11 @@ import org.tinytlf.fn.toInheritanceChain;
 import org.tinytlf.fn.wrapTextNodes;
 import org.tinytlf.observables.Values;
 
-import trxcllnt.vr.Virtualizer;
+import trxcllnt.ds.HRTree;
 
 internal function valuesFromXML(node:XML):Values {
 	return new Values({
-		cache: new Virtualizer(),
+		cache: new HRTree(),
 		index: node.childIndex(),
 		html: wrapTextNodes(addInheritanceChain(node)),
 		key: toInheritanceChain(node),

@@ -21,8 +21,8 @@ package org.tinytlf.views
 	import org.tinytlf.fn.toXML;
 	import org.tinytlf.observables.Values;
 	import org.tinytlf.observables.cacheObservable;
-	import org.tinytlf.parsers.block.container;
 	import org.tinytlf.parsers.block.br_block;
+	import org.tinytlf.parsers.block.container;
 	import org.tinytlf.parsers.block.nope;
 	import org.tinytlf.parsers.block.paragraph;
 	import org.tinytlf.parsers.inline.br_inline;
@@ -35,11 +35,11 @@ package org.tinytlf.views
 	
 	import spark.core.IViewport;
 	
+	import trxcllnt.ds.HRTree;
 	import trxcllnt.gr.mouse.down;
 	import trxcllnt.gr.mouse.move;
 	import trxcllnt.gr.mouse.up;
 	import trxcllnt.gr.terminators.stop;
-	import trxcllnt.vr.Virtualizer;
 	
 	public class WebView extends UIComponent implements IViewport, TTLFView
 	{
@@ -106,7 +106,7 @@ package org.tinytlf.views
 		}
 		
 		private var _element:Values = new Values({
-			cache: new Virtualizer(),
+			cache: new HRTree(),
 			index: 0,
 			key: 'html'
 		}, 'cache', 'html', 'viewport', 'width', 'height', 'x', 'y');

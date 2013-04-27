@@ -6,7 +6,7 @@ package org.tinytlf.parsers.block
 	
 	import org.tinytlf.enumerables.cachedValues;
 	
-	import trxcllnt.vr.Virtualizer;
+	import trxcllnt.ds.HRTree;
 
 	/**
 	 * @author ptaylor
@@ -29,13 +29,14 @@ package org.tinytlf.parsers.block
 		
 		const oldport:Rectangle = a[2];
 		const newport:Rectangle = b[2];
-		const cache:Virtualizer = b[3];
+		const cache:HRTree = b[3];
+		const mbr:Rectangle = cache.mbr;
 		
 		// If the cache is smaller than the viewport, do an update.
-		if(cache.size < newport.bottom) return true;
+		if(mbr.bottom < newport.bottom) return true;
 		
-		const oldKeys:Array = pluck(cachedValues(oldport.y, oldport.bottom, cache), 'key');
-		const newKeys:Array = pluck(cachedValues(newport.y, newport.bottom, cache), 'key');
+		const oldKeys:Array = pluck(cachedValues(cache, oldport), 'key');
+		const newKeys:Array = pluck(cachedValues(cache, newport), 'key');
 		
 		const oldStr:String = '[' + oldKeys.join('], [') + ']';
 		const newStr:String = '[' + newKeys.join('], [') + ']';
